@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    default: ${APP_ENV}
+    development:
+      username: hexlet@example.com
+      password: qwerty
+      url: "jdbc:h2:./database"
+
+  ebean:
+    migration:
+      run: true
