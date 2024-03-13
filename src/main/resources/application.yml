@@ -1,4 +1,22 @@
-#Пути к ключам
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  output:
+    ansi:
+      enabled: always
+
+server:
+  address: 0.0.0.0
+  port: ${PORT:8080}
+
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
+
+sentry:
+  dsn: todo_change_me
+  tracesSampleRate: 1.0
+  exception-resolver-order: -2147483647
