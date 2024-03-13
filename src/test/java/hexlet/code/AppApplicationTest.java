@@ -8,26 +8,24 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import hexlet.code.model.User;
-import hexlet.code.repository.UserRepository;
-import hexlet.code.util.ModelGenerator;
+import java.util.HashMap;
+
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.BeforeMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.test.web.servlet.MockMvc;
-import net.datafaker.Faker;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor;
+import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.HashMap;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
+import hexlet.code.model.User;
+import hexlet.code.repository.UserRepository;
+import hexlet.code.util.ModelGenerator;
+import net.datafaker.Faker;
 
 @SpringBootTest
 @AutoConfigureMockMvc
