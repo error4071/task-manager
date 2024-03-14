@@ -59,6 +59,10 @@ public class AppApplicationTest {
     }
 
     @Test
+    void contextLoads() {
+    }
+
+    @Test
     public void testIndex() throws Exception {
         var request = get("/api/users").with(token);
         var result = mockMvc.perform(request)
