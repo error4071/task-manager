@@ -1,5 +1,5 @@
 plugins {
-	id 'java'
+	id ("application")
 	id("checkstyle")
 	id("io.freefair.lombok") version "8.4"
 	id("org.springframework.boot") version "3.2.0"
@@ -13,6 +13,9 @@ version = '1.0-SNAPSHOT'
 
 repositories {
 	mavenCentral()
+}
+application {
+	mainClass.set = ('hexlet.code.AppApplication')
 }
 
 dependencies {
