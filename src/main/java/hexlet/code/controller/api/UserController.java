@@ -9,6 +9,7 @@ import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
 import hexlet.code.utils.JWTUtils;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,10 +25,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api")
 public class UserController {
-
     @Autowired
     private UserRepository userRepository;
 
