@@ -28,13 +28,12 @@ public abstract class UserMapper {
     private BCryptPasswordEncoder encoder;
 
     @Mapping(target = "passwordDigest", source = "password")
-    public abstract User map(UserCreateDTO model);
+    public abstract User map(UserCreateDTO dto);
 
-    public abstract User map(UserUpdateDTO model);
-
-    @Mapping(target = "username", source = "email")
-    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "createdAt", source = "createdAt")
     public abstract UserDTO map(User model);
+
+    @Mapping(target = "passwordDigest", source = "password")
 
     public abstract void update(UserUpdateDTO update, @MappingTarget User destination);
 
