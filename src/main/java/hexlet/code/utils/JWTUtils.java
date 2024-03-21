@@ -14,7 +14,6 @@ import java.time.temporal.ChronoUnit;
 @AllArgsConstructor
 public class JWTUtils {
 
-    @Autowired
     private JwtEncoder encoder;
 
     //Подготовка и шифрование токена

@@ -1,6 +1,7 @@
 package hexlet.code.service;
 
 import hexlet.code.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,9 +9,9 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class CustomUserDetailsService implements UserDetailsManager {
 
-    @Autowired
     private UserRepository userRepository;
 
     @Override
@@ -21,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsManager {
     }
 
     @Override
-    public void createUser(UserDetails data) {
+    public void createUser(UserDetails user) {
         throw new UnsupportedOperationException("Unimplemented method 'createUser'");
     }
 
@@ -41,7 +42,7 @@ public class CustomUserDetailsService implements UserDetailsManager {
     }
 
     @Override
-    public boolean userExists(String usernme) {
+    public boolean userExists(String username) {
         throw new UnsupportedOperationException("Unimplemented method 'userExists'");
     }
 }
