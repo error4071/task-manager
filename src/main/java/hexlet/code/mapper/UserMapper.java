@@ -11,6 +11,9 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
+import org.mapstruct.BeforeMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Mapper(
         uses = {JsonNullableMapper.class, ReferenceMapper.class},
@@ -21,13 +24,23 @@ import org.mapstruct.ReportingPolicy;
 
 public abstract class UserMapper {
 
-    @Mapping(target = "passwordDigest", source = "password")
-    public abstract User map(UserCreateDTO dto);
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
-    @Mapping(target = "createdAt", source = "createdAt")
+    @Mapping(target = "passwordDigest", source = "password")
+    public abstract User map(UserCreateDTO model);
+
+    public abstract User map(UserUpdateDTO model);
+
+    @Mapping(target = "username", source = "email")
+    @Mapping(target = "password", ignore = true)
     public abstract UserDTO map(User model);
 
-    @Mapping(target = "passwordDigest", source = "password")
-    public abstract void update(UserUpdateDTO dto, @MappingTarget User model);
+    public abstract void update(UserUpdateDTO update, @MappingTarget User destination);
 
+    @BeforeMapping
+    public void encryptPassword(UserCreateDTO data) {
+        var password = data.getPassword();
+        data.setPassword(encoder.encode(password));
     }
+}
