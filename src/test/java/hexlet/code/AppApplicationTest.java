@@ -22,7 +22,6 @@ public class AppApplicationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
     private User testUser;
 
     @Autowired
