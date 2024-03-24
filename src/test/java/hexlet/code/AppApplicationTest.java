@@ -1,8 +1,12 @@
 package hexlet.code;
 
+import hexlet.code.util.ModelGenerator;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
+import org.instancio.Instancio;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,9 +30,19 @@ public class AppApplicationTest {
     private UserRepository userRepository;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private ModelGenerator modelGenerator;
 
     private User testUser;
     private JwtRequestPostProcessor token;
+
+    @BeforeEach
+    public void setUp() {
+        token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
+        testUser = Instancio.of(modelGenerator.getUserModel())
+                .create();
+        userRepository.save(testUser);
+    }
 
     @Test
     public void testIndex() throws Exception {
