@@ -31,19 +31,19 @@ import net.datafaker.Faker;
 @AutoConfigureMockMvc
 public class AppApplicationTest {
 
-    @Autowired
+
     private MockMvc mockMvc;
 
-    @Autowired
+
     private Faker faker;
 
-    @Autowired
+
     private UserRepository userRepository;
 
-    @Autowired
+
     private ModelGenerator modelGenerator;
 
-    @Autowired
+
     private ObjectMapper objectMapper;
 
     private JwtRequestPostProcessor token;
