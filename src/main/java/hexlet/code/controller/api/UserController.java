@@ -45,7 +45,7 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @GetMapping(path = "/users")
+    @GetMapping("/users")
     public List<UserDTO> index() {
         var users = userRepository.findAll();
         return users.stream()
@@ -53,7 +53,7 @@ public class UserController {
                 .toList();
     }
 
-    @GetMapping(path = "/users/{id}")
+    @GetMapping("/users/{id}")
     public UserDTO show(@PathVariable long id) {
         var user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Error 400"));
@@ -61,7 +61,7 @@ public class UserController {
         return userDto;
     }
 
-    @PostMapping(path = "/users")
+    @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO create(@Valid @RequestBody UserCreateDTO userCreateDTO) {
         var user = userMapper.map(userCreateDTO);
@@ -70,13 +70,13 @@ public class UserController {
         return userDto;
     }
 
-    @PutMapping(path = "/users/{id}")
+    @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO update(@PathVariable Long id, @RequestBody UserUpdateDTO userUpdateDTO) {
         return userService.update(id, userUpdateDTO);
     }
 
-    @DeleteMapping(path = "/users/{id}")
+    @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public void delete(@PathVariable Long id) {
         userRepository.deleteById(id);
