@@ -63,7 +63,7 @@ public class UserController {
 
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO create(@Valid @RequestBody UserCreateDTO userCreateDTO) {
+    public UserDTO create(@RequestBody @Valid UserCreateDTO userCreateDTO) {
         var user = userMapper.map(userCreateDTO);
         userRepository.save(user);
         var userDto = userMapper.map(user);
@@ -77,7 +77,7 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id}")
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         userRepository.deleteById(id);
     }
