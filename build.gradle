@@ -12,14 +12,13 @@ plugins {
 group = 'hexlet.code'
 version = '1.0-SNAPSHOT'
 
-repositories {
-	mavenCentral()
-}
 application {
 	mainClass = "hexlet.code.AppApplication"
 }
 
 dependencies {
+	testImplementation 'org.testng:testng:7.1.0'
+	testImplementation 'junit:junit:4.13.1'
 	runtimeOnly("com.h2database:h2:2.1.214")
 	runtimeOnly("org.postgresql:postgresql:42.6.0")
 
@@ -43,27 +42,13 @@ dependencies {
 	testImplementation("org.springframework.security:spring-security-test:6.0.2")
 }
 
-tasks.sentryBundleSourcesJava {
-	enabled = System.getenv("SENTRY_AUTH_TOKEN") != null
-}
-
-tasks.withType(JavaCompile) {
-	options.encoding = "UTF-8"
-}
-
 checkstyle {
 	toolVersion = "10.3.3"
 }
 
-tasks.test {
+test {
 	useJUnitPlatform()
-	finalizedBy(tasks.jacocoTestReport)
-}
-
-java {
-	toolchain {
-		languageVersion.set(JavaLanguageVersion.of(20))
-	}
+	finalizedBy jacocoTestReport
 }
 
 jacocoTestReport {
