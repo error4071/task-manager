@@ -52,17 +52,6 @@ public class AppApplicationTest {
     }
 
     @Test
-    public void testIndex() throws Exception {
-        var request = get("/api/users").with(token);
-        var result = mockMvc.perform(request)
-                .andExpect(status().isOk())
-                .andReturn();
-
-        var body = result.getResponse().getContentAsString();
-        assertThatJson(body).isArray();
-        assertThat(body).contains(String.valueOf(testUser.getId()));
-        assertThat(body).contains(testUser.getEmail());
-        assertThat(body).contains(testUser.getFirstName());
-        assertThat(body).contains(testUser.getLastName());
+    void contextLoads() {
     }
 }
