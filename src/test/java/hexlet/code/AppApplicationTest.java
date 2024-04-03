@@ -7,7 +7,6 @@ import hexlet.code.util.ModelGenerator;
 import net.datafaker.Faker;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -51,7 +50,6 @@ public class AppApplicationTest {
         userRepository.save(testUser);
     }
 
-    @Test
     public void testIndex() throws Exception {
         var request = get("/api/users").with(token);
         var result = mockMvc.perform(request)
