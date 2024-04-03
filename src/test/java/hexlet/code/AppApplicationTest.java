@@ -48,8 +48,4 @@ public class AppApplicationTest {
                 .create();
         userRepository.save(testUser);
     }
-
-    @Test
-    void contextLoads() {
-    }
 }
