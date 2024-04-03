@@ -55,9 +55,9 @@ checkstyle {
 	toolVersion = "10.3.3"
 }
 
-test {
+tasks.test {
 	useJUnitPlatform()
-	finalizedBy jacocoTestReport
+	finalizedBy(tasks.jacocoTestReport)
 }
 
 java {
