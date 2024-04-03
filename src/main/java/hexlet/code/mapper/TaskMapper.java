@@ -2,12 +2,9 @@ package hexlet.code.mapper;
 
 import lombok.Getter;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
-import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
-import hexlet.code.model.Task;
 
 @Getter
 @Mapper(
