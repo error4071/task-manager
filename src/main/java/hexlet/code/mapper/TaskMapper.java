@@ -25,13 +25,17 @@ import org.mapstruct.MappingTarget;
 public abstract class TaskMapper {
     public abstract Task map(TaskCreateDTO dto);
 
-    @Mapping(target = "index", source = "index")
+    @Mapping(source = "assignee.id", target = "assigneeId")
+    @Mapping(source = "taskStatus.slug", target = "status")
+    @Mapping(source = "name", target = "title")
+    @Mapping(source = "description", target = "content")
     @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(target = "assignee_id", source = "assignee")
-    @Mapping(target = "title", source = "name")
-    @Mapping(target = "content", source = "description")
-    @Mapping(target = "status", source = "taskStaatus")
     public abstract TaskDTO map(Task model);
 
+    @Mapping(target = "assignee", source = "assigneeId")
+    @Mapping(target = "taskStatus.slug", source = "status")
+    @Mapping(target = "labels", source = "taskLabelIds")
+    @Mapping(target = "name", source = "title")
+    @Mapping(target = "description", source = "content")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
 }
