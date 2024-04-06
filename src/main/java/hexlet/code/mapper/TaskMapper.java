@@ -23,6 +23,15 @@ import org.mapstruct.MappingTarget;
 )
 
 public abstract class TaskMapper {
+
+    private final String defaultContent = "";
+
+    @Mapping(target = "assignee", source = "assigneeId")
+    @Mapping(target = "taskStatus.slug", source = "status")
+    @Mapping(target = "labels", source = "taskLabelIds")
+    @Mapping(target = "name", source = "title")
+    @Mapping(target = "description",
+            expression = "java(dto.getContent() == null ? getDefaultContent() : dto.getContent())")
     public abstract Task map(TaskCreateDTO dto);
 
     @Mapping(source = "assignee.id", target = "assigneeId")
