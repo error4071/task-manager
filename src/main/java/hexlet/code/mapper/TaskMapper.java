@@ -24,27 +24,27 @@ import org.mapstruct.MappingTarget;
 
 public abstract class TaskMapper {
 
-    private final String defaultContent = "";
-
-    @Mapping(target = "assignee", source = "assigneeId")
-    @Mapping(target = "taskStatus.slug", source = "status")
-    @Mapping(target = "labels", source = "taskLabelIds")
-    @Mapping(target = "name", source = "title")
-    @Mapping(target = "description",
-            expression = "java(dto.getContent() == null ? getDefaultContent() : dto.getContent())")
+    @Mapping(target = "index", source = "index")
+    @Mapping(target = "createdAt", source = "createdAt")
+    @Mapping(target = "assignee", source = "assignee")
+    @Mapping(target = "title", source = "name")
+    @Mapping(target = "content", source = "description")
+    @Mapping(target = "status", source = "taskStatus")
     public abstract Task map(TaskCreateDTO dto);
 
-    @Mapping(source = "assignee.id", target = "assigneeId")
-    @Mapping(source = "taskStatus.slug", target = "status")
-    @Mapping(source = "name", target = "title")
-    @Mapping(source = "description", target = "content")
+    @Mapping(target = "index", source = "index")
     @Mapping(target = "createdAt", source = "createdAt")
+    @Mapping(target = "assignee", source = "assignee")
+    @Mapping(target = "title", source = "name")
+    @Mapping(target = "content", source = "description")
+    @Mapping(target = "status", source = "taskStatus")
     public abstract TaskDTO map(Task model);
 
-    @Mapping(target = "assignee", source = "assigneeId")
-    @Mapping(target = "taskStatus.slug", source = "status")
-    @Mapping(target = "labels", source = "taskLabelIds")
-    @Mapping(target = "name", source = "title")
-    @Mapping(target = "description", source = "content")
+    @Mapping(target = "index", source = "index")
+    @Mapping(target = "createdAt", source = "createdAt")
+    @Mapping(target = "assignee", source = "assignee")
+    @Mapping(target = "title", source = "name")
+    @Mapping(target = "content", source = "description")
+    @Mapping(target = "status", source = "taskStatus")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
 }
