@@ -1,5 +1,6 @@
 package hexlet.code.mapper;
 
+import hexlet.code.model.Task;
 import lombok.Getter;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -15,4 +16,5 @@ import org.mapstruct.ReportingPolicy;
 )
 
 public abstract class TaskMapper {
+    public abstract Task map
 }
