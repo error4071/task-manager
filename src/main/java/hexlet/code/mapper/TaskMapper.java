@@ -1,11 +1,18 @@
 package hexlet.code.mapper;
 
+import hexlet.code.dto.TaskCreateDTO;
+import hexlet.code.dto.TaskDTO;
+import hexlet.code.dto.TaskUpdateDTO;
 import hexlet.code.model.Task;
+
 import lombok.Getter;
+
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
-import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.MappingTarget;
 
 @Getter
 @Mapper(
@@ -16,5 +23,15 @@ import org.mapstruct.ReportingPolicy;
 )
 
 public abstract class TaskMapper {
+    public abstract Task map(TaskCreateDTO dto);
 
+    @Mapping(target = "index", source = "index")
+    @Mapping(target = "createdAt", source = "createdAt")
+    @Mapping(target = "assignee_id", source = "assignee")
+    @Mapping(target = "title", source = "name")
+    @Mapping(target = "content", source = "description")
+    @Mapping(target = "status", source = "taskStaatus")
+    public abstract TaskDTO map(Task model);
+
+    public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
 }
