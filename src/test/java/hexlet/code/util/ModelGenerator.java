@@ -13,8 +13,10 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 public class ModelGenerator {
+
     private Model<User> userModel;
 
+    @Autowired
     private Faker faker;
 
     @PostConstruct
