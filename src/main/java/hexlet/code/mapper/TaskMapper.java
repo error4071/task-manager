@@ -16,5 +16,5 @@ import org.mapstruct.ReportingPolicy;
 )
 
 public abstract class TaskMapper {
-    public abstract Task map
+
 }
