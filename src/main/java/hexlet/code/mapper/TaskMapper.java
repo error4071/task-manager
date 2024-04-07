@@ -31,11 +31,11 @@ public abstract class TaskMapper {
             expression = "java(dto.getContent() == null ? getDefaultContent() : dto.getContent())")
     public abstract Task map(TaskCreateDTO dto);
 
-    @Mapping(target = "assignee.id", source = "assigneeId")
+    @Mapping(target = "assignee.id", source = "assignee")
     @Mapping(target = "title", source = "name")
     @Mapping(target = "content", source = "description")
     @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(target = "status", source = "taskStatus")
+    @Mapping(target = "status", source = "taskStatus.slug")
     public abstract TaskDTO map(Task model);
 
     @Mapping(target = "assignee", source = "assigneeId")
