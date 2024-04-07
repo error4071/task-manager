@@ -24,27 +24,23 @@ import org.mapstruct.MappingTarget;
 
 public abstract class TaskMapper {
 
-    @Mapping(target = "index", source = "index")
-    @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(target = "assignee", source = "assignee")
-    @Mapping(target = "title", source = "name")
+    @Mapping(target = "assignee", source = "assigneeId")
+    @Mapping(target = "name", source = "title")
     @Mapping(target = "content", source = "description")
-    @Mapping(target = "status", source = "taskStatus")
+    @Mapping(target = "taskStatus", source = "status")
     public abstract Task map(TaskCreateDTO dto);
 
-    @Mapping(target = "index", source = "index")
+    @Mapping(target = "assignee.id", source = "assigneeId")
+    @Mapping(target = "name", source = "title")
+    @Mapping(target = "description", source = "content")
     @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(target = "assignee", source = "assignee")
-    @Mapping(target = "title", source = "name")
-    @Mapping(target = "content", source = "description")
-    @Mapping(target = "status", source = "taskStatus")
+    @Mapping(target = "taskStatus", source = "status")
     public abstract TaskDTO map(Task model);
 
-    @Mapping(target = "index", source = "index")
-    @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(target = "assignee", source = "assignee")
-    @Mapping(target = "title", source = "name")
-    @Mapping(target = "content", source = "description")
-    @Mapping(target = "status", source = "taskStatus")
+    @Mapping(target = "assignee", source = "assigneeId")
+    @Mapping(target = "taskStatus", source = "status")
+    @Mapping(target = "name", source = "title")
+    @Mapping(target = "description", source = "content")
+    @Mapping(target = "taskStatus", source = "status")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
 }

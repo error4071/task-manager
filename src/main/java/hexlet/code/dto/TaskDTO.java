@@ -1,21 +1,19 @@
 package hexlet.code.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class TaskDTO {
 
     private Long id;
-    private String name;
     private Integer index;
-    private String description;
-    private String taskStatus;
-    private String assignee;
-    private LocalDate createdAt;
+    private Date createdAt;
+    private Long assigneeId;
+    private String title;
+    private String content;
+    private String status;
 }
