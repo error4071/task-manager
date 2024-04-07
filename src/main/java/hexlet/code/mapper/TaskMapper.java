@@ -32,7 +32,7 @@ public abstract class TaskMapper {
     public abstract Task map(TaskCreateDTO dto);
 
     @Mapping(target = "assignee.id", source = "assignee")
-    @Mapping(target = "name", source = "title")
+    @Mapping(target = "title", source = "name")
     @Mapping(target = "description", source = "content")
     @Mapping(target = "createdAt", source = "createdAt")
     @Mapping(target = "taskStatus", source = "status")
