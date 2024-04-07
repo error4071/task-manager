@@ -31,7 +31,7 @@ public abstract class TaskMapper {
             expression = "java(dto.getContent() == null ? getDefaultContent() : dto.getContent())")
     public abstract Task map(TaskCreateDTO dto);
 
-    @Mapping(target = "assignee.id", source = "assignee")
+    @Mapping(target = "assigneeId", source = "assignee.id")
     @Mapping(target = "title", source = "name")
     @Mapping(target = "content", source = "description")
     @Mapping(target = "createdAt", source = "createdAt")
