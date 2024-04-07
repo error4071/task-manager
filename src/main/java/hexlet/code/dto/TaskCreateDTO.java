@@ -21,5 +21,5 @@ public class TaskCreateDTO {
     private String content;
 
     @NotNull
-    private String taskStatus;
+    private String status;
 }
