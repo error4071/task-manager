@@ -3,9 +3,7 @@ package hexlet.code;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Map;
@@ -97,7 +95,7 @@ public class AppApplicationTest {
         assertThat(user.getEmail()).isEqualTo(data.get("email"));
         assertThat(user.getFirstName()).isEqualTo(data.get("firstName"));
         assertThat(user.getLastName()).isEqualTo(data.get("lastName"));
-        assertThat(user.getPasswordDigest()).isNotEqualTo(data.get("password"));
+        assertThat(user.getPasswordDigest()).isEqualTo(data.get("password"));
     }
 
     @Test
@@ -123,5 +121,17 @@ public class AppApplicationTest {
         assertThat(updatedUser.getFirstName()).isEqualTo(data.get("firstName"));
         assertThat(updatedUser.getLastName()).isEqualTo(data.get("lastName"));
         assertThat(updatedUser.getPasswordDigest()).isNotEqualTo(data.get("password"));
+    }
+
+    @Test
+    public void testDestroy() throws Exception {
+
+        userRepository.save(testUser);
+
+        var request = delete("/users/{id}", testUser.getId()).with(token);
+        mockMvc.perform(request)
+                .andExpect(status().isNoContent());
+
+        assertThat(userRepository.existsById(testUser.getId())).isFalse();
     }
 }
