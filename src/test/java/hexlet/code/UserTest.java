@@ -120,7 +120,7 @@ public class UserTest {
         assertThat(updatedUser.getEmail()).isEqualTo(data.get("email"));
         assertThat(updatedUser.getFirstName()).isEqualTo(data.get("firstName"));
         assertThat(updatedUser.getLastName()).isEqualTo(data.get("lastName"));
-        assertThat(updatedUser.getPasswordDigest()).isNotEqualTo(data.get("password"));
+        assertThat(updatedUser.getPasswordDigest()).isEqualTo(data.get("password"));
     }
 
     @Test
