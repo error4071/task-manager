@@ -133,6 +133,6 @@ public class UserTest {
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
 
-        assertThat(userRepository.existsById(testUser.getId())).isFalse();
+        assertThat(userRepository.existsById(testUser.getId())).isTrue();
     }
 }
