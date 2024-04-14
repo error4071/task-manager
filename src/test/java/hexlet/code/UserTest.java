@@ -27,7 +27,7 @@ import net.datafaker.Faker;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AppApplicationTest {
+public class UserTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -129,7 +129,7 @@ public class AppApplicationTest {
         userRepository.save(testUser);
 
         var request = delete("/users/{id}", testUser.getId()).with(token);
-        
+
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
 

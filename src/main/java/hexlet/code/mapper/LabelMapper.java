@@ -1,9 +1,9 @@
 package hexlet.code.mapper;
 
-import hexlet.code.dto.User.UserCreateDTO;
-import hexlet.code.dto.User.UserDTO;
-import hexlet.code.dto.User.UserUpdateDTO;
-import hexlet.code.model.User;
+import hexlet.code.dto.Label.LabelCreateDTO;
+import hexlet.code.dto.Label.LabelDTO;
+import hexlet.code.dto.Label.LabelUpdateDTO;
+import hexlet.code.model.Label;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,21 +12,20 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(
+@Mapper (
         uses = {JsonNullableMapper.class, ReferenceMapper.class},
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         componentModel = MappingConstants.ComponentModel.SPRING,
         unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 
-public abstract class UserMapper {
+public abstract class LabelMapper {
 
-    @Mapping(target = "passwordDigest", source = "password")
-    public abstract User map(UserCreateDTO dto);
+    @Mapping(target = "slug", source = "slug")
+    public abstract Label map(LabelCreateDTO dto);
 
     @Mapping(target = "createdAt", source = "createdAt")
-    public abstract UserDTO map(User model);
+    public abstract LabelDTO map(Label model);
 
-    @Mapping(target = "passwordDigest", source = "password")
-    public abstract void update(UserUpdateDTO dto, @MappingTarget User model);
+    public abstract void update(LabelUpdateDTO dto, @MappingTarget Label model);
 }
