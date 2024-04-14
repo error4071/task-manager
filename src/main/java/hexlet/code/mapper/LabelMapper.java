@@ -21,7 +21,7 @@ import org.mapstruct.ReportingPolicy;
 
 public abstract class LabelMapper {
 
-    @Mapping(target = "slug", source = "slug")
+    @Mapping(target = "name", source = "name")
     public abstract Label map(LabelCreateDTO dto);
 
     @Mapping(target = "createdAt", source = "createdAt")

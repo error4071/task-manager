@@ -7,7 +7,6 @@ import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.LabelMapper;
 import hexlet.code.repository.LabelRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.autoconfigure.web.servlet.JspTemplateAvailabilityProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
