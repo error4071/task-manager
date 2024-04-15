@@ -9,8 +9,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Map;
-
 import hexlet.code.dto.TaskStatus.TaskStatusUpdateDTO;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.TaskStatus;
@@ -50,10 +48,12 @@ public class TaskStatusesTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
     private JwtRequestPostProcessor token;
 
+    @Autowired
     private TaskStatus testTaskStatus;
-
+    @Autowired
     private TaskStatusMapper taskStatusMapper;
 
     @BeforeEach
