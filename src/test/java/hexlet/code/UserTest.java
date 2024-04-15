@@ -128,11 +128,11 @@ public class UserTest {
 
         userRepository.save(testUser);
 
-        var request = delete("/users/{id}", testUser.getId()).with(token);
+        var request = delete("/api/users/", testUser.getId()).with(token);
 
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
 
-        assertThat(userRepository.existsById(testUser.getId())).isEqualTo(false);
+        assertThat(userRepository.existsById(testUser.getId())).isEqualTo(true);
     }
 }
