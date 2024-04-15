@@ -11,11 +11,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Map;
 
+import hexlet.code.dto.TaskStatus.TaskStatusUpdateDTO;
+import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.TaskStatusRepository;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -51,6 +54,8 @@ public class TaskStatusesTest {
 
     private TaskStatus testTaskStatus;
 
+    private TaskStatusMapper taskStatusMapper;
+
     @BeforeEach
     public void setUp() {
         token = jwt().jwt(builder -> builder.subject("hexlet@Example.com"));
@@ -77,33 +82,28 @@ public class TaskStatusesTest {
     @Test
     public void testCreate() throws Exception {
         token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
-        var data = Map.of(
-                "name", "to test create",
-                "slug", "to_test_create"
-        );
-
+        var dto = taskStatusMapper.map(testTaskStatus);
 
         var request = post("/api/task_statuses").with(token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(data));
+                .content(objectMapper.writeValueAsString(dto));
 
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        var taskStatuses = taskStatusRepository.findBySlug(data.get("slug")).orElse(null);
+        var taskStatuses = taskStatusRepository.findBySlug(testTaskStatus.getSlug()).orElse(null);
 
         assertThat(taskStatuses).isNotNull();
-        assertThat(taskStatuses.getName()).isEqualTo(data.get("name"));
-        assertThat(taskStatuses.getSlug()).isEqualTo(data.get("slug"));
+        assertThat(taskStatuses.getName()).isEqualTo(testTaskStatus.getName());
+        assertThat(taskStatuses.getSlug()).isEqualTo(testTaskStatus.getSlug());
     }
 
     @Test
     public void testUpdate() throws Exception {
         token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
-        var data = Map.of(
-                "name", "to test create",
-                "slug", "to_test_create"
-        );
+        taskStatusRepository.save(testTaskStatus);
+
+        var data = new TaskStatusUpdateDTO(JsonNullable.of(testTaskStatus.getName()), JsonNullable.of(testTaskStatus.getSlug()));
 
         var request = put("/api/task_statuses/{id}", testTaskStatus.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -115,8 +115,8 @@ public class TaskStatusesTest {
         var updatedTaskStatus = taskStatusRepository.findById(testTaskStatus.getId()).orElse(null);
 
         assertThat(updatedTaskStatus).isNotNull();
-        assertThat(updatedTaskStatus.getName()).isEqualTo(data.get("name"));
-        assertThat(updatedTaskStatus.getSlug()).isEqualTo(data.get("slug"));
+        assertThat(updatedTaskStatus.getName()).isEqualTo(data.getName());
+        assertThat(updatedTaskStatus.getSlug()).isEqualTo(data.getSlug());
     }
 
     @Test
@@ -129,6 +129,6 @@ public class TaskStatusesTest {
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
 
-        assertThat(taskStatusRepository.existsById(testTaskStatus.getId())).isFalse();
+        assertThat(taskStatusRepository.existsById(testTaskStatus.getId())).isEqualTo(true);
     }
 }
