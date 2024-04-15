@@ -48,12 +48,10 @@ public class TaskStatusesTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Autowired
     private JwtRequestPostProcessor token;
 
-    @Autowired
     private TaskStatus testTaskStatus;
-    @Autowired
+
     private TaskStatusMapper taskStatusMapper;
 
     @BeforeEach
