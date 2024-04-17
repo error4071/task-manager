@@ -11,11 +11,10 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class LabelCreateDTO {
-    @Column(unique=true)
+    @Column(unique = true)
     @NotBlank
     @Size(min = 3, max = 1000)
     private String name;
 
     private LocalDate createdAt;
-
 }
