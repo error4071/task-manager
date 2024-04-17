@@ -50,6 +50,7 @@ public class UserTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
     private JwtRequestPostProcessor token;
 
     private User testUser;
