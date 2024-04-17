@@ -92,7 +92,7 @@ public class UserTest {
         MockHttpServletRequestBuilder request = post("/api/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(data)
-                        .with(token);
+                .with(token);
 
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
@@ -117,7 +117,7 @@ public class UserTest {
                 userUpdateDTO.setEmail(JsonNullable.of(FAKER.internet().emailAddress()));
                 userUpdateDTO.setPassword(JsonNullable.of(FAKER.internet().password(3, 12)));
 
-                MockHttpServletRequestBuilder request = put("/api/users/{id}", testUser.getId())
+        MockHttpServletRequestBuilder request = put("/api/users/{id}", testUser.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userUpdateDTO))
                 .with(SecurityMockMvcRequestPostProcessors.user(testUser.getUsername()));
@@ -131,9 +131,8 @@ public class UserTest {
 
         User user = updatedUser.get();
 
-        assertThat(user).isNotNull();
-        assertThat(user.getEmail()).isEqualTo(userUpdateDTO.getEmail());;
-        assertThat(user.getPasswordDigest()).isEqualTo(userUpdateDTO.getPassword());
+        assertThat(user.getEmail()).isEqualTo(userUpdateDTO.getEmail().get());
+        assertThat(user.getPasswordDigest()).isEqualTo(userUpdateDTO.getPassword().get());
     }
 
     @Test
