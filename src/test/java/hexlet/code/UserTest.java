@@ -36,12 +36,10 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserTest {
+    private static final Faker FAKER = new Faker();
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private Faker faker;
 
     @Autowired
     private UserRepository userRepository;
@@ -84,10 +82,10 @@ public class UserTest {
     public void testCreate() throws Exception {
         UserCreateDTO userCreateDTO = new UserCreateDTO();
 
-                userCreateDTO.setEmail(faker.internet().emailAddress());
-                userCreateDTO.setFirstName(faker.name().firstName());
-                userCreateDTO.setLastName(faker.name().lastName());
-                userCreateDTO.setPassword(faker.internet().password(3, 12));
+                userCreateDTO.setEmail(FAKER.internet().emailAddress());
+                userCreateDTO.setFirstName(FAKER.name().firstName());
+                userCreateDTO.setLastName(FAKER.name().lastName());
+                userCreateDTO.setPassword(FAKER.internet().password(3, 12));
 
                 String data = objectMapper.writeValueAsString(userCreateDTO);
 
@@ -116,8 +114,8 @@ public class UserTest {
         userRepository.save(testUser);
         UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
 
-                userUpdateDTO.setEmail(JsonNullable.of(faker.internet().emailAddress()));
-                userUpdateDTO.setPassword(JsonNullable.of(faker.internet().password(3, 12)));
+                userUpdateDTO.setEmail(JsonNullable.of(FAKER.internet().emailAddress()));
+                userUpdateDTO.setPassword(JsonNullable.of(FAKER.internet().password(3, 12)));
 
                 MockHttpServletRequestBuilder request = put("/api/users/{id}", testUser.getId())
                 .contentType(MediaType.APPLICATION_JSON)
