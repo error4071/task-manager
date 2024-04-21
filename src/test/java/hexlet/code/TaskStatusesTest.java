@@ -49,7 +49,6 @@ public class TaskStatusesTest {
 
     private TaskStatusMapper taskStatusMapper;
 
-    @Bean
     public Faker getFaker() {
         return new Faker();
     }
