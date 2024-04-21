@@ -40,7 +40,6 @@ public class TaskController {
 
     @GetMapping("/tasks")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@userUtils.isAuthor(#id)")
     public List<TaskDTO> index() {
         var task = taskRepository.findAll();
         return task.stream()
@@ -50,7 +49,6 @@ public class TaskController {
 
     @GetMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@userUtils.isAuthor(#id)")
     public TaskDTO show(@PathVariable Long id) {
         var task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found"));
@@ -60,7 +58,6 @@ public class TaskController {
 
     @PostMapping("/tasks")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@userUtils.isAuthor(#id)")
     public TaskDTO create(@RequestBody @Valid TaskCreateDTO taskCreateDTO) {
         var task = taskMapper.map(taskCreateDTO);
         taskRepository.save(task);
@@ -70,7 +67,6 @@ public class TaskController {
 
     @PutMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@userUtils.isAuthor(#id)")
     public TaskDTO update(@PathVariable Long id, @RequestBody TaskUpdateDTO taskUpdateDTO) {
         return taskService.update(id, taskUpdateDTO);
     }

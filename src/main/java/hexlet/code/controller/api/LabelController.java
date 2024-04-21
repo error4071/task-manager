@@ -40,7 +40,6 @@ public class LabelController {
 
     @GetMapping("/labels")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@userUtils.isAuthor(#id)")
     public List<LabelDTO> index() {
         var label = labelRepository.findAll();
         return label.stream()
@@ -50,7 +49,6 @@ public class LabelController {
 
     @GetMapping("/labels/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@userUtils.isAuthor(#id)")
     public LabelDTO show(@PathVariable Long id) {
         var labels = labelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Label with id " + id + " not found"));
@@ -60,7 +58,6 @@ public class LabelController {
 
     @PostMapping("/labels")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@userUtils.isAuthor(#id)")
     public LabelDTO create(@RequestBody @Valid LabelCreateDTO labelCreateDTO) {
         var label = labelMapper.map(labelCreateDTO);
         labelRepository.save(label);
@@ -70,7 +67,6 @@ public class LabelController {
 
     @PutMapping("/labels/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@userUtils.isAuthor(#id)")
     public LabelDTO update(@PathVariable Long id, @RequestBody LabelUpdateDTO labelUpdateDTO) {
         return labelService.update(id, labelUpdateDTO);
     }
