@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,11 +40,14 @@ public class TaskStatusController {
     private TaskStatusService taskStatusService;
 
     @GetMapping("/task_statuses")
-    public List<TaskStatusDTO> index() {
+    ResponseEntity<List<TaskStatusDTO>> index() {
         var taskStatuses = taskStatusRepository.findAll();
-        return taskStatuses.stream()
+        var result =  taskStatuses.stream()
                 .map(x -> taskStatusMapper.map(x))
                 .toList();
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(taskStatuses.size()))
+                .body(result);
     }
 
     @GetMapping("/task_statuses/{id}")
