@@ -1,15 +1,7 @@
 spring:
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-datasource:
-  default: ${APP_ENV}
-  production:
+  datasource:
+    url: ${JDBC_DATABASE_URL}
     username: ${JDBC_DATABASE_USERNAME}
     password: ${JDBC_DATABASE_PASSWORD}
-    url: ${JDBC_DATABASE_URL}
 
-ebean:
-  migration:
-    run: true
+

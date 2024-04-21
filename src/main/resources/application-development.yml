@@ -1,12 +1,9 @@
 spring:
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
   datasource:
+      url: "jdbc:h2:./database"
       username: hexlet@example.com
       password: qwerty
-      url: "jdbc:h2:./database"
+
 
   h2:
     console:

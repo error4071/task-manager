@@ -52,9 +52,9 @@ public class TaskController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("@userUtils.isAuthor(#id)")
     public TaskDTO show(@PathVariable Long id) {
-        var tasks = taskRepository.findById(id)
+        var task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found"));
-        var taskDto = taskMapper.map(tasks);
+        var taskDto = taskMapper.map(task);
         return taskDto;
     }
 

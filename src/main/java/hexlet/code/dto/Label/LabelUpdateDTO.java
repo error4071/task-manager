@@ -1,6 +1,8 @@
 package hexlet.code.dto.Label;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class LabelUpdateDTO {
 
-    @NotBlank
+    @NotNull
+    @Size(min = 3, max = 1000)
     private JsonNullable<String> name;
-
-    private JsonNullable<LocalDate> createdAt;
 }
