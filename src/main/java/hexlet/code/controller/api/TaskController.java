@@ -40,7 +40,7 @@ public class TaskController {
 
     @GetMapping("/tasks")
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity <List<TaskDTO>> index() {
+    ResponseEntity<List<TaskDTO>> index() {
         var task = taskRepository.findAll();
         var result =  task.stream()
                 .map(x -> taskMapper.map(x))

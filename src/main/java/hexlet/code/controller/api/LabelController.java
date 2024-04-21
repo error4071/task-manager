@@ -40,7 +40,7 @@ public class LabelController {
 
     @GetMapping("/labels")
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity <List<LabelDTO>> index() {
+    ResponseEntity<List<LabelDTO>> index() {
         var label = labelRepository.findAll();
         var result =  label.stream()
                 .map(x -> labelMapper.map(x))
