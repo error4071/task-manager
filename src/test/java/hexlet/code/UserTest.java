@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Map;
 import java.util.Optional;
 
 import hexlet.code.dto.User.UserCreateDTO;
@@ -113,28 +112,28 @@ public class UserTest {
 
     @Test
     public void testUpdate() throws Exception {
-        var data = Map.of(
-                "email", FAKER.internet().emailAddress(),
-                "firstName", FAKER.name().firstName(),
-                "lastName", FAKER.name().lastName(),
-                "password", FAKER.internet().password(3, 12)
-        );
+        userRepository.save(testUser);
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
 
-        var jwt = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
-        var request = put("/api/users/{id}", testUser.getId()).with(jwt)
+                userUpdateDTO.setEmail(JsonNullable.of(FAKER.internet().emailAddress()));
+                userUpdateDTO.setPassword(JsonNullable.of(FAKER.internet().password(3, 12)));
+
+        MockHttpServletRequestBuilder request = put("/api/users/{id}", testUser.getId())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(data));
+                .content(objectMapper.writeValueAsString(userUpdateDTO))
+                .with(SecurityMockMvcRequestPostProcessors.user(testUser.getUsername()));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk());
 
-        var updatedUser = userRepository.findById(testUser.getId()).orElse(null);
+        Optional<User> updatedUser = userRepository.findById(testUser.getId());
 
-        assertThat(updatedUser).isNotNull();
-        assertThat(updatedUser.getEmail()).isEqualTo(data.get("email"));
-        assertThat(updatedUser.getFirstName()).isEqualTo(data.get("firstName"));
-        assertThat(updatedUser.getLastName()).isEqualTo(data.get("lastName"));
-        assertThat(updatedUser.getPasswordDigest()).isNotEqualTo(data.get("password"));
+        assertThat(updatedUser.isPresent()).isTrue();
+
+        User user = updatedUser.get();
+
+        assertThat(user.getEmail()).isEqualTo(userUpdateDTO.getEmail().get());
+        assertThat(user.getPasswordDigest()).isNotEqualTo(userUpdateDTO.getPassword().get());
     }
 
     @Test

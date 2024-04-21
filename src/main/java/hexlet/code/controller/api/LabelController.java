@@ -36,7 +36,7 @@ public class LabelController {
     private LabelMapper labelMapper;
 
     @Autowired
-    LabelService labelService;
+    private LabelService labelService;
 
     @GetMapping("/labels")
     @ResponseStatus(HttpStatus.OK)
