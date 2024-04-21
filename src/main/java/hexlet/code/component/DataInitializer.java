@@ -60,7 +60,7 @@ public class DataInitializer implements ApplicationRunner {
             String data = arr[0].substring(0, 1).toUpperCase() + arr[0].substring(1);
             var name = new StringBuilder(data);
 
-            if(arr.length > 1) {
+            if (arr.length > 1) {
                 for (var element: arr) {
                     name.append(" ").append(element);
                 }
