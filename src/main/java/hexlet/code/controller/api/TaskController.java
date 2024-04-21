@@ -11,7 +11,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,11 +40,15 @@ public class TaskController {
 
     @GetMapping("/tasks")
     @ResponseStatus(HttpStatus.OK)
-    public List<TaskDTO> index() {
+    ResponseEntity <List<TaskDTO>> index() {
         var task = taskRepository.findAll();
-        return task.stream()
+        var result =  task.stream()
                 .map(x -> taskMapper.map(x))
                 .toList();
+
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(task.size()))
+                .body(result);
     }
 
     @GetMapping("/tasks/{id}")

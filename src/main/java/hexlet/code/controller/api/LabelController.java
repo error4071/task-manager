@@ -11,7 +11,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,11 +40,15 @@ public class LabelController {
 
     @GetMapping("/labels")
     @ResponseStatus(HttpStatus.OK)
-    public List<LabelDTO> index() {
+    ResponseEntity <List<LabelDTO>> index() {
         var label = labelRepository.findAll();
-        return label.stream()
+        var result =  label.stream()
                 .map(x -> labelMapper.map(x))
                 .toList();
+
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(label.size()))
+                .body(result);
     }
 
     @GetMapping("/labels/{id}")
