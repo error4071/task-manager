@@ -71,7 +71,7 @@ public class LabelController {
         return labelService.update(id, labelUpdateDTO);
     }
 
-    @DeleteMapping("//labels/{id}")
+    @DeleteMapping("/labels/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         labelRepository.deleteById(id);
