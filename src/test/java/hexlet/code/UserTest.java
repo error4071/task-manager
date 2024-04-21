@@ -133,7 +133,7 @@ public class UserTest {
         User user = updatedUser.get();
 
         assertThat(user.getEmail()).isEqualTo(userUpdateDTO.getEmail().get());
-        assertThat(user.getPasswordDigest()).isNotEqualTo(userUpdateDTO.getPassword().get());
+        assertThat(user.getPasswordDigest()).isNotEqualTo(userUpdateDTO.getPassword());
     }
 
     @Test
