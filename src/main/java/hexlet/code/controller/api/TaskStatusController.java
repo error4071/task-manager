@@ -8,6 +8,7 @@ import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.service.TaskStatusService;
 
+import hexlet.code.utils.UserUtils;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class TaskStatusController {
 
     @Autowired
     private TaskStatusService taskStatusService;
+
+    @Autowired
+    private UserUtils userUtils;
 
     @GetMapping("/task_statuses")
     ResponseEntity<List<TaskStatusDTO>> index() {

@@ -33,7 +33,6 @@ import hexlet.code.util.ModelGenerator;
 import net.datafaker.Faker;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserTest {
