@@ -45,6 +45,7 @@ public class TaskStatusController {
     private UserUtils userUtils;
 
     @GetMapping("/task_statuses")
+    @ResponseStatus(HttpStatus.OK)
     ResponseEntity<List<TaskStatusDTO>> index() {
         var taskStatuses = taskStatusRepository.findAll();
         var result =  taskStatuses.stream()
@@ -56,6 +57,7 @@ public class TaskStatusController {
     }
 
     @GetMapping("/task_statuses/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public TaskStatusDTO show(@PathVariable Long id) {
         var taskStatuses = taskStatusRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task status with id " + " not found"));
@@ -65,6 +67,7 @@ public class TaskStatusController {
 
     @PostMapping("/task_statuses")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("@userUtils.isUser(#id)")
     public TaskStatusDTO create(@RequestBody @Valid TaskStatusCreateDTO taskStatusCreateDTO) {
         var taskStatuses = taskStatusMapper.map(taskStatusCreateDTO);
         taskStatusRepository.save(taskStatuses);

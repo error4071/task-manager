@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +54,7 @@ public class TaskController {
 
     @GetMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@userUtils.isUser(#id)")
     public TaskDTO show(@PathVariable Long id) {
         var task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found"));
@@ -62,6 +64,7 @@ public class TaskController {
 
     @PostMapping("/tasks")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("@userUtils.isUser(#id)")
     public TaskDTO create(@RequestBody @Valid TaskCreateDTO taskCreateDTO) {
         var task = taskMapper.map(taskCreateDTO);
         taskRepository.save(task);
@@ -71,6 +74,7 @@ public class TaskController {
 
     @PutMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@userUtils.isUser(#id)")
     public TaskDTO update(@PathVariable Long id, @RequestBody TaskUpdateDTO taskUpdateDTO) {
         return taskService.update(id, taskUpdateDTO);
     }

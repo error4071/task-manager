@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class LabelController {
 
     @GetMapping("/labels")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@userUtils.isUser(#id)")
     ResponseEntity<List<LabelDTO>> index(@RequestParam(defaultValue = "10") Integer limit) {
         var label = labelRepository.findAll();
         var result =  label.stream()
@@ -45,6 +47,7 @@ public class LabelController {
 
     @GetMapping("/labels/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@userUtils.isUser(#id)")
     public LabelDTO show(@PathVariable Long id) {
         var labels = labelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Label with id " + id + " not found"));
@@ -54,6 +57,7 @@ public class LabelController {
 
     @PostMapping("/labels")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("@userUtils.isUser(#id)")
     public LabelDTO create(@RequestBody @Valid LabelCreateDTO labelCreateDTO) {
         var label = labelMapper.map(labelCreateDTO);
         labelRepository.save(label);
@@ -63,12 +67,14 @@ public class LabelController {
 
     @PutMapping("/labels/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@userUtils.isUser(#id)")
     public LabelDTO update(@PathVariable Long id, @RequestBody LabelUpdateDTO labelUpdateDTO) {
         return labelService.update(id, labelUpdateDTO);
     }
 
     @DeleteMapping("/labels/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("@userUtils.isUser(#id)")
     public void delete(@PathVariable Long id) {
         labelRepository.deleteById(id);
     }
