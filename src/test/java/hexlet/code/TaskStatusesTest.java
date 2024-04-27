@@ -109,8 +109,6 @@ public class TaskStatusesTest {
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
 
-        var taskStatusTest = taskStatusRepository.findBySlug(testTaskStatus.getSlug());
-
-        assertThat(taskStatusTest.isEmpty()).isEqualTo(true);
+        assertThat(taskStatusRepository.existsById(testTaskStatus.getId())).isEqualTo(false);
     }
 }
