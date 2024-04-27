@@ -67,7 +67,6 @@ public class TaskStatusController {
 
     @PostMapping("/task_statuses")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@userUtils.isUser(#id)")
     public TaskStatusDTO create(@RequestBody @Valid TaskStatusCreateDTO taskStatusCreateDTO) {
         var taskStatuses = taskStatusMapper.map(taskStatusCreateDTO);
         taskStatusRepository.save(taskStatuses);
@@ -77,14 +76,12 @@ public class TaskStatusController {
 
     @PutMapping("/task_statuses/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@userUtils.isUser(#id)")
     public TaskStatusDTO update(@PathVariable Long id, @RequestBody TaskStatusUpdateDTO taskStatusUpdateDTO) {
         return taskStatusService.update(id, taskStatusUpdateDTO);
     }
 
     @DeleteMapping("/task_statuses/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("@userUtils.isUser(#id)")
     public void delete(@PathVariable Long id) {
         taskStatusRepository.deleteById(id);
     }

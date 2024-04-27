@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class TaskFilterDTO {
     private String titleCont;
-    private Integer id;
-    private String slug;
+    private Integer assigneeId;
+    private String status;
     private Integer labelId;
 }

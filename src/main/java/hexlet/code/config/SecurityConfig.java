@@ -29,7 +29,6 @@ public class SecurityConfig {
     private JwtDecoder jwtDecoder;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private CustomUserDetailsService userService;
 

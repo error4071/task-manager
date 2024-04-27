@@ -54,7 +54,6 @@ public class TaskController {
 
     @GetMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@userUtils.isUser(#id)")
     public TaskDTO show(@PathVariable Long id) {
         var task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found"));
@@ -64,7 +63,6 @@ public class TaskController {
 
     @PostMapping("/tasks")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@userUtils.isUser(#id)")
     public TaskDTO create(@RequestBody @Valid TaskCreateDTO taskCreateDTO) {
         var task = taskMapper.map(taskCreateDTO);
         taskRepository.save(task);
@@ -81,6 +79,7 @@ public class TaskController {
 
     @DeleteMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("@userUtils.isUser(#id)")
     public void delete(@PathVariable Long id) {
         taskRepository.deleteById(id);
     }
