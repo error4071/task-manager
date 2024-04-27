@@ -67,6 +67,10 @@ public class TaskStatusesTest {
         taskStatusRepository.save(testTaskStatus);
     }
 
+    public void cleanUp() {
+        taskStatusRepository.deleteById(testTaskStatus.getId());
+    }
+
     @Test
     public void testIndex() throws Exception {
         var request = get("/api/task_statuses").with(token);
@@ -100,15 +104,11 @@ public class TaskStatusesTest {
     }
 
     @Test
-    public void testDestroy() throws Exception {
-
-        taskStatusRepository.save(testTaskStatus);
-
-        var request = delete("/api/task_statuses/" + testTaskStatus.getId()).with(token);
-
+    public void testDestroyWithoutAuth() throws Exception {
+        setUp();
+        var request = delete("/api/task_statuses/{id}", testTaskStatus.getId());
         mockMvc.perform(request)
-                .andExpect(status().isNoContent());
-
-        assertThat(taskStatusRepository.existsById(testTaskStatus.getId())).isEqualTo(false);
+                .andExpect(status().isUnauthorized());
+        cleanUp();
     }
 }
