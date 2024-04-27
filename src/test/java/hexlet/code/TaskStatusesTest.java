@@ -3,14 +3,13 @@ package hexlet.code;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import hexlet.code.dto.TaskStatus.TaskStatusCreateDTO;
-import hexlet.code.dto.User.UserCreateDTO;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.TaskStatus;
-import hexlet.code.model.User;
 import hexlet.code.repository.TaskStatusRepository;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +25,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hexlet.code.util.ModelGenerator;
 import net.datafaker.Faker;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.Optional;
 
@@ -111,7 +109,8 @@ public class TaskStatusesTest {
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
 
-        Optional<TaskStatus> userOptional = taskStatusRepository.findBySlug(testTaskStatus.getSlug());
-        assertThat(userOptional.isEmpty()).isEqualTo(true);
+        var taskStatusTest = taskStatusRepository.findBySlug(testTaskStatus.getSlug());
+
+        assertThat(taskStatusTest.isEmpty()).isEqualTo(true);
     }
 }
