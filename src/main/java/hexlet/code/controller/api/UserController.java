@@ -9,7 +9,6 @@ import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
 import hexlet.code.utils.JWTUtils;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.servlet.annotation.HttpConstraint;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
