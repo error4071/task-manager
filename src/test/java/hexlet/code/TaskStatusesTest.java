@@ -103,8 +103,6 @@ public class TaskStatusesTest {
     @Test
     public void testDestroy() throws Exception {
 
-        taskStatusRepository.save(testTaskStatus);
-
         var request = delete("/api/task_statuses/{id}", testTaskStatus.getId()).with(token);
 
         mockMvc.perform(request)
