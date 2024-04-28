@@ -63,25 +63,6 @@ public class TaskTest {
 
     private TaskMapper taskMapper;
 
-    @BeforeEach
-    public void setUp() {
-        token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
-
-        var user = userRepository.findByEmail("hexlet@example.com")
-                .orElseThrow(() -> new RuntimeException("User doesn't exist"));
-
-        var taskStatus = taskStatusRepository.findBySlug("draft")
-                .orElseThrow(() -> new RuntimeException("TaskStatus doesn't exist"));
-
-        var label = labelRepository.findByName("feature")
-                .orElseThrow(() -> new RuntimeException("Label doesn't exist"));
-
-        testTask = Instancio.of(modelGenerator.getTaskModel()).create();
-        testTask.setAssignee(user);
-        testTask.setTaskStatus(taskStatus);
-        testTask.setLabelSet(Set.of(label));
-        taskRepository.save(testTask);
-    }
 
     @Test
     public void testIndex() throws Exception {
