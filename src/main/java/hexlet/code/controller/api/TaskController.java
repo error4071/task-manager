@@ -7,6 +7,7 @@ import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.service.TaskService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ public class TaskController {
 
     @GetMapping("/tasks")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Show all tasks")
     ResponseEntity<List<TaskDTO>> index() {
         var task = taskRepository.findAll();
         var result =  task.stream()
@@ -54,6 +56,7 @@ public class TaskController {
 
     @GetMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Show task  by id")
     public TaskDTO show(@PathVariable Long id) {
         var task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found"));
@@ -63,6 +66,7 @@ public class TaskController {
 
     @PostMapping("/tasks")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create new task")
     public TaskDTO create(@RequestBody @Valid TaskCreateDTO taskCreateDTO) {
         var task = taskMapper.map(taskCreateDTO);
         taskRepository.save(task);
@@ -73,6 +77,7 @@ public class TaskController {
     @PutMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("@userUtils.isUser(#id)")
+    @Operation(summary = "Update status")
     public TaskDTO update(@PathVariable Long id, @RequestBody TaskUpdateDTO taskUpdateDTO) {
         return taskService.update(id, taskUpdateDTO);
     }
@@ -80,6 +85,7 @@ public class TaskController {
     @DeleteMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("@userUtils.isUser(#id)")
+    @Operation(summary = "Delete status")
     public void delete(@PathVariable Long id) {
         taskRepository.deleteById(id);
     }

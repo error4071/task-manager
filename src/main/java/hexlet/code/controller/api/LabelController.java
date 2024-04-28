@@ -7,6 +7,7 @@ import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.LabelMapper;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.service.LabelService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ public class LabelController {
 
     @GetMapping("/labels")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Show all labels")
     ResponseEntity<List<LabelDTO>> index(@RequestParam(defaultValue = "10") Integer limit) {
         var label = labelRepository.findAll();
         var result =  label.stream()
@@ -53,6 +55,7 @@ public class LabelController {
     }
 
     @GetMapping("/labels/{id}")
+    @Operation(summary = "Show label by id")
     @ResponseStatus(HttpStatus.OK)
     public LabelDTO show(@PathVariable Long id) {
         var labels = labelRepository.findById(id)
@@ -63,6 +66,7 @@ public class LabelController {
 
     @PostMapping("/labels")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create new label")
     public LabelDTO create(@RequestBody @Valid LabelCreateDTO labelCreateDTO) {
         var label = labelMapper.map(labelCreateDTO);
         labelRepository.save(label);
@@ -72,12 +76,14 @@ public class LabelController {
 
     @PutMapping("/labels/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Update label")
     public LabelDTO update(@PathVariable Long id, @RequestBody LabelUpdateDTO labelUpdateDTO) {
         return labelService.update(id, labelUpdateDTO);
     }
 
     @DeleteMapping("/labels/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete label")
     public void delete(@PathVariable Long id) {
         labelRepository.deleteById(id);
     }

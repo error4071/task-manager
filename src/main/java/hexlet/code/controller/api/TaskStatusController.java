@@ -9,6 +9,7 @@ import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.service.TaskStatusService;
 
 import hexlet.code.utils.UserUtils;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class TaskStatusController {
 
     @GetMapping("/task_statuses")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Show all task statuses")
     ResponseEntity<List<TaskStatusDTO>> index() {
         var taskStatuses = taskStatusRepository.findAll();
         var result =  taskStatuses.stream()
@@ -57,6 +59,7 @@ public class TaskStatusController {
 
     @GetMapping("/task_statuses/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Show task status by id")
     public TaskStatusDTO show(@PathVariable Long id) {
         var taskStatuses = taskStatusRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task status with id " + " not found"));
@@ -66,6 +69,7 @@ public class TaskStatusController {
 
     @PostMapping("/task_statuses")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create new task status")
     public TaskStatusDTO create(@RequestBody @Valid TaskStatusCreateDTO taskStatusCreateDTO) {
         var taskStatuses = taskStatusMapper.map(taskStatusCreateDTO);
         taskStatusRepository.save(taskStatuses);
@@ -75,12 +79,14 @@ public class TaskStatusController {
 
     @PutMapping("/task_statuses/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Update task status")
     public TaskStatusDTO update(@PathVariable Long id, @RequestBody TaskStatusUpdateDTO taskStatusUpdateDTO) {
         return taskStatusService.update(id, taskStatusUpdateDTO);
     }
 
     @DeleteMapping("/task_statuses/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete task status")
     public void delete(@PathVariable Long id) {
         taskStatusRepository.deleteById(id);
     }

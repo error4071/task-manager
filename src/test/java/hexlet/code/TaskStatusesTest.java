@@ -26,8 +26,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.util.ModelGenerator;
 import net.datafaker.Faker;
 
-import java.util.Optional;
-
 @SpringBootTest
 @AutoConfigureMockMvc
 public class TaskStatusesTest {
@@ -55,9 +53,6 @@ public class TaskStatusesTest {
 
     private TaskStatusMapper taskStatusMapper;
 
-    public Faker getFaker() {
-        return new Faker();
-    }
 
     @BeforeEach
     public void setUp() {
@@ -104,7 +99,7 @@ public class TaskStatusesTest {
     }
 
     @Test
-    public void testDestroyWithoutAuth() throws Exception {
+    public void testDestroy() throws Exception {
         setUp();
         var request = delete("/api/task_statuses/{id}", testTaskStatus.getId());
         mockMvc.perform(request)

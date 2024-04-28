@@ -8,6 +8,8 @@ import hexlet.code.mapper.UserMapper;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
 import hexlet.code.utils.JWTUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.annotation.HttpConstraint;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,8 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
     @GetMapping("/users")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Show all users")
     ResponseEntity<List<UserDTO>> index() {
         var users = userRepository.findAll();
         var result =  users.stream()
@@ -58,6 +62,8 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Show user by id")
     public UserDTO show(@PathVariable Long id) {
         var user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Error 400"));
@@ -67,6 +73,7 @@ public class UserController {
 
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create new user")
     public UserDTO create(@RequestBody @Valid UserCreateDTO userCreateDTO) {
         var user = userMapper.map(userCreateDTO);
         userRepository.save(user);
@@ -76,12 +83,14 @@ public class UserController {
 
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Update user data")
     public UserDTO update(@PathVariable Long id, @RequestBody UserUpdateDTO userUpdateDTO) {
         return userService.update(id, userUpdateDTO);
     }
 
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete user")
     public void delete(@PathVariable Long id) {
         userRepository.deleteById(id);
     }

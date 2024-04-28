@@ -1,7 +1,9 @@
 package hexlet.code.util;
 
+import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.model.User;
+import hexlet.code.model.Label;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import net.datafaker.Faker;
@@ -19,6 +21,10 @@ public class ModelGenerator {
 
     private Model<TaskStatus> taskStatusModel;
 
+    private Model<Task> taskModel;
+
+    private Model<Label> labelModel;
+
     @Autowired
     private Faker faker;
 
@@ -34,10 +40,20 @@ public class ModelGenerator {
 
         taskStatusModel = Instancio.of(TaskStatus.class)
                 .ignore(Select.field(TaskStatus::getId))
-                .supply(Select.field(TaskStatus::getName), () -> faker.name().name())
-                .supply(Select.field(TaskStatus::getSlug), () -> "to test")
+                .supply(Select.field(TaskStatus::getName), () -> "To test")
+                .supply(Select.field(TaskStatus::getSlug), () -> "to_test")
                 .toModel();
 
+        taskModel = Instancio.of(Task.class)
+                .ignore(Select.field(Task::getId))
+                .supply(Select.field(Task::getIndex), () -> (Integer) faker.number().positive())
+                .supply(Select.field(Task::getName), () -> faker.lorem().word())
+                .supply(Select.field(Task::getDescription), () -> faker.lorem().sentence())
+                .toModel();
 
+        labelModel = Instancio.of(Label.class)
+                .ignore(Select.field(Label::getId))
+                .supply(Select.field(Label::getName), () -> "new")
+                .toModel();
     }
 }
