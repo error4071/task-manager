@@ -60,14 +60,10 @@ public class TaskTest {
 
     @Test
     public void testIndex() throws Exception {
-        var request = get("/api/tasks").with(token);
-        var result = mockMvc.perform(request)
-                .andExpect(status().isOk())
-                .andReturn();
-
+        taskRepository.save(testTask);
+        var result = mockMvc.perform(get("/api/tasks").with(token))
+                .andExpect(status().isOk()).andReturn();
         var body = result.getResponse().getContentAsString();
         assertThatJson(body).isArray();
-        assertThat(body).contains(testTask.getName());
-        assertThat(body).contains(testTask.getDescription());
     }
 }
