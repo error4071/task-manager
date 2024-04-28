@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import hexlet.code.dto.TaskStatus.TaskStatusCreateDTO;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.TaskStatusRepository;
@@ -82,20 +83,23 @@ public class TaskStatusesTest {
 
     @Test
     public void testCreate() throws Exception {
-        var dto = taskStatusMapper.map(testTaskStatus);
+        TaskStatusCreateDTO taskStatusCreateDTO = new TaskStatusCreateDTO();
+
+        taskStatusCreateDTO.setName(FAKER.internet().emailAddress());
+        taskStatusCreateDTO.setSlug(FAKER.internet().slug());
 
         var request = post("/api/task_statuses")
                 .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto));
+                .content(objectMapper.writeValueAsString(taskStatusCreateDTO));
 
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        var taskStatusTest = taskStatusRepository.findBySlug(dto.getSlug()).get();
+        var taskStatusTest = taskStatusRepository.findBySlug(taskStatusCreateDTO.getSlug()).get();
 
         assertThat(taskStatusTest).isNotNull();
-        assertThat(taskStatusTest.getName()).isEqualTo(dto.getName());
+        assertThat(taskStatusTest.getName()).isEqualTo(taskStatusCreateDTO.getName());
     }
 
     @Test
