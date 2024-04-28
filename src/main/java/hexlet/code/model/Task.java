@@ -41,9 +41,6 @@ public class Task implements BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private User assignee;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Set<Label> labelSet = new HashSet<>();
-
     @CreatedDate
     private LocalDate createdAt;
 
