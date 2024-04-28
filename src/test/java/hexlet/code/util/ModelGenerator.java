@@ -38,12 +38,11 @@ public class ModelGenerator {
                 .supply(Select.field(User::getPasswordDigest), () -> faker.internet().password(3, 12))
                 .toModel();
 
-        taskStatusModel = (Model<TaskStatus>) Instancio.of(TaskStatus.class)
+        taskStatusModel = Instancio.of(TaskStatus.class)
                 .ignore(Select.field(TaskStatus::getId))
-                .ignore(Select.field(TaskStatus::getCreatedAt))
                 .supply(Select.field(TaskStatus::getName), () -> faker.lorem().word())
                 .supply(Select.field(TaskStatus::getSlug), () -> faker.lorem().word())
-                .create();
+                .toModel();
 
         taskModel = Instancio.of(Task.class)
                 .ignore(Select.field(Task::getId))
