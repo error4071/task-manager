@@ -109,6 +109,6 @@ public class TaskStatusesTest {
                 .andExpect(status().isNoContent());
 
         Optional<TaskStatus> taskStatusOptional = taskStatusRepository.findBySlug(testTaskStatus.getSlug());
-        assertThat(taskStatusOptional.isEmpty()).isEqualTo(false);
+        assertThat(taskStatusOptional.isEmpty()).isEqualTo(true);
     }
 }
