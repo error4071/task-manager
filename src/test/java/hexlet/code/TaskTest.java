@@ -79,6 +79,7 @@ public class TaskTest {
         testTask = Instancio.of(modelGenerator.getTaskModel()).create();
         testTask.setAssignee(user);
         testTask.setTaskStatus(taskStatus);
+        testTask.setLabelSet(Set.of(label));
         taskRepository.save(testTask);
     }
 

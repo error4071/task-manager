@@ -1,19 +1,17 @@
 package hexlet.code.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -31,9 +29,9 @@ public class Task implements BaseEntity {
     private Integer index;
 
     @NotBlank
-    @Size(min = 1)
     private String name;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @ManyToOne
@@ -42,6 +40,9 @@ public class Task implements BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User assignee;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Set<Label> labelSet = new HashSet<>();
 
     @CreatedDate
     private LocalDate createdAt;
