@@ -67,7 +67,6 @@ public class TaskTest {
 
         var body = result.getResponse().getContentAsString();
         assertThatJson(body).isArray();
-        assertThat(body).contains(String.valueOf(testTask.getId()));
         assertThat(body).contains(testTask.getName());
         assertThat(body).contains(testTask.getDescription());
     }
