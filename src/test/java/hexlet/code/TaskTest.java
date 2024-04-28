@@ -70,11 +70,15 @@ public class TaskTest {
         var user = userRepository.findByEmail("hexlet@example.com")
                 .orElseThrow(() -> new RuntimeException("User doesn't exist"));
 
+        var taskStatus = taskStatusRepository.findBySlug("draft")
+                .orElseThrow(() -> new RuntimeException("TaskStatus doesn't exist"));
+
         var label = labelRepository.findByName("feature")
                 .orElseThrow(() -> new RuntimeException("Label doesn't exist"));
 
         testTask = Instancio.of(modelGenerator.getTaskModel()).create();
         testTask.setAssignee(user);
+        testTask.setTaskStatus(taskStatus);
         taskRepository.save(testTask);
     }
 
