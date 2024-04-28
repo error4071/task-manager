@@ -105,7 +105,7 @@ public class TaskStatusesTest {
 
         taskStatusRepository.save(testTaskStatus);
 
-        var request = delete("/api/task_statuses/{id}", testTaskStatus.getSlug()).with(token);
+        var request = delete("/api/task_statuses/{id}", testTaskStatus.getId()).with(token);
 
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
