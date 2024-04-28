@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import hexlet.code.dto.TaskStatus.TaskStatusCreateDTO;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.TaskStatus;
+import hexlet.code.model.User;
 import hexlet.code.repository.TaskStatusRepository;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +27,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hexlet.code.util.ModelGenerator;
 import net.datafaker.Faker;
+
+import java.util.Optional;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -61,10 +64,6 @@ public class TaskStatusesTest {
         testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel())
                 .create();
         taskStatusRepository.save(testTaskStatus);
-    }
-
-    public void cleanUp() {
-        taskStatusRepository.deleteById(testTaskStatus.getId());
     }
 
     @Test
@@ -104,10 +103,15 @@ public class TaskStatusesTest {
 
     @Test
     public void testDestroy() throws Exception {
-        setUp();
-        var request = delete("/api/task_statuses/{id}", testTaskStatus.getId());
+
+        taskStatusRepository.save(testTaskStatus);
+
+        var request = delete("/api/users/{id}", testTaskStatus.getId()).with(token);
+
         mockMvc.perform(request)
-                .andExpect(status().isUnauthorized());
-        cleanUp();
+                .andExpect(status().isNoContent());
+
+        Optional<TaskStatus> taskStatusOptional = taskStatusRepository.findBySlug(testTaskStatus.getSlug());
+        assertThat(taskStatusOptional.isEmpty()).isEqualTo(true);
     }
 }
