@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import hexlet.code.dto.TaskStatus.TaskStatusCreateDTO;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.TaskStatus;
-import hexlet.code.model.User;
 import hexlet.code.repository.TaskStatusRepository;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
@@ -106,7 +105,7 @@ public class TaskStatusesTest {
 
         taskStatusRepository.save(testTaskStatus);
 
-        var request = delete("/api/users/{id}", testTaskStatus.getId()).with(token);
+        var request = delete("/api/task_statuses/{id}", testTaskStatus.getSlug()).with(token);
 
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
