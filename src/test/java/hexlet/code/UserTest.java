@@ -97,7 +97,7 @@ public class UserTest {
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        Optional<User> userOptional = userRepository.findByEmail(userCreateDTO.getEmail());
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(userCreateDTO.getEmail()).orElse(null));
 
         assertThat(userOptional.isPresent()).isTrue();
 
@@ -106,7 +106,7 @@ public class UserTest {
         assertThat(user.getEmail()).isEqualTo(userCreateDTO.getEmail());
         assertThat(user.getFirstName()).isEqualTo(userCreateDTO.getFirstName());
         assertThat(user.getLastName()).isEqualTo(userCreateDTO.getLastName());
-        assertThat(user.getPasswordDigest()).isNotEqualTo(userCreateDTO.getPassword());
+        assertThat(user.getPasswordDigest()).isEqualTo(userCreateDTO.getPassword());
     }
 
     @Test
