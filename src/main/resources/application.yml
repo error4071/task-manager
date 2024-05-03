@@ -15,3 +15,10 @@ server:
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
+
+sentry:
+  dsn: https://1b42b4e2dac6f1dab14a6ae565cfee5f@o4507192397398016.ingest.de.sentry.io/4507192401789008
+  # Set traces-sample-rate to 1.0 to capture 100% of transactions for performance monitoring.
+  # We recommend adjusting this value in production.
+  traces-sample-rate: 1.0
+  exception-resolver-order: -2147483647

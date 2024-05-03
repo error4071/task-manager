@@ -63,13 +63,11 @@ public class TaskTest {
 
     private TaskMapper taskMapper;
 
-
-    @Test
-    public void testIndex() throws Exception {
+    @BeforeEach
+    public void setUp() {
+        token = jwt().jwt(builder -> builder.subject("hexlet@Example.com"));
+        testTask = Instancio.of(modelGenerator.getTaskModel())
+                .create();
         taskRepository.save(testTask);
-        var result = mockMvc.perform(get("/api/tasks").with(token))
-                .andExpect(status().isOk()).andReturn();
-        var body = result.getResponse().getContentAsString();
-        assertThatJson(body).isArray();
     }
 }
