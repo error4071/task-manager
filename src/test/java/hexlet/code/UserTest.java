@@ -106,7 +106,7 @@ public class UserTest {
         assertThat(user.getEmail()).isEqualTo(userCreateDTO.getEmail());
         assertThat(user.getFirstName()).isEqualTo(userCreateDTO.getFirstName());
         assertThat(user.getLastName()).isEqualTo(userCreateDTO.getLastName());
-        assertThat(user.getPasswordDigest()).isEqualTo(userCreateDTO.getPassword());
+        assertThat(user.getPasswordDigest()).isNotEqualTo(userCreateDTO.getPassword());
     }
 
     @Test
