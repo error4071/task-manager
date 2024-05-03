@@ -97,7 +97,8 @@ public class UserTest {
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(userCreateDTO.getEmail()).orElse(null));
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(userCreateDTO.getEmail())
+                .orElse(null));
 
         assertThat(userOptional.isPresent()).isTrue();
 
