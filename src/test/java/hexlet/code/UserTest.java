@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Map;
 import java.util.Optional;
 
 import hexlet.code.dto.User.UserCreateDTO;
@@ -36,7 +37,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserTest {
-    private static final Faker FAKER = new Faker();
+    private Faker faker;
 
     @Autowired
     private MockMvc mockMvc;
@@ -77,37 +78,31 @@ public class UserTest {
         assertThat(body).contains(testUser.getLastName());
     }
 
-
     @Test
     public void testCreate() throws Exception {
-        UserCreateDTO userCreateDTO = new UserCreateDTO();
-
-                userCreateDTO.setEmail(FAKER.internet().emailAddress());
-                userCreateDTO.setFirstName(FAKER.name().firstName());
-                userCreateDTO.setLastName(FAKER.name().lastName());
-                userCreateDTO.setPassword(FAKER.internet().password(3, 12));
-
-                String data = objectMapper.writeValueAsString(userCreateDTO);
+        var data = Map.of(
+                "email", faker.internet().emailAddress(),
+                "firstName", faker.name().firstName(),
+                "lastName", faker.name().lastName(),
+                "password", faker.internet().password(3, 12)
+        );
 
         MockHttpServletRequestBuilder request = post("/api/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(data)
+                .content(objectMapper.writeValueAsString(data))
                 .with(token);
 
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(userCreateDTO.getEmail())
-                .orElse(null));
+        var user = userRepository.findByEmail(data.get("email"))
+                .orElse(null);
 
-        assertThat(userOptional.isPresent()).isTrue();
-
-        User user = userOptional.get();
-
-        assertThat(user.getEmail()).isEqualTo(userCreateDTO.getEmail());
-        assertThat(user.getFirstName()).isEqualTo(userCreateDTO.getFirstName());
-        assertThat(user.getLastName()).isEqualTo(userCreateDTO.getLastName());
-        assertThat(user.getPasswordDigest()).isEqualTo(userCreateDTO.getPassword());
+        assertThat(user).isNotNull();
+        assertThat(user.getEmail()).isEqualTo(data.get("email"));
+        assertThat(user.getFirstName()).isEqualTo(data.get("firstName"));
+        assertThat(user.getLastName()).isEqualTo(data.get("lastName"));
+        assertThat(user.getPasswordDigest()).isEqualTo(data.get("password"));
     }
 
     @Test
@@ -115,8 +110,8 @@ public class UserTest {
         userRepository.save(testUser);
         UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
 
-                userUpdateDTO.setEmail(JsonNullable.of(FAKER.internet().emailAddress()));
-                userUpdateDTO.setPassword(JsonNullable.of(FAKER.internet().password(3, 12)));
+                userUpdateDTO.setEmail(JsonNullable.of(faker.internet().emailAddress()));
+                userUpdateDTO.setPassword(JsonNullable.of(faker.internet().password(3, 12)));
 
         MockHttpServletRequestBuilder request = put("/api/users/{id}", testUser.getId())
                 .contentType(MediaType.APPLICATION_JSON)
