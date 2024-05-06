@@ -26,9 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class LabelTest {
-
     private static final Faker FAKER = new Faker();
-    
+
     @Autowired
     private ModelGenerator modelGenerator;
 
@@ -40,7 +39,7 @@ public class LabelTest {
 
     @Autowired
     private LabelRepository labelRepository;
-    
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -66,23 +65,23 @@ public class LabelTest {
         assertThat(body).contains(String.valueOf(testLabel.getId()));
         assertThat(body).contains(testLabel.getName());
     }
-    
+
     @Test
     private void testCreate() throws Exception {
         LabelCreateDTO labelCreateDTO = new LabelCreateDTO();
-        
+
         labelCreateDTO.setName(FAKER.internet().emailAddress());
-        
+
         var request = post("api/labels")
                 .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(labelCreateDTO));
-        
+
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
-        
+
         var labelTest = labelRepository.findByName(labelCreateDTO.getName()).get();
-        
+
         assertThat(labelTest).isNotNull();
         assertThat(labelTest.getName()).isEqualTo(labelCreateDTO.getName());
     }
