@@ -12,7 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Map;
 import java.util.Optional;
 
-import hexlet.code.dto.User.UserCreateDTO;
 import hexlet.code.dto.User.UserUpdateDTO;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
