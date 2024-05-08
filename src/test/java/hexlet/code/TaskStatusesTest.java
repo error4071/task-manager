@@ -114,7 +114,6 @@ public class TaskStatusesTest {
             taskStatusUpdateDTO.setSlug(JsonNullable.of(faker.internet().slug()));
 
         MockHttpServletRequestBuilder request = put("/api/labels/{id}", testTaskStatus.getId())
-                .contentType(MediaType.APPLICATION_JSON)
                 .contentType(objectMapper.writeValueAsString(taskStatusUpdateDTO))
                 .with(SecurityMockMvcRequestPostProcessors.user(testTaskStatus.getName()));
 
