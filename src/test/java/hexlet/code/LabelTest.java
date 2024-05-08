@@ -35,14 +35,15 @@ public class LabelTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private Label testLabel;
+
 
     @Autowired
     private LabelRepository labelRepository;
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    private Label testLabel;
 
     private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
 
