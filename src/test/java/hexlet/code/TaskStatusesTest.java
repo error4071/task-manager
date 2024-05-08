@@ -105,6 +105,7 @@ public class TaskStatusesTest {
         assertThat(taskStatusTest.getName()).isEqualTo(taskStatusCreateDTO.getName());
     }
 
+    @Test
     public void testUpdate() throws Exception {
         taskStatusRepository.save(testTaskStatus);
         TaskStatusUpdateDTO taskStatusUpdateDTO = new TaskStatusUpdateDTO();
