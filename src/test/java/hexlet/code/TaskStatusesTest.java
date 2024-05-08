@@ -116,12 +116,12 @@ public class TaskStatusesTest {
         MockHttpServletRequestBuilder request = put("/api/labels/{id}", testTaskStatus.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .contentType(objectMapper.writeValueAsString(taskStatusUpdateDTO))
-                .with(SecurityMockMvcRequestPostProcessors.user(testTaskStatus.getName()));
+                .with(token);
 
         mockMvc.perform(request)
                 .andExpect(status().isOk());
 
-        var updatedTaskStatus = taskStatusRepository.findById(testTaskStatus.getId()).get();
+        var updatedTaskStatus = taskStatusRepository.findById(testTaskStatus.getId()).orElse(null);
 
         assertThat(updatedTaskStatus).isNotNull();
         assertThat(updatedTaskStatus.getName()).isEqualTo(taskStatusUpdateDTO.getName().get());
