@@ -124,7 +124,7 @@ public class TaskStatusesTest {
         var updatedTaskStatus = taskStatusRepository.findBySlug(testTaskStatus.getSlug()).get();
 
         assertThat(updatedTaskStatus).isNotNull();
-        assertThat(updatedTaskStatus.getName()).isEqualTo(taskStatusUpdateDTO.getName());
+        assertThat(updatedTaskStatus.getName()).isEqualTo(taskStatusUpdateDTO.getName().get());
     }
 
     @Test
@@ -136,6 +136,7 @@ public class TaskStatusesTest {
                 .andExpect(status().isNoContent());
 
         Optional<TaskStatus> taskStatusOptional = taskStatusRepository.findBySlug(testTaskStatus.getSlug());
+
         assertThat(taskStatusOptional.isEmpty()).isEqualTo(true);
     }
 }
