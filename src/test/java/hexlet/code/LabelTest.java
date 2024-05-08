@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -84,5 +85,17 @@ public class LabelTest {
 
         assertThat(labelTest).isNotNull();
         assertThat(labelTest.getName()).isEqualTo(labelCreateDTO.getName());
+    }
+
+    @Test
+    public void testDestroy() throws Exception {
+
+        var request = delete("/api/labels/{id}", testLabel.getId()).with(token);
+
+        mockMvc.perform(request)
+                .andExpect(status().isNoContent());
+
+        var labelTest = labelRepository.findByName(testLabel.getName());
+        assertThat(labelTest.isEmpty()).isEqualTo(true);
     }
 }
