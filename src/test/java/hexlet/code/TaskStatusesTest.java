@@ -114,16 +114,18 @@ public class TaskStatusesTest {
             taskStatusUpdateDTO.setSlug(JsonNullable.of(faker.internet().slug()));
 
         MockHttpServletRequestBuilder request = put("/api/labels/{id}", testTaskStatus.getId())
+                .contentType(MediaType.APPLICATION_JSON)
                 .contentType(objectMapper.writeValueAsString(taskStatusUpdateDTO))
                 .with(SecurityMockMvcRequestPostProcessors.user(testTaskStatus.getName()));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk());
 
-        var updatedTaskStatus = taskStatusRepository.findBySlug(testTaskStatus.getSlug()).get();
+        var updatedTaskStatus = taskStatusRepository.findById(testTaskStatus.getId()).get();
 
         assertThat(updatedTaskStatus).isNotNull();
         assertThat(updatedTaskStatus.getName()).isEqualTo(taskStatusUpdateDTO.getName().get());
+        assertThat(updatedTaskStatus.getSlug()).isEqualTo(taskStatusUpdateDTO.getSlug().get());
     }
 
     @Test
