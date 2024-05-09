@@ -15,6 +15,7 @@ import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.TaskStatusRepository;
 import org.instancio.Instancio;
+import org.instancio.Select;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -32,6 +33,7 @@ import hexlet.code.util.ModelGenerator;
 import net.datafaker.Faker;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import java.util.Map;
 import java.util.Optional;
 
 @SpringBootTest
@@ -107,16 +109,22 @@ public class TaskStatusesTest {
 
     @Test
     public void testUpdate() throws Exception {
+        token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
+        testTaskStatus = Instancio.of(TaskStatus.class)
+                .ignore(Select.field(TaskStatus::getId))
+                .supply(Select.field(TaskStatus::getName), () -> "To experiment")
+                .supply(Select.field(TaskStatus::getSlug), () -> "to_experiment")
+                .create();
         taskStatusRepository.save(testTaskStatus);
-        TaskStatusUpdateDTO taskStatusUpdateDTO = new TaskStatusUpdateDTO();
 
-            taskStatusUpdateDTO.setName(JsonNullable.of(faker.internet().emailAddress()));
-            taskStatusUpdateDTO.setSlug(JsonNullable.of(faker.internet().slug()));
+        var data = Map.of(
+                "name", "To test update",
+                "slug", "to_test_update"
+        );
 
-        MockHttpServletRequestBuilder request = put("/api/task_statuses/{id}", testTaskStatus.getId())
+        var request = put("/api/task_statuses/{id}", testTaskStatus.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .contentType(objectMapper.writeValueAsString(taskStatusUpdateDTO))
-                .with(token);
+                .content(objectMapper.writeValueAsString(data));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk());
@@ -124,8 +132,8 @@ public class TaskStatusesTest {
         var updatedTaskStatus = taskStatusRepository.findById(testTaskStatus.getId()).orElse(null);
 
         assertThat(updatedTaskStatus).isNotNull();
-        assertThat(updatedTaskStatus.getName()).isEqualTo(taskStatusUpdateDTO.getName().get());
-        assertThat(updatedTaskStatus.getSlug()).isEqualTo(taskStatusUpdateDTO.getSlug().get());
+        assertThat(updatedTaskStatus.getName()).isEqualTo(data.get("name"));
+        assertThat(updatedTaskStatus.getSlug()).isEqualTo(data.get("slug"));
     }
 
     @Test
