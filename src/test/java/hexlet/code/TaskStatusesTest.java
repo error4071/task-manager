@@ -122,7 +122,7 @@ public class TaskStatusesTest {
         var taskStatusData = Map.of(
                 "name", "To test update",
                 "slug", "to_test_update"
-        )
+        );
 
         MockHttpServletRequestBuilder request = put("/api/task_statuses/{id}", testTaskStatus.getId())
                 .contentType(MediaType.APPLICATION_JSON)
