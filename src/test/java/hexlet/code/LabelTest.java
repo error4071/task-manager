@@ -66,8 +66,11 @@ public class LabelTest {
 
         var body = result.getResponse().getContentAsString();
         assertThatJson(body).isArray();
-        assertThat(body).contains(String.valueOf(testLabel.getId()));
-        assertThat(body).contains(testLabel.getName());
+        var listOfLabels = labelRepository.findAll();
+        for (var label: listOfLabels) {
+            assertThat(body).contains(String.valueOf(label.getId()));
+            assertThat(body).contains(label.getName());
+        }
     }
 
     @Test
