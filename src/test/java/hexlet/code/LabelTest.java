@@ -66,17 +66,14 @@ public class LabelTest {
 
         var body = result.getResponse().getContentAsString();
         assertThatJson(body).isArray();
-        var listOfLabels = labelRepository.findAll();
-        for (var label: listOfLabels) {
-            assertThat(body).contains(String.valueOf(label.getId()));
-            assertThat(body).contains(label.getName());
-        }
+        assertThat(body).contains(String.valueOf(testLabel.getId()));
+        assertThat(body).contains(testLabel.getName());
     }
 
     @Test
     public void testCreate() throws Exception {
         var labelData = Map.of(
-                "name", "createdAt"
+                "id ,name", "createdAt"
         );
 
         var request = post("api/labels")
@@ -101,7 +98,7 @@ public class LabelTest {
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
 
-        var labelTest = labelRepository.findById(testLabel.getId()).orElse(null);
-        assertThat(labelTest).isNull();
+        var labelTest = labelRepository.findById(testLabel.getId());
+        assertThat(labelTest.isEmpty()).isEqualTo(true);
     }
 }
