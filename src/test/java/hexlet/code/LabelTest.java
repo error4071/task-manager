@@ -16,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Map;
+
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
@@ -70,22 +72,22 @@ public class LabelTest {
 
     @Test
     public void testCreate() throws Exception {
-        LabelCreateDTO labelCreateDTO = new LabelCreateDTO();
-
-        labelCreateDTO.setName(FAKER.internet().emailAddress());
+        var labelData = Map.of(
+                "name", "createdAt"
+        );
 
         var request = post("api/labels")
                 .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(labelCreateDTO));
+                .content(objectMapper.writeValueAsString(labelData));
 
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        var labelTest = labelRepository.findByName(labelCreateDTO.getName()).get();
+        var labelTest = labelRepository.findByName(labelData.get("name")).get();
 
         assertThat(labelTest).isNotNull();
-        assertThat(labelTest.getName()).isEqualTo(labelCreateDTO.getName());
+        assertThat(labelTest.getName()).isEqualTo(labelData.get("name"));
     }
 
     @Test
