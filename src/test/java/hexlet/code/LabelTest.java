@@ -2,6 +2,7 @@ package hexlet.code;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.dto.Label.LabelCreateDTO;
+import hexlet.code.mapper.LabelMapper;
 import hexlet.code.model.Label;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.util.ModelGenerator;
@@ -37,7 +38,8 @@ public class LabelTest {
     @Autowired
     private MockMvc mockMvc;
 
-
+    @Autowired
+    private LabelMapper labelMapper;
 
     @Autowired
     private LabelRepository labelRepository;
@@ -72,22 +74,20 @@ public class LabelTest {
 
     @Test
     public void testCreate() throws Exception {
-        var labelData = Map.of(
-                "id ,name", "createdAt"
-        );
+        var dto = labelMapper.map(testLabel);
 
         var request = post("api/labels")
                 .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(labelData));
+                .content(objectMapper.writeValueAsString(dto));
 
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        var labelTest = labelRepository.findByName(labelData.get("name")).get();
+        var labelTest = labelRepository.findByName(dto.getName()).get();
 
         assertThat(labelTest).isNotNull();
-        assertThat(labelTest.getName()).isEqualTo(labelData.get("name"));
+        assertThat(labelTest.getName()).isEqualTo(dto.getName());
     }
 
     @Test
