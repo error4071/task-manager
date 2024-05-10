@@ -88,10 +88,9 @@ public class UserTest {
                 "password", faker.internet().password(3, 12)
         );
 
-        MockHttpServletRequestBuilder request = post("/api/users")
+        MockHttpServletRequestBuilder request = post("/api/users").with(token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(data))
-                .with(token);
+                .content(objectMapper.writeValueAsString(data));
 
         mockMvc.perform(request)
                 .andExpect(status().isCreated());

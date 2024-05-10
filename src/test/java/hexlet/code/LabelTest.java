@@ -56,7 +56,7 @@ public class LabelTest {
     }
 
     @Test
-    private void testIndex() throws Exception {
+    public void testIndex() throws Exception {
         var request = get("/api/labels").with(token);
         var result = mockMvc.perform(request)
                 .andExpect(status().isOk())
@@ -69,7 +69,7 @@ public class LabelTest {
     }
 
     @Test
-    private void testCreate() throws Exception {
+    public void testCreate() throws Exception {
         LabelCreateDTO labelCreateDTO = new LabelCreateDTO();
 
         labelCreateDTO.setName(FAKER.internet().emailAddress());
