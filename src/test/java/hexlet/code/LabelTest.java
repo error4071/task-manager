@@ -100,7 +100,7 @@ public class LabelTest {
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
 
-        var label = labelRepository.findById(testLabel.getId());
+        var label = labelRepository.findById(testLabel.getId()).or(null);
         assertThat(label).isNull();
     }
 }

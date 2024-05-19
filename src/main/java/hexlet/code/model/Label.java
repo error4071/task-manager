@@ -27,7 +27,6 @@ public class Label implements BaseEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-
     @Size(min = 3, max = 1000)
     private String name;
 
