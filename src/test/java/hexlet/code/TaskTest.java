@@ -1,6 +1,7 @@
 package hexlet.code;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hexlet.code.dto.Task.TaskUpdateDTO;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.model.Task;
 import hexlet.code.repository.LabelRepository;
@@ -12,6 +13,7 @@ import net.datafaker.Faker;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,8 +36,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 @SpringBootTest
 @AutoConfigureMockMvc
 public class TaskTest {
-    private static final Faker FAKER = new Faker();
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -43,10 +43,16 @@ public class TaskTest {
     private Faker faker;
 
     @Autowired
-    private TaskRepository taskRepository;
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    private ModelGenerator modelGenerator;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     @Autowired
     private TaskStatusRepository taskStatusRepository;
@@ -54,17 +60,9 @@ public class TaskTest {
     @Autowired
     private LabelRepository labelRepository;
 
-    @Autowired
-    private ModelGenerator modelGenerator;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
     private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
 
     private Task testTask;
-
-    private TaskMapper taskMapper;
 
     @BeforeEach
     public void setUp() {
@@ -112,4 +110,34 @@ public class TaskTest {
         assertThat(task.getDescription()).isEqualTo(data.get("content"));
         assertThat(task.getTaskStatus()).isEqualTo(data.get("draft"));
     }
+
+    @Test
+    public void testUpdate() throws Exception {
+        var user = userRepository.findByEmail("hexlet@example.com").orElseThrow();
+
+        var data = new TaskUpdateDTO();
+        data.setIndex(JsonNullable.of(faker.number().positive()));
+        data.setAssigneeId(JsonNullable.of(user.getId()));
+        data.setTitle(JsonNullable.of(faker.lorem().word()));
+        data.setContent(JsonNullable.of(faker.lorem().sentence()));
+        data.setStatus(JsonNullable.of("published"));
+
+        var request = put("/api/tasks/{id}", testTask.getId()).with(token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(data));
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk());
+
+        var updatedTask = taskRepository.findById(testTask.getId()).orElse(null);
+
+        assertThat(updatedTask).isNotNull();
+        assertThat(updatedTask.getIndex()).isEqualTo(data.getIndex().get());
+        assertThat(updatedTask.getAssignee().getId()).isEqualTo(data.getAssigneeId().get());
+        assertThat(updatedTask.getName()).isEqualTo(data.getTitle().get());
+        assertThat(updatedTask.getDescription()).isEqualTo(data.getContent().get());
+        assertThat(updatedTask.getTaskStatus().getSlug()).isEqualTo(data.getStatus().get());
+    }
+
+
 }

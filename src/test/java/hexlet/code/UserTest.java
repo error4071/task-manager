@@ -36,7 +36,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Configuration
 public class UserTest {
 
     @Autowired
