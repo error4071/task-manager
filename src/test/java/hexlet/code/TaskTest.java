@@ -139,5 +139,13 @@ public class TaskTest {
         assertThat(updatedTask.getTaskStatus().getSlug()).isEqualTo(data.getStatus().get());
     }
 
+    @Test
+    public void testDestroy() throws Exception {
+        var request = delete("/api/tasks/{id}", testTask.getId()).with(token);
+        mockMvc.perform(request)
+                .andExpect(status().isNoContent());
 
+        var task = taskRepository.findById(testTask.getId()).orElse(null);
+        assertThat(task).isNull();
+    }
 }
