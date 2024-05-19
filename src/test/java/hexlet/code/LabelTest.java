@@ -101,6 +101,6 @@ public class LabelTest {
                 .andExpect(status().isNoContent());
 
         var labelTest = labelRepository.findById(testLabel.getId());
-        assertThat(labelTest.isEmpty()).isEqualTo(true);
+        assertThat(labelTest).isNull();
     }
 }
