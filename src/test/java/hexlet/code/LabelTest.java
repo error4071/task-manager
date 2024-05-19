@@ -21,9 +21,10 @@ import java.util.Map;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -90,6 +91,25 @@ public class LabelTest {
 
         assertThat(label).isNotNull();
         assertThat(label.getName()).isEqualTo(data.get("name"));
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        var data = Map.of(
+                "name", "updated"
+        );
+
+        var request = put("/api/labels/{id}", testLabel.getId()).with(token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(data));
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk());
+
+        var updatedLabel = labelRepository.findByName(data.get("name")).orElse(null);
+
+        assertThat(updatedLabel).isNotNull();
+        assertThat(updatedLabel.getName()).isEqualTo(data.get("name"));
     }
 
     @Test
