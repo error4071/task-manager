@@ -1,7 +1,6 @@
 package hexlet.code;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hexlet.code.dto.Label.LabelCreateDTO;
 import hexlet.code.mapper.LabelMapper;
 import hexlet.code.model.Label;
 import hexlet.code.repository.LabelRepository;
@@ -30,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class LabelTest {
+
     @Autowired
     private Faker faker;
 
@@ -100,7 +100,7 @@ public class LabelTest {
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
 
-        var labelTest = labelRepository.findById(testLabel.getId());
-        assertThat(labelTest).isNull();
+        var label = labelRepository.findById(testLabel.getId());
+        assertThat(label).isNull();
     }
 }
