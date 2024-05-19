@@ -107,28 +107,29 @@ public class UserTest {
 
     @Test
     public void testUpdate() throws Exception {
-        userRepository.save(testUser);
-        UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
+        var data = Map.of(
+                "email", faker.internet().emailAddress(),
+                "firstName", faker.name().firstName(),
+                "lastName", faker.name().lastName(),
+                "password", faker.internet().password(3, 12)
+        );
 
-                userUpdateDTO.setEmail(JsonNullable.of(faker.internet().emailAddress()));
-                userUpdateDTO.setPassword(JsonNullable.of(faker.internet().password(3, 12)));
+        var jwt = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
 
-        MockHttpServletRequestBuilder request = put("/api/users/{id}", testUser.getId())
+        var request = put("/api/users/{id}", testUser.getId()).with(jwt)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(userUpdateDTO))
-                .with(SecurityMockMvcRequestPostProcessors.user(testUser.getUsername()));
+                .content(objectMapper.writeValueAsString(data));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk());
 
-        Optional<User> updatedUser = userRepository.findById(testUser.getId());
+        var updatedUser = userRepository.findById(testUser.getId()).orElse(null);
 
-        assertThat(updatedUser.isPresent()).isTrue();
-
-        User user = updatedUser.get();
-
-        assertThat(user.getEmail()).isEqualTo(userUpdateDTO.getEmail().get());
-        assertThat(user.getPasswordDigest()).isNotEqualTo(userUpdateDTO.getPassword());
+        assertThat(updatedUser).isNotNull();
+        assertThat(updatedUser.getEmail()).isEqualTo(data.get("email"));
+        assertThat(updatedUser.getFirstName()).isEqualTo(data.get("firstName"));
+        assertThat(updatedUser.getLastName()).isEqualTo(data.get("lastName"));
+        assertThat(updatedUser.getPasswordDigest()).isNotEqualTo(data.get("password"));
     }
 
     @Test
