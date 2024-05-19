@@ -30,7 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class LabelTest {
-    private static final Faker FAKER = new Faker();
+    @Autowired
+    private Faker faker;
 
     @Autowired
     private ModelGenerator modelGenerator;
