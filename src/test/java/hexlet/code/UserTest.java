@@ -88,7 +88,7 @@ public class UserTest {
                 "password", faker.internet().password(3, 12)
         );
 
-        MockHttpServletRequestBuilder request = post("/api/users").with(token)
+        var request = post("/api/users").with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(data));
 

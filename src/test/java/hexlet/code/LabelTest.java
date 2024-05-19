@@ -53,7 +53,7 @@ public class LabelTest {
 
     @BeforeEach
     public void setUp() {
-        token = jwt().jwt(builder -> builder.subject("hexlet@Example.com"));
+        token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
         testLabel = Instancio.of(modelGenerator.getLabelModel())
                 .create();
         labelRepository.save(testLabel);
