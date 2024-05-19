@@ -74,20 +74,21 @@ public class LabelTest {
 
     @Test
     public void testCreate() throws Exception {
-        var dto = labelMapper.map(testLabel);
+        var data = Map.of(
+                "name", "good"
+        );
 
-        var request = post("api/labels")
-                .with(token)
+        var request = post("/api/labels").with(token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto));
+                .content(objectMapper.writeValueAsString(data));
 
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        var labelTest = labelRepository.findByName(dto.getName()).get();
+        var label = labelRepository.findByName(data.get("name")).orElse(null);
 
-        assertThat(labelTest).isNotNull();
-        assertThat(labelTest.getName()).isEqualTo(dto.getName());
+        assertThat(label).isNotNull();
+        assertThat(label.getName()).isEqualTo(data.get("name"));
     }
 
     @Test
