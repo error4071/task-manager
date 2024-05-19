@@ -22,25 +22,18 @@ import java.util.List;
 @AllArgsConstructor
 public class DataInitializer implements ApplicationRunner {
 
-    @Autowired
     private final UserRepository userRepository;
 
-    @Autowired
     private final TaskStatusRepository taskStatusRepository;
 
-    @Autowired
     private final LabelRepository labelRepository;
 
-    @Autowired
     private final UserMapper userMapper;
 
-    @Autowired
     private final TaskStatusMapper taskStatusMapper;
 
-    @Autowired
     private final LabelMapper labelMapper;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -53,10 +46,10 @@ public class DataInitializer implements ApplicationRunner {
     }
 
     public void addSlug() {
-        List<String> slug = List.of("draft", "to_review", "to_be_fixed", "to_publish", "published");
-        slug.forEach(slugs -> {
+        List<String> defaultSlug = List.of("draft", "to_review", "to_be_fixed", "to_publish", "published");
+        defaultSlug.forEach(slug -> {
             var statusData = new TaskStatusCreateDTO();
-            String[] arr = slugs.split("_");
+            String[] arr = slug.split("_");
             String data = arr[0].substring(0, 1).toUpperCase() + arr[0].substring(1);
             var name = new StringBuilder(data);
 
@@ -67,7 +60,7 @@ public class DataInitializer implements ApplicationRunner {
             }
 
             statusData.setName(name.toString());
-            statusData.setSlug(slugs);
+            statusData.setSlug(slug);
             var status = taskStatusMapper.map(statusData);
             taskStatusRepository.save(status);
         });
