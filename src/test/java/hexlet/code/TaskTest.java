@@ -72,23 +72,13 @@ public class TaskTest {
 
     private Task testTask;
 
+    private TaskStatus taskStatus;
+
     @BeforeEach
     public void setUp() {
-        token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
-
-        var userTest = userRepository.findByEmail("hexlet@example.com")
-                .orElseThrow(() -> new RuntimeException("User not found."));
-
-        var taskStatusTest = taskStatusRepository.findBySlug("draft")
-                .orElseThrow(() -> new RuntimeException("TaskStatus not found."));
-
-        var labelTest = labelRepository.findByName("feature")
-                .orElseThrow(() -> new RuntimeException("Label not found."));
-
+        token = jwt().jwt(builder -> builder.subject("hexlet@Example.com"));
         testTask = Instancio.of(modelGenerator.getTaskModel())
                 .create();
-        testTask.setAssignee(userTest);
-        testTask.setTaskStatus(taskStatusTest);
         taskRepository.save(testTask);
     }
 
