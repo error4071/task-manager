@@ -110,6 +110,6 @@ public class TaskTest {
         assertThat(task.getAssignee().getId()).isEqualTo(data.get("assignee_id"));
         assertThat(task.getName()).isEqualTo(data.get("title"));
         assertThat(task.getDescription()).isEqualTo(data.get("content"));
-        assertThat(task.getTaskStatus()).isEqualTo(data.get("draft"));
+        assertThat(task.getTaskStatus()).isEqualTo(data.get("Draft"));
     }
 }
