@@ -71,8 +71,6 @@ public class TaskTest {
         var userTest = userRepository.findByEmail("hexlet@example.com")
                 .orElseThrow(() -> new RuntimeException("User not found."));
 
-        var taskStatusTest = taskStatusRepository.findBySlug("draft")
-                .orElseThrow(() -> new RuntimeException("TaskStatus not found."));
 
         var labelTest = labelRepository.findByName("feature")
                 .orElseThrow(() -> new RuntimeException("Label not found."));
@@ -80,7 +78,7 @@ public class TaskTest {
         testTask = Instancio.of(modelGenerator.getTaskModel())
                 .create();
         testTask.setAssignee(userTest);
-        testTask.setTaskStatus(taskStatusTest);
+
         taskRepository.save(testTask);
     }
 
