@@ -68,9 +68,9 @@ public class TaskTest {
 
     @BeforeEach
     public void setUp() {
-        token = jwt().jwt(builder -> builder.subject("hexlet@Example.com"));
+        token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
 
-        var userTest = userRepository.findByEmail("hexlet@Example.com")
+        var userTest = userRepository.findByEmail("hexlet@example.com")
                 .orElseThrow(() -> new RuntimeException("User not found."));
 
         var taskStatusTest = taskStatusRepository.findBySlug("draft")
