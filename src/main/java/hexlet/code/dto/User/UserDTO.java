@@ -1,6 +1,5 @@
 package hexlet.code.dto.User;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
