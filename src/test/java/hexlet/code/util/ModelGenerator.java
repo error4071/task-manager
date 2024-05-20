@@ -9,9 +9,12 @@ import net.datafaker.Faker;
 import org.instancio.Instancio;
 import org.instancio.Model;
 import org.instancio.Select;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 public class ModelGenerator {
+
+    @Autowired
 
     private Model<User> userModel;
     private Model<Task> taskModel;
