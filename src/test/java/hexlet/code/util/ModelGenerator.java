@@ -4,15 +4,18 @@ import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.model.User;
 import hexlet.code.model.Label;
-import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import net.datafaker.Faker;
 import org.instancio.Instancio;
 import org.instancio.Model;
 import org.instancio.Select;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 public class ModelGenerator {
+
+    @Autowired
+    private Faker faker;
 
     private Model<User> userModel;
     private Model<Task> taskModel;
@@ -20,7 +23,6 @@ public class ModelGenerator {
     private Model<Label> labelModel;
 
     public ModelGenerator() {
-        var faker = new Faker();
         userModel = Instancio.of(User.class)
                 .ignore(Select.field(User::getId))
                 .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
