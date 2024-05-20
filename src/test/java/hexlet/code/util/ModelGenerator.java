@@ -16,6 +16,8 @@ public class ModelGenerator {
 
     private Model<User> userModel;
     private Model<Task> taskModel;
+    private Model<TaskStatus> taskStatusModel;
+    private Model<Label> labelModel;
 
     public ModelGenerator() {
         var faker = new Faker();
@@ -29,6 +31,17 @@ public class ModelGenerator {
                 .ignore(Select.field(Task::getId))
                 .supply(Select.field(Task::getName), () -> faker.lorem().word())
                 .supply(Select.field(Task::getDescription), () -> faker.lorem().sentence())
+                .toModel();
+
+        labelModel = Instancio.of(Label.class)
+                .ignore(Select.field(Label::getId))
+                .supply(Select.field(Label::getName), () -> "new")
+                .toModel();
+
+        taskStatusModel = Instancio.of(TaskStatus.class)
+                .ignore(Select.field(TaskStatus::getId))
+                .supply(Select.field(TaskStatus::getName), () -> "To test")
+                .supply(Select.field(TaskStatus::getSlug), () -> "to_test")
                 .toModel();
     }
 }

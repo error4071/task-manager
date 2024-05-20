@@ -62,8 +62,7 @@ public class TaskStatusesTest {
 
 
     @BeforeEach
-    public void setUp() {
-        token = jwt().jwt(builder -> builder.subject("hexlet@Example.com"));
+    public void beforeEach() {
         testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel())
                 .create();
         taskStatusRepository.save(testTaskStatus);
