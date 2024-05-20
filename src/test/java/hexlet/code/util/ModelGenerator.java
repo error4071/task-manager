@@ -9,13 +9,9 @@ import net.datafaker.Faker;
 import org.instancio.Instancio;
 import org.instancio.Model;
 import org.instancio.Select;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 public class ModelGenerator {
-
-    @Autowired
-    private Faker faker;
 
     private Model<User> userModel;
     private Model<Task> taskModel;
@@ -23,6 +19,7 @@ public class ModelGenerator {
     private Model<Label> labelModel;
 
     public ModelGenerator() {
+        var faker = new Faker();
         userModel = Instancio.of(User.class)
                 .ignore(Select.field(User::getId))
                 .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
@@ -31,8 +28,8 @@ public class ModelGenerator {
 
         taskModel = Instancio.of(Task.class)
                 .ignore(Select.field(Task::getId))
-                .supply(Select.field(Task::getName), () -> faker.lorem().word())
-                .supply(Select.field(Task::getDescription), () -> faker.lorem().sentence())
+                .supply(Select.field(Task::getName), () -> faker.gameOfThrones().house())
+                .supply(Select.field(Task::getDescription), () -> faker.gameOfThrones().quote())
                 .toModel();
 
         labelModel = Instancio.of(Label.class)

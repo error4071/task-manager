@@ -60,7 +60,6 @@ public class TaskStatusesTest {
 
     private TaskStatusMapper taskStatusMapper;
 
-
     @BeforeEach
     public void beforeEach() {
         testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel())
