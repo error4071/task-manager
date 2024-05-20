@@ -51,10 +51,9 @@ public class TaskStatusesTest {
     private TaskStatusRepository taskStatusRepository;
 
     @Autowired
-    private ModelGenerator modelGenerator;
-
-    @Autowired
     private ObjectMapper objectMapper;
+
+    private ModelGenerator modelGenerator = new ModelGenerator();
 
     private JwtRequestPostProcessor token;
 

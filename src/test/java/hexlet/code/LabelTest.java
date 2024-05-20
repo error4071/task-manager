@@ -37,9 +37,6 @@ public class LabelTest {
     private Faker faker;
 
     @Autowired
-    private ModelGenerator modelGenerator;
-
-    @Autowired
     private MockMvc mockMvc;
 
     @Autowired
@@ -50,6 +47,8 @@ public class LabelTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    private ModelGenerator modelGenerator = new ModelGenerator();
 
     private Label testLabel;
 
