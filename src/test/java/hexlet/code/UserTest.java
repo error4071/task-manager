@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import hexlet.code.AppApplication;
 import hexlet.code.dto.User.UserDTO;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
@@ -29,7 +30,6 @@ import hexlet.code.util.ModelGenerator;
 @ContextConfiguration(classes = AppApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-
 public class UserTest {
 
     @Autowired
