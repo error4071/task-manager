@@ -39,8 +39,6 @@ import java.util.Optional;
 @AutoConfigureMockMvc
 public class TaskStatusesTest {
 
-    private static final Faker FAKER = new Faker();
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -55,8 +53,6 @@ public class TaskStatusesTest {
 
     private ModelGenerator modelGenerator = new ModelGenerator();
 
-    private JwtRequestPostProcessor token;
-
     private TaskStatus testTaskStatus;
 
     private TaskStatusMapper taskStatusMapper;
@@ -70,7 +66,7 @@ public class TaskStatusesTest {
 
     @Test
     public void testIndex() throws Exception {
-        var request = get("/api/task_statuses").with(token);
+        var request = get("/api/task_statuses").with(jwt());
         var result = mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andReturn();
@@ -86,11 +82,11 @@ public class TaskStatusesTest {
     public void testCreate() throws Exception {
         TaskStatusCreateDTO taskStatusCreateDTO = new TaskStatusCreateDTO();
 
-        taskStatusCreateDTO.setName(FAKER.internet().emailAddress());
-        taskStatusCreateDTO.setSlug(FAKER.internet().slug());
+        taskStatusCreateDTO.setName(faker.internet().emailAddress());
+        taskStatusCreateDTO.setSlug(faker.internet().slug());
 
         var request = post("/api/task_statuses")
-                .with(token)
+                .with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(taskStatusCreateDTO));
 
@@ -106,7 +102,7 @@ public class TaskStatusesTest {
     @Test
     public void testUpdate() throws Exception {
 
-        token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
+        jwt().jwt(builder -> builder.subject("hexlet@example.com"));
         testTaskStatus = Instancio.of(TaskStatus.class)
                 .ignore(Select.field(TaskStatus::getId))
                 .supply(Select.field(TaskStatus::getName), () -> "To experiment")
@@ -120,7 +116,7 @@ public class TaskStatusesTest {
                 "slug", "to_test_update"
         );
 
-        MockHttpServletRequestBuilder request = put("/api/task_statuses/{id}", testTaskStatus.getId()).with(token)
+        MockHttpServletRequestBuilder request = put("/api/task_statuses/{id}", testTaskStatus.getId()).with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(taskStatusData));
 
@@ -137,7 +133,7 @@ public class TaskStatusesTest {
     @Test
     public void testDestroy() throws Exception {
 
-        var request = delete("/api/task_statuses/{id}", testTaskStatus.getId()).with(token);
+        var request = delete("/api/task_statuses/{id}", testTaskStatus.getId()).with(jwt());
 
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
