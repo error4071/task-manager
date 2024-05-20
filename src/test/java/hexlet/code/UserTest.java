@@ -46,7 +46,7 @@ public class UserTest {
     private User testUser;
 
     @BeforeEach
-    public void beforeEach() {
+    public void setUp() {
         testUser = Instancio.of(modelGenerator.getUserModel())
                 .create();
         userRepository.save(testUser);
