@@ -82,7 +82,7 @@ public class TaskStatusesTest {
         var data = Instancio.of(modelGenerator.getTaskStatusModel())
                 .create();
 
-        var request = put("/api/task_statuses")
+        var request = put("/api/task_statuses/")
                 .with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(data));
