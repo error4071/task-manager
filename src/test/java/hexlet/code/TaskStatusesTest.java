@@ -79,23 +79,24 @@ public class TaskStatusesTest {
 
     @Test
     public void testCreate() throws Exception {
-        TaskStatusCreateDTO taskStatusCreateDTO = new TaskStatusCreateDTO();
+        var data = Instancio.of(modelGenerator.getTaskStatusModel())
+                .create();
 
-        taskStatusCreateDTO.setName(faker.internet().emailAddress());
-        taskStatusCreateDTO.setSlug(faker.internet().slug());
-
-        var request = post("/api/task_statuses")
+        var request = put("/api/task_statuses")
                 .with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(taskStatusCreateDTO));
+                .content(objectMapper.writeValueAsString(data));
 
-        mockMvc.perform(request)
-                .andExpect(status().isCreated());
+        var result = mockMvc
+                .perform(request)
+                .andExpect(status().isCreated())
+                .andReturn();
 
-        var taskStatusTest = taskStatusRepository.findBySlug(taskStatusCreateDTO.getSlug()).get();
+        var body = result.getResponse().getContentAsString();
 
-        assertThat(taskStatusTest).isNotNull();
-        assertThat(taskStatusTest.getName()).isEqualTo(taskStatusCreateDTO.getName());
+        assertThatJson(body).and(
+                v -> v.node("email").isEqualTo(data.getName()),
+                v -> v.node("slug").isEqualTo(data.getSlug()));
     }
 
     @Test
