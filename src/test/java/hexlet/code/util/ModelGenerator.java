@@ -24,7 +24,6 @@ public class ModelGenerator {
                 .ignore(Select.field(User::getId))
                 .supply(Select.field(User::getFirstName), () -> faker.name().firstName())
                 .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
-                .ignore(Select.field(User::getPasswordDigest))
                 .toModel();
 
         taskModel = Instancio.of(Task.class)
