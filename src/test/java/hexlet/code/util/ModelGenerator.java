@@ -22,8 +22,9 @@ public class ModelGenerator {
         var faker = new Faker();
         userModel = Instancio.of(User.class)
                 .ignore(Select.field(User::getId))
-                .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
                 .supply(Select.field(User::getFirstName), () -> faker.name().firstName())
+                .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
+                .supply(Select.field(User::getPasswordDigest), () -> faker.internet().password(3, 10))
                 .toModel();
 
         taskModel = Instancio.of(Task.class)
