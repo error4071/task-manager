@@ -40,8 +40,8 @@ public class ModelGenerator {
         taskStatusModel = Instancio.of(TaskStatus.class)
                 .ignore(Select.field(TaskStatus::getId))
                 .ignore(Select.field(TaskStatus::getCreatedAt))
-                .supply(Select.field(TaskStatus::getName), () -> faker.lorem().word())
-                .supply(Select.field(TaskStatus::getSlug), () -> faker.lorem().word())
+                .supply(Select.field(TaskStatus::getName), () -> faker.gameOfThrones().house())
+                .supply(Select.field(TaskStatus::getSlug), () -> faker.gameOfThrones().quote())
                 .toModel();
     }
 }
