@@ -140,6 +140,5 @@ public class TaskStatusesTest {
 
        mockMvc.perform(delete("/api/task_statuses/" + testTaskStatus.getId()).with(jwt()))
                .andExpect(status().isNoContent());
-
     }
 }
