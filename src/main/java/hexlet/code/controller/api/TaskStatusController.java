@@ -67,11 +67,14 @@ public class TaskStatusController {
         return taskStatusDto;
     }
 
-    @PostMapping
+    @PostMapping("/task_statuses")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create new task status")
-    public TaskStatusDTO create(@Valid @RequestBody TaskStatusCreateDTO data) {
-        return taskStatusService.create(data);
+    public TaskStatusDTO create(@RequestBody @Valid TaskStatusCreateDTO taskStatusCreateDTO) {
+        var taskStatuses = taskStatusMapper.map(taskStatusCreateDTO);
+        taskStatusRepository.save(taskStatuses);
+        var taskStatusDto = taskStatusMapper.map(taskStatuses);
+        return taskStatusDto;
     }
 
     @PutMapping("/task_statuses/{id}")
