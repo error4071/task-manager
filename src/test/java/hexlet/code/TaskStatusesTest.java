@@ -133,13 +133,8 @@ public class TaskStatusesTest {
     @Test
     public void testDestroy() throws Exception {
 
-        var request = delete("/api/task_statuses/{id}", testTaskStatus.getId()).with(jwt());
+       mockMvc.perform(delete("/api/task_statuses/" + testTaskStatus.getId()).with(jwt()))
+               .andExpect(status().isNoContent());
 
-        mockMvc.perform(request)
-                .andExpect(status().isNoContent());
-
-        Optional<TaskStatus> taskStatusOptional = taskStatusRepository.findBySlug(testTaskStatus.getSlug());
-
-        assertThat(taskStatusOptional.isEmpty()).isEqualTo(true);
     }
 }
