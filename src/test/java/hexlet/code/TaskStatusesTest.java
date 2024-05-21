@@ -100,7 +100,7 @@ public class TaskStatusesTest {
         var body = result.getResponse().getContentAsString();
 
         assertThatJson(body).and(
-                v -> v.node("email").isEqualTo(data.getName()),
+                v -> v.node("name").isEqualTo(data.getName()),
                 v -> v.node("slug").isEqualTo(data.getSlug()));
     }
 
