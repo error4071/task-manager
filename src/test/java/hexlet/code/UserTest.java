@@ -83,7 +83,7 @@ public class UserTest {
         var body = result.getResponse().getContentAsString();
 
         assertThatJson(body).and(
-                v -> v.node("password").isAbsent(),
+                v -> v.node("passwordDigest").isAbsent(),
                 v -> v.node("id").isPresent(),
                 v -> v.node("firstName").isEqualTo(data.getFirstName()),
                 v -> v.node("lastName").isEqualTo(data.getLastName()),
