@@ -38,7 +38,14 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
     private UserService userService;
+
+    @Autowired
+    private JWTUtils jwtUtils;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
