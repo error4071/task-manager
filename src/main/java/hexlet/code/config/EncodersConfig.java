@@ -24,7 +24,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 public class EncodersConfig {
 
     private RsaKeyProperties keyProperties;
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
