@@ -12,6 +12,10 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 @Mapper(
         uses = {JsonNullableMapper.class, ReferenceMapper.class},
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
@@ -29,4 +33,8 @@ public abstract class UserMapper {
 
     @Mapping(target = "passwordDigest", source = "password")
     public abstract void update(UserUpdateDTO dto, @MappingTarget User model);
+
+    public Date toDate(LocalDate createdAt) {
+        return java.util.Date.from(createdAt.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+    }
 }
