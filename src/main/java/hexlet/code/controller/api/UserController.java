@@ -39,14 +39,12 @@ public class UserController {
     private UserMapper userMapper;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private JWTUtils jwtUtils;
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
+    
+    private UserService userService;
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Show all users")

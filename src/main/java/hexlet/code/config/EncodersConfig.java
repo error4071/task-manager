@@ -23,7 +23,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 @Configuration
 @AllArgsConstructor
 public class EncodersConfig {
-    
+
     private RsaKeyProperties keyProperties;
 
     //Хэшируем пароль
