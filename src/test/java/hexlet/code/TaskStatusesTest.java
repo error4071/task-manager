@@ -67,7 +67,6 @@ public class TaskStatusesTest {
         var result = mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andReturn();
-
         var body = result.getResponse().getContentAsString();
         assertThatJson(body).isArray();
         assertThat(body).contains(String.valueOf(testTaskStatus.getId()));
