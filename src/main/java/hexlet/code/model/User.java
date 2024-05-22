@@ -44,11 +44,11 @@ public class User implements UserDetails, BaseEntity {
     private String email;
 
     @CreatedDate
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate createdAt;
 
     @LastModifiedDate
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate updatedAt;
 
     @NotBlank
