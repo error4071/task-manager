@@ -1,5 +1,6 @@
 package hexlet.code.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -43,9 +44,11 @@ public class User implements UserDetails, BaseEntity {
     private String email;
 
     @CreatedDate
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate createdAt;
 
     @LastModifiedDate
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate updatedAt;
 
     @NotBlank
