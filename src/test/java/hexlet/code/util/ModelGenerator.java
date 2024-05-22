@@ -22,7 +22,7 @@ public class ModelGenerator {
         var faker = new Faker();
         userModel = Instancio.of(User.class)
                 .ignore(Select.field(User::getId))
-                .ignore(Select.field(User::getPassword))
+                .ignore(Select.field(User::getPasswordDigest))
                 .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
                 .supply(Select.field(User::getFirstName), () -> faker.name().firstName())
                 .toModel();
