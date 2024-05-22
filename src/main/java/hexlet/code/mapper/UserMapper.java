@@ -33,8 +33,4 @@ public abstract class UserMapper {
 
     @Mapping(target = "passwordDigest", source = "password")
     public abstract void update(UserUpdateDTO dto, @MappingTarget User model);
-
-    public Date toDate(LocalDate createdAt) {
-        return java.util.Date.from(createdAt.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-    }
 }
