@@ -34,7 +34,7 @@ public class ModelGenerator {
 
         labelModel = Instancio.of(Label.class)
                 .ignore(Select.field(Label::getId))
-                .supply(Select.field(Label::getName), () -> "new")
+                .supply(Select.field(Label::getName), () -> faker.lorem().word())
                 .toModel();
 
         taskStatusModel = Instancio.of(TaskStatus.class)
