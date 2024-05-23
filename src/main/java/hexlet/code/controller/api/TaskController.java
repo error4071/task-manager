@@ -3,7 +3,6 @@ package hexlet.code.controller.api;
 import hexlet.code.dto.Task.TaskCreateDTO;
 import hexlet.code.dto.Task.TaskDTO;
 import hexlet.code.dto.Task.TaskUpdateDTO;
-import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.service.TaskService;
@@ -57,20 +56,14 @@ public class TaskController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Show task  by id")
     public TaskDTO show(@PathVariable Long id) {
-        var task = taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found"));
-        var taskDto = taskMapper.map(task);
-        return taskDto;
+        return taskService.findById(id);
     }
 
     @PostMapping("/tasks")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create new task")
     public TaskDTO create(@RequestBody @Valid TaskCreateDTO taskCreateDTO) {
-        var task = taskMapper.map(taskCreateDTO);
-        taskRepository.save(task);
-        var taskDto = taskMapper.map(task);
-        return taskDto;
+        return taskService.create(taskCreateDTO);
     }
 
     @PutMapping("/tasks/{id}")
