@@ -57,6 +57,5 @@ public class Task implements BaseEntity {
     private User assignee;
 
     @CreatedDate
-    @ToString.Include
     private LocalDate createdAt;
 }

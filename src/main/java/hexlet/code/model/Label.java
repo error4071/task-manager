@@ -33,6 +33,5 @@ public class Label implements BaseEntity {
     private String name;
 
     @CreatedDate
-    @ToString.Include
     private LocalDate createdAt;
 }

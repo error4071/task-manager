@@ -54,7 +54,7 @@ public class TaskController {
 
     @GetMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Show task  by id")
+    @Operation(summary = "Show task by id")
     public TaskDTO show(@PathVariable Long id) {
         return taskService.findById(id);
     }
