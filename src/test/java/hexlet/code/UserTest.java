@@ -30,7 +30,6 @@ import hexlet.code.util.ModelGenerator;
 @ContextConfiguration(classes = AppApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@AllArgsConstructor
 public class UserTest {
 
     @Autowired
