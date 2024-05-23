@@ -14,6 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,12 +45,10 @@ public class User implements UserDetails, BaseEntity {
     @Column(unique = true)
     private String email;
 
-    @CreationTimestamp
-    @Temporal(TIMESTAMP)
+    @CreatedDate
     private Date createdAt;
 
-    @CreationTimestamp
-    @Temporal(TIMESTAMP)
+    @CreatedDate
     private Date updatedAt;
 
     @NotBlank
