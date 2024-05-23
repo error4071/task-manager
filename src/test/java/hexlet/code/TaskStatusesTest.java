@@ -73,7 +73,7 @@ public class TaskStatusesTest {
 
     @Test
     public void testShow() throws Exception {
-        var request = get("/api/task_statuses/" + testTaskStatus.getId()).with(jwt());
+        var request = get("/api/task_statuses" + testTaskStatus.getId()).with(jwt());
         mockMvc.perform(request)
                 .andExpect(status().isOk());
     }
