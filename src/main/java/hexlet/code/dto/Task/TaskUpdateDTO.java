@@ -22,6 +22,6 @@ public class TaskUpdateDTO {
     private JsonNullable<String> content;
     private JsonNullable<Integer> index;
 
-    @NotNull
+    @NotBlank
     private JsonNullable<String> status;
 }

@@ -9,7 +9,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.FetchType;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -38,7 +37,7 @@ public class Task implements BaseEntity {
     private String description;
 
     @ManyToOne
-    @NotNull
+    @NotBlank
     private TaskStatus taskStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
