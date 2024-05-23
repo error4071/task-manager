@@ -19,28 +19,30 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDate;
 
 @Entity
+@Setter
+@Getter
 @EntityListeners(AuditingEntityListener.class)
 @ToString(includeFieldNames = true, onlyExplicitlyIncluded = true)
 @Table(name = "task_statuses")
 @EqualsAndHashCode
-@Getter
-@Setter
 
 public class TaskStatus implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @ToString.Include
     private Long id;
 
     @Column(unique = true)
     @NotNull
+    @ToString.Include
     private String name;
 
     @Column(unique = true)
     @NotNull
+    @ToString.Include
     private String slug;
 
     @CreatedDate
     private LocalDate createdAt;
-
 }
