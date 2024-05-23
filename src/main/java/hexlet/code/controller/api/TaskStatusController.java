@@ -41,9 +41,6 @@ public class TaskStatusController {
     @Autowired
     private TaskStatusService taskStatusService;
 
-    @Autowired
-    private UserUtils userUtils;
-
     @GetMapping("/task_statuses")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Show all task statuses")
@@ -61,20 +58,14 @@ public class TaskStatusController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Show task status by id")
     public TaskStatusDTO show(@PathVariable Long id) {
-        var taskStatuses = taskStatusRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Task status with id " + " not found"));
-        var taskStatusDto = taskStatusMapper.map(taskStatuses);
-        return taskStatusDto;
+        return taskStatusService.findById(id);
     }
 
     @PostMapping("/task_statuses")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create new task status")
     public TaskStatusDTO create(@RequestBody @Valid TaskStatusCreateDTO taskStatusCreateDTO) {
-        var taskStatuses = taskStatusMapper.map(taskStatusCreateDTO);
-        taskStatusRepository.save(taskStatuses);
-        var taskStatusDto = taskStatusMapper.map(taskStatuses);
-        return taskStatusDto;
+        return taskStatusService.create(taskStatusCreateDTO);
     }
 
     @PutMapping("/task_statuses/{id}")

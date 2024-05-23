@@ -58,20 +58,14 @@ public class LabelController {
     @Operation(summary = "Show label by id")
     @ResponseStatus(HttpStatus.OK)
     public LabelDTO show(@PathVariable Long id) {
-        var labels = labelRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Label with id " + id + " not found"));
-        var labelDto = labelMapper.map(labels);
-        return labelDto;
+        return labelService.findById(id);
     }
 
     @PostMapping("/labels")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create new label")
     public LabelDTO create(@RequestBody @Valid LabelCreateDTO labelCreateDTO) {
-        var label = labelMapper.map(labelCreateDTO);
-        labelRepository.save(label);
-        var labelDto = labelMapper.map(label);
-        return labelDto;
+        return labelService.create(labelCreateDTO);
     }
 
     @PutMapping("/labels/{id}")

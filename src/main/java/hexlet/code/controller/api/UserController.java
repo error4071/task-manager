@@ -41,12 +41,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private JWTUtils jwtUtils;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Show all users")
@@ -64,20 +58,14 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Show user by id")
     public UserDTO show(@PathVariable Long id) {
-        var user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Error 400"));
-        var userDto = userMapper.map(user);
-        return userDto;
+        return userService.findById(id);
     }
 
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create new user")
     public UserDTO create(@RequestBody @Valid UserCreateDTO userCreateDTO) {
-        var user = userMapper.map(userCreateDTO);
-        userRepository.save(user);
-        var userDto = userMapper.map(user);
-        return userDto;
+        return userService.create(userCreateDTO);
     }
 
     @PutMapping("/users/{id}")

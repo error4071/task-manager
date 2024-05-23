@@ -1,5 +1,6 @@
 package hexlet.code.service;
 
+import hexlet.code.dto.User.UserCreateDTO;
 import hexlet.code.dto.User.UserDTO;
 import hexlet.code.dto.User.UserUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
@@ -41,12 +42,10 @@ public final class UserService {
         return userMapper.map(user);
     }
 
-    public void create(UserDetails userData) {
-        var user = new User();
-        user.setEmail(userData.getUsername());
-        var hashedPassword = passwordEncoder.encode(userData.getPassword());
-        user.setPasswordDigest(hashedPassword);
+    public UserDTO create(UserCreateDTO userData) {
+        var user = userMapper.map(userData);
         userRepository.save(user);
+        return userMapper.map(user);
     }
 
     public UserDTO update(Long id, UserUpdateDTO userUpdateDTO) {
