@@ -25,7 +25,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Table(name = "tasks")
 @Getter
 @Setter
-@ToString(includeFieldNames = true, onlyExplicitlyIncluded = true)
+@ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 public class Task implements BaseEntity {

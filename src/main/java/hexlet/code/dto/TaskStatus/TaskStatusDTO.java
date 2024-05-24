@@ -8,7 +8,6 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class TaskStatusDTO {
     private Long id;
     private String name;
