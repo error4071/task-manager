@@ -22,8 +22,6 @@ repositories {
 }
 
 dependencies {
-	implementation project(path: ':')
-	implementation project(path: ':')
 	runtimeOnly("com.h2database:h2:2.1.214")
 	runtimeOnly("org.postgresql:postgresql:42.6.0")
 
