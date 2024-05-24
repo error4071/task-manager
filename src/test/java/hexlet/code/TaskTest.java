@@ -49,11 +49,11 @@ public class TaskTest {
 
     @BeforeEach
     public void beforeEach() {
-        var taskStatus = taskRepository.findByName("name").get();
+        var task = taskRepository.findByName("name").get();
         testTask = Instancio.of(modelGenerator.getTaskModel())
                 .set(Select.field(Task::getAssignee), null)
                 .create();
-        testTask.setTaskStatus(taskStatus.getTaskStatus());
+        testTask.setTaskStatus(task.getTaskStatus());
         taskRepository.save(testTask);
     }
 
