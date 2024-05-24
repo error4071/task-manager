@@ -6,22 +6,15 @@ import hexlet.code.dto.User.UserCreateDTO;
 import hexlet.code.mapper.LabelMapper;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.mapper.UserMapper;
-import hexlet.code.model.Label;
-import hexlet.code.model.Task;
-import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.LabelRepository;
-import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.instancio.Instancio;
-import org.instancio.Select;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -41,10 +34,6 @@ public class DataInitializer implements ApplicationRunner {
     private final LabelMapper labelMapper;
 
     private PasswordEncoder passwordEncoder;
-
-    private TaskRepository taskRepository;
-
-    private Task task;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
