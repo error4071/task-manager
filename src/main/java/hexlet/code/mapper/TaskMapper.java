@@ -38,7 +38,7 @@ public abstract class TaskMapper {
     public abstract TaskDTO map(Task model);
 
     @Mapping(target = "assignee", source = "assigneeId")
-    @Mapping(target = "taskStatus.slug", source = "status.present")
+    @Mapping(target = "taskStatus.slug", source = "status")
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
