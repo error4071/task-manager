@@ -22,6 +22,8 @@ repositories {
 }
 
 dependencies {
+	implementation project(path: ':')
+	implementation project(path: ':')
 	runtimeOnly("com.h2database:h2:2.1.214")
 	runtimeOnly("org.postgresql:postgresql:42.6.0")
 
@@ -39,6 +41,9 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 	implementation ("io.swagger.core.v3:swagger-annotations:2.2.10")
 	implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.8.0'
+
+	// https://mavenlibs.com/maven/dependency/org.apache.commons/commons-text
+	implementation group: 'org.apache.commons', name: 'commons-text', version: '1.10.0'
 
 	testImplementation(platform("org.junit:junit-bom:5.10.0"))
 	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
