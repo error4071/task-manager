@@ -42,9 +42,6 @@ dependencies {
 	implementation ("io.swagger.core.v3:swagger-annotations:2.2.10")
 	implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.8.0'
 
-	// https://mavenlibs.com/maven/dependency/org.apache.commons/commons-text
-	implementation 'org.apache.commons:commons-text:1.10.0'
-
 	testImplementation(platform("org.junit:junit-bom:5.10.0"))
 	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
 	testImplementation("net.javacrumbs.json-unit:json-unit-assertj:3.2.2")
