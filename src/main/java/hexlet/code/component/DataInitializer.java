@@ -50,7 +50,7 @@ public class DataInitializer implements ApplicationRunner {
             var statusData = new TaskStatusCreateDTO();
             String[] arr = slug.split("_");
             String data = arr[0].substring(0, 1).toUpperCase() + arr[0].substring(1);
-            var name = new StringBuilder(data);
+            var name = new StringBuilder(String.valueOf(data));
 
             if (arr.length > 1) {
                 for (var element: arr) {
@@ -59,7 +59,7 @@ public class DataInitializer implements ApplicationRunner {
             }
 
             statusData.setName(name.toString());
-            statusData.setSlug(slug);
+            statusData.setSlug(slug.toString());
             var status = taskStatusMapper.map(statusData);
             taskStatusRepository.save(status);
         });
