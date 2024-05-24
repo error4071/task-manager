@@ -35,6 +35,7 @@ public class DataInitializer implements ApplicationRunner {
 
     private PasswordEncoder passwordEncoder;
 
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         var userData = new UserCreateDTO();
