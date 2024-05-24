@@ -1,7 +1,6 @@
 package hexlet.code.repository;
 
 import hexlet.code.model.TaskStatus;
-import org.springframework.boot.BootstrapContext;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +10,5 @@ import java.util.Optional;
 public interface TaskStatusRepository extends JpaRepository<TaskStatus, Long> {
 
     Optional<TaskStatus> findById(Long id);
-    Optional<TaskStatus> findBySlug(String draft);
+    Optional<TaskStatus> findBySlug(String slug);
 }
