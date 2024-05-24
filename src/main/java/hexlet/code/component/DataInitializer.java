@@ -21,7 +21,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.apache.commons.text.CaseUtils;
+
+import org.apache.commons.text.*;
 
 import java.util.Arrays;
 import java.util.List;
