@@ -5,7 +5,6 @@ import hexlet.code.dto.TaskStatus.TaskStatusDTO;
 import hexlet.code.dto.TaskStatus.TaskStatusUpdateDTO;
 import hexlet.code.model.TaskStatus;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
