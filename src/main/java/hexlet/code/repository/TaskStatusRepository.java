@@ -12,5 +12,5 @@ public interface TaskStatusRepository extends JpaRepository<TaskStatus, Long> {
 
     Optional<TaskStatus> findById(Long id);
 
-    Optional<TaskStatus> findBySlug(String draft);
+    Optional<TaskStatus> findBySlug(String slug);
 }
