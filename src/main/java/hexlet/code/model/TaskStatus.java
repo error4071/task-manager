@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,12 +35,12 @@ public class TaskStatus implements BaseEntity {
     private Long id;
 
     @Column(unique = true)
-    @NotNull
+    @NotBlank
     @ToString.Include
     private String name;
 
     @Column(unique = true)
-    @NotNull
+    @NotBlank
     @ToString.Include
     private String slug;
 
