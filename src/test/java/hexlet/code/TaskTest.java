@@ -10,6 +10,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import hexlet.code.dto.Task.TaskDTO;
+import hexlet.code.repository.LabelRepository;
+import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
 import org.instancio.Instancio;
 import org.instancio.Select;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,12 +50,36 @@ public class TaskTest {
 
     private Task testTask;
 
+
+
+
+    @Autowired
+    private UserRepository userRepository;
+
+
+
+
+    @Autowired
+    private LabelRepository labelRepository;
+
+    private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
+
+
     @BeforeEach
-    public void beforeEach() {
-        var taskStatus = taskStatusRepository.findBySlug("draft").get();
-        testTask = Instancio.of(modelGenerator.getTaskModel())
-                .set(Select.field(Task::getAssignee), null)
-                .create();
+    public void setUp() {
+        token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
+
+        var user = userRepository.findByEmail("hexlet@example.com")
+                .orElseThrow(() -> new RuntimeException("User doesn't exist"));
+
+        var taskStatus = taskStatusRepository.findBySlug("draft")
+                .orElseThrow(() -> new RuntimeException("TaskStatus doesn't exist"));
+
+        var label = labelRepository.findByName("feature")
+                .orElseThrow(() -> new RuntimeException("Label doesn't exist"));
+
+        testTask = Instancio.of(modelGenerator.getTaskModel()).create();
+        testTask.setAssignee(user);
         testTask.setTaskStatus(taskStatus);
         taskRepository.save(testTask);
     }
