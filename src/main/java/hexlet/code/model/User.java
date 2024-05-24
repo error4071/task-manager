@@ -12,7 +12,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,18 +31,14 @@ public class User implements UserDetails, BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @ToString.Include
     private Long id;
 
-    @ToString.Include
     private String firstName;
 
-    @ToString.Include
     private String lastName;
 
     @Email
     @Column(unique = true)
-    @ToString.Include
     private String email;
 
     @CreatedDate
@@ -53,7 +48,6 @@ public class User implements UserDetails, BaseEntity {
     private LocalDate updatedAt;
 
     @NotBlank
-    @ToString.Include
     private String passwordDigest;
 
     @Override
