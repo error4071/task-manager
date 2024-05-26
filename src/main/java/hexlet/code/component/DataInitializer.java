@@ -6,6 +6,7 @@ import hexlet.code.dto.User.UserCreateDTO;
 import hexlet.code.mapper.LabelMapper;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.mapper.UserMapper;
+import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.UserRepository;
@@ -38,20 +39,28 @@ public class DataInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        addSuperUser();
+        addDefaultSlugs();
+        addLabel();
+    }
+
+    public void addSuperUser() {
         var userData = new UserCreateDTO();
         userData.setEmail("hexlet@example.com");
-        userData.setPassword(passwordEncoder.encode("qwerty"));
+        userData.setPassword("qwerty");
         var user = userMapper.map(userData);
+        var hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPasswordDigest(hashedPassword);
         userRepository.save(user);
     }
 
-    public void addSlug() {
-        List<String> defaultSlug = List.of("draft", "to_review", "to_be_fixed", "to_publish", "published");
-        defaultSlug.forEach(slug -> {
+    public void addDefaultSlugs() {
+        List<String> defaultSlugs = List.of("draft", "to_review", "to_be_fixed", "to_publish", "published");
+        defaultSlugs.forEach(slug -> {
             var statusData = new TaskStatusCreateDTO();
             String[] arr = slug.split("_");
-            String data = arr[0].substring(0, 1).toUpperCase() + arr[0].substring(1);
-            var name = new StringBuilder(String.valueOf(data));
+            String first = arr[0].substring(0, 1).toUpperCase() + arr[0].substring(1);
+            var name = new StringBuilder(first);
 
             if (arr.length > 1) {
                 for (var element: arr) {
@@ -60,7 +69,7 @@ public class DataInitializer implements ApplicationRunner {
             }
 
             statusData.setName(name.toString());
-            statusData.setSlug(slug.toString());
+            statusData.setSlug(slug);
             var status = taskStatusMapper.map(statusData);
             taskStatusRepository.save(status);
         });
