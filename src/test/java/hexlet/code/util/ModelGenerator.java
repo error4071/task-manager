@@ -12,7 +12,6 @@ import org.instancio.Model;
 import org.instancio.Select;
 
 @Getter
-@AllArgsConstructor
 public class ModelGenerator {
 
     private Model<User> userModel;
