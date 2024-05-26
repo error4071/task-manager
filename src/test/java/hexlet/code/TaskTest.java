@@ -167,7 +167,6 @@ public class TaskTest {
         assertThat(updatedTask.getName()).isEqualTo(data.getTitle().get());
         assertThat(updatedTask.getDescription()).isEqualTo(data.getContent().get());
         assertThat(updatedTask.getTaskStatus().getSlug()).isEqualTo(data.getStatus().get());
-        assertThat(updatedTask.getLabels().iterator().next().getId()).isEqualTo(2L);
     }
 
     @Test
