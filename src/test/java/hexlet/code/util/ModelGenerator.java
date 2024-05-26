@@ -21,7 +21,6 @@ public class ModelGenerator {
     private Model<TaskStatus> taskStatusModel;
     private Model<Label> labelModel;
 
-    @Autowired
     private static Faker faker = new Faker();
 
     public ModelGenerator() {
