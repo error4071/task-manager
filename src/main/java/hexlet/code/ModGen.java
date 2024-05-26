@@ -12,6 +12,7 @@ import org.instancio.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
+
 public class ModGen {
 
     private Model<User> userModel;

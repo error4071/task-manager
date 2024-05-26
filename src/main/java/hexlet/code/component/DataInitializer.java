@@ -36,11 +36,10 @@ public class DataInitializer implements ApplicationRunner {
 
     private PasswordEncoder passwordEncoder;
 
-
     @Override
     public void run(ApplicationArguments args) throws Exception {
         addSuperUser();
-        addDefaultSlugs();
+        addSlugs();
         addLabel();
     }
 
@@ -54,7 +53,7 @@ public class DataInitializer implements ApplicationRunner {
         userRepository.save(user);
     }
 
-    public void addDefaultSlugs() {
+    public void addSlugs() {
         List<String> defaultSlugs = List.of("draft", "to_review", "to_be_fixed", "to_publish", "published");
         defaultSlugs.forEach(slug -> {
             var statusData = new TaskStatusCreateDTO();
