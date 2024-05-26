@@ -47,9 +47,7 @@ public class DataInitializer implements ApplicationRunner {
 
     private final TaskRepository taskRepository;
 
-    private final Task task;
-
-    private final modGenerator modGenerator;
+    private final modGenerator generator;
 
 
     @Override
@@ -84,7 +82,7 @@ public class DataInitializer implements ApplicationRunner {
                     return taskStatus;
                 }).toList();
 
-        var tasks = Instancio.ofList(modGenerator.getTaskModel())
+        var tasks = Instancio.ofList(generator.getTaskModel())
                 .size(10)
                 .generate(Select.field(Task::getTaskStatus), gen -> gen.oneOf(taskStatuses))
                 .supply(Select.field(Task::getAssignee), () -> user)
