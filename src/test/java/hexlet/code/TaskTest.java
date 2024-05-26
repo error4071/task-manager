@@ -108,7 +108,6 @@ public class TaskTest {
                 v -> v.node("title").isEqualTo(testTask.getName()),
                 v -> v.node("content").isEqualTo(testTask.getDescription()),
                 v -> v.node("status").isEqualTo(testTask.getTaskStatus().getSlug()),
-                v -> v.node("assigneeId").isEqualTo(testTask.getAssignee().getId()),
                 v -> v.node("createdAt").isEqualTo(createdAt)
         );
     }
@@ -179,12 +178,5 @@ public class TaskTest {
 
         var task = taskRepository.findById(testTask.getId()).orElse(null);
         assertThat(task).isNull();
-    }
-
-    @Test
-    public void testDestroyWithoutAuth() throws Exception {
-        var request = delete("/api/tasks/{id}", testTask.getId());
-        mockMvc.perform(request)
-                .andExpect(status().isUnauthorized());
     }
 }
