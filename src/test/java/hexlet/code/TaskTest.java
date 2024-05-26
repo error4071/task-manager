@@ -10,6 +10,7 @@ import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
 import net.datafaker.Faker;
 import org.instancio.Instancio;
+import org.instancio.Select;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,22 +69,12 @@ public class TaskTest {
     private Task testTask;
 
     @BeforeEach
-    public void setUp() {
-        token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
-
-        var user = userRepository.findByEmail("hexlet@example.com")
-                .orElseThrow(() -> new RuntimeException("User doesn't exist"));
-
-        var taskStatus = taskStatusRepository.findBySlug("draft")
-                .orElseThrow(() -> new RuntimeException("TaskStatus doesn't exist"));
-
-        var label = labelRepository.findByName("feature")
-                .orElseThrow(() -> new RuntimeException("Label doesn't exist"));
-
-        testTask = Instancio.of(modelGenerator.getTaskModel()).create();
-        testTask.setAssignee(user);
+    public void beforeEach() {
+        var taskStatus = taskStatusRepository.findBySlug("draft").get();
+        testTask = Instancio.of(modelGenerator.getTaskModel())
+                .set(Select.field(Task::getAssignee), null)
+                .create();
         testTask.setTaskStatus(taskStatus);
-        testTask.setLabels(Set.of(label));
         taskRepository.save(testTask);
     }
 
