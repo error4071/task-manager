@@ -98,6 +98,8 @@ public class TaskTest {
         data.setTitle(name);
         data.setStatus(taskStatus.getSlug());
 
+        taskStatusRepository.save(taskStatus);
+
         var request = post("/api/tasks").with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
