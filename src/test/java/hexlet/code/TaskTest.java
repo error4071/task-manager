@@ -51,8 +51,10 @@ public class TaskTest {
 
     private Task testTask;
 
+    @Autowired
     private UserRepository userRepository;
 
+    @Autowired
     private LabelRepository labelRepository;
 
     @BeforeEach

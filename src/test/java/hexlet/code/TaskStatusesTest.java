@@ -40,9 +40,6 @@ public class TaskStatusesTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private Faker faker;
-
-    @Autowired
     private TaskStatusRepository taskStatusRepository;
 
     @Autowired
@@ -51,8 +48,6 @@ public class TaskStatusesTest {
     private ModelGenerator modelGenerator = new ModelGenerator();
 
     private TaskStatus testTaskStatus;
-
-    private TaskStatusMapper taskStatusMapper;
 
     @BeforeEach
     public void beforeEach() {
