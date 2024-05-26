@@ -1,4 +1,3 @@
-
 package hexlet.code.component;
 
 import hexlet.code.dto.Label.LabelCreateDTO;
@@ -24,42 +23,35 @@ public class DataInitializer implements ApplicationRunner {
 
     private final UserRepository userRepository;
 
-    private final UserMapper userMapper;
-
-    private final PasswordEncoder passwordEncoder;
-
     private final TaskStatusRepository taskStatusRepository;
-
-    private final TaskStatusMapper taskStatusMapper;
 
     private final LabelRepository labelRepository;
 
+    private final UserMapper userMapper;
+
+    private final TaskStatusMapper taskStatusMapper;
+
     private final LabelMapper labelMapper;
+
+    private PasswordEncoder passwordEncoder;
+
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        addSuperUser();
-        addDefaultSlugs();
-        addDefaultLabels();
-    }
-
-    public void addSuperUser() {
         var userData = new UserCreateDTO();
         userData.setEmail("hexlet@example.com");
-        userData.setPassword("qwerty");
+        userData.setPassword(passwordEncoder.encode("qwerty"));
         var user = userMapper.map(userData);
-        var hashedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPasswordDigest(hashedPassword);
         userRepository.save(user);
     }
 
-    public void addDefaultSlugs() {
-        List<String> defaultSlugs = List.of("draft", "to_review", "to_be_fixed", "to_publish", "published");
-        defaultSlugs.forEach(slug -> {
+    public void addSlug() {
+        List<String> defaultSlug = List.of("draft", "to_review", "to_be_fixed", "to_publish", "published");
+        defaultSlug.forEach(slug -> {
             var statusData = new TaskStatusCreateDTO();
             String[] arr = slug.split("_");
-            String first = arr[0].substring(0, 1).toUpperCase() + arr[0].substring(1);
-            var name = new StringBuilder(first);
+            String data = arr[0].substring(0, 1).toUpperCase() + arr[0].substring(1);
+            var name = new StringBuilder(String.valueOf(data));
 
             if (arr.length > 1) {
                 for (var element: arr) {
@@ -68,15 +60,15 @@ public class DataInitializer implements ApplicationRunner {
             }
 
             statusData.setName(name.toString());
-            statusData.setSlug(slug);
+            statusData.setSlug(slug.toString());
             var status = taskStatusMapper.map(statusData);
             taskStatusRepository.save(status);
         });
     }
 
-    public void addDefaultLabels() {
-        List<String> defaultLabels = List.of("feature", "bug");
-        defaultLabels.forEach(name -> {
+    public void addLabel() {
+        List<String> labels = List.of("feature", "bug");
+        labels.forEach(name -> {
             var labelData = new LabelCreateDTO();
             labelData.setName(name);
             var label = labelMapper.map(labelData);
