@@ -22,18 +22,28 @@ public class ModGen {
         var faker = new Faker();
         userModel = Instancio.of(User.class)
                 .ignore(Select.field(User::getId))
+                .ignore(Select.field(User::getCreatedAt))
+                .ignore(Select.field(User::getUpdatedAt))
+                .supply(Select.field(User::getPasswordDigest), () -> faker.internet().password(3, 10))
                 .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
                 .supply(Select.field(User::getFirstName), () -> faker.name().firstName())
+                .supply(Select.field(User::getLastName), () -> faker.name().lastName())
                 .toModel();
 
         taskModel = Instancio.of(Task.class)
                 .ignore(Select.field(Task::getId))
-                .supply(Select.field(Task::getName), () -> faker.gameOfThrones().house())
-                .supply(Select.field(Task::getDescription), () -> faker.gameOfThrones().quote())
+                .ignore(Select.field(Task::getCreatedAt))
+                .ignore(Select.field(Task::getTaskStatus))
+                .ignore(Select.field(Task::getAssignee))
+                .ignore(Select.field(Task::getLabels))
+                .supply(Select.field(Task::getName), () -> faker.lorem().word())
+                .supply(Select.field(Task::getDescription), () -> faker.lorem().sentence())
+                .supply(Select.field(Task::getIndex), () -> faker.number().positive())
                 .toModel();
 
         labelModel = Instancio.of(Label.class)
                 .ignore(Select.field(Label::getId))
+                .ignore(Select.field(Label::getCreatedAt))
                 .supply(Select.field(Label::getName), () -> faker.text().text(3, 1000))
                 .toModel();
 
@@ -41,7 +51,8 @@ public class ModGen {
                 .ignore(Select.field(TaskStatus::getId))
                 .ignore(Select.field(TaskStatus::getCreatedAt))
                 .supply(Select.field(TaskStatus::getName), () -> faker.lorem().word())
-                .supply(Select.field(TaskStatus::getSlug), () -> faker.lorem().sentence())
+                .supply(Select.field(TaskStatus::getSlug), () -> faker.lorem().word())
                 .toModel();
     }
 }
+

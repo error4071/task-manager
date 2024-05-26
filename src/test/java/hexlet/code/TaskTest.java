@@ -10,6 +10,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import hexlet.code.dto.Task.TaskDTO;
+import hexlet.code.repository.LabelRepository;
+import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
 import org.instancio.Instancio;
 import org.instancio.Select;
@@ -25,6 +27,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.model.Task;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
+
+import java.util.Set;
 
 @ContextConfiguration(classes = AppApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -47,13 +51,27 @@ public class TaskTest {
 
     private Task testTask;
 
+    private UserRepository userRepository;
+
+    private LabelRepository labelRepository;
+
     @BeforeEach
-    public void beforeEach() {
-        var taskStatus = taskStatusRepository.findBySlug("draft").get();
-        testTask = Instancio.of(modelGenerator.getTaskModel())
-                .set(Select.field(Task::getAssignee), null)
-                .create();
+    public void setUp() {
+        jwt().jwt(builder -> builder.subject("hexlet@example.com"));
+
+        var user = userRepository.findByEmail("hexlet@example.com")
+                .orElseThrow(() -> new RuntimeException("User doesn't exist"));
+
+        var taskStatus = taskStatusRepository.findBySlug("draft")
+                .orElseThrow(() -> new RuntimeException("TaskStatus doesn't exist"));
+
+        var label = labelRepository.findByName("feature")
+                .orElseThrow(() -> new RuntimeException("Label doesn't exist"));
+
+        testTask = Instancio.of(modelGenerator.getTaskModel()).create();
+        testTask.setAssignee(user);
         testTask.setTaskStatus(taskStatus);
+        testTask.setLabels(Set.of(label));
         taskRepository.save(testTask);
     }
 
