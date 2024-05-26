@@ -97,12 +97,13 @@ public class TaskTest {
         var name = "New Task Name";
         data.setTitle(name);
         data.setStatus(taskStatus.getSlug());
-
-        taskStatusRepository.save(taskStatus);
-
+        
         var request = post("/api/tasks").with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
+
+        taskStatusRepository.save(taskStatus);
+
         var result = mockMvc.perform(request)
                 .andExpect(status().isCreated())
                 .andReturn();
