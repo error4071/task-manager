@@ -1,21 +1,31 @@
 package hexlet.code.component;
 
+import hexlet.code.modGenerator;
 import hexlet.code.dto.Label.LabelCreateDTO;
 import hexlet.code.dto.TaskStatus.TaskStatusCreateDTO;
 import hexlet.code.dto.User.UserCreateDTO;
 import hexlet.code.mapper.LabelMapper;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.mapper.UserMapper;
+import hexlet.code.model.Label;
+import hexlet.code.model.Task;
+import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.LabelRepository;
+import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.instancio.Instancio;
+import org.instancio.Select;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.text.CaseUtils;
 
 @Component
 @AllArgsConstructor
@@ -35,14 +45,51 @@ public class DataInitializer implements ApplicationRunner {
 
     private PasswordEncoder passwordEncoder;
 
+    private final TaskRepository taskRepository;
+
+    private final Task task;
+
+    private final modGenerator modGenerator;
+
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+
+        addModels();
+    }
+
+    private void addModels() {
         var userData = new UserCreateDTO();
         userData.setEmail("hexlet@example.com");
-        userData.setPassword(passwordEncoder.encode("qwerty"));
+        userData.setPassword("qwerty");
         var user = userMapper.map(userData);
         userRepository.save(user);
+
+        var labelNames = Arrays.asList("bug", "feature");
+        labelNames.stream()
+                .map(name -> {
+                    var label = new Label();
+                    label.setName(name);
+                    labelRepository.save(label);
+                    return label;
+                }).toList();
+
+        var statusNames = Arrays.asList("draft", "to_review", "to_be_fixed", "to_publish", "published");
+        var taskStatuses = statusNames.stream()
+                .map(name -> {
+                    var taskStatus = new TaskStatus();
+                    taskStatus.setSlug(name);
+                    taskStatus.setName(CaseUtils.toCamelCase(name, true, new char[] { '_' }));
+                    taskStatusRepository.save(taskStatus);
+                    return taskStatus;
+                }).toList();
+
+        var tasks = Instancio.ofList(modGenerator.getTaskModel())
+                .size(10)
+                .generate(Select.field(Task::getTaskStatus), gen -> gen.oneOf(taskStatuses))
+                .supply(Select.field(Task::getAssignee), () -> user)
+                .create();
+        taskRepository.saveAll(tasks);
     }
 
     public void addSlug() {
@@ -51,7 +98,7 @@ public class DataInitializer implements ApplicationRunner {
             var statusData = new TaskStatusCreateDTO();
             String[] arr = slug.split("_");
             String data = arr[0].substring(0, 1).toUpperCase() + arr[0].substring(1);
-            var name = new StringBuilder(String.valueOf(data));
+            var name = new StringBuilder((data));
 
             if (arr.length > 1) {
                 for (var element: arr) {
