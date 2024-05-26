@@ -38,12 +38,12 @@ public class DataInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        addSuperUser();
+        addUser();
         addSlugs();
         addLabel();
     }
 
-    public void addSuperUser() {
+    public void addUser() {
         var userData = new UserCreateDTO();
         userData.setEmail("hexlet@example.com");
         userData.setPassword("qwerty");
