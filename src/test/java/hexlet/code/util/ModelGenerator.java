@@ -21,8 +21,7 @@ public class ModelGenerator {
     private Model<TaskStatus> taskStatusModel;
     private Model<Label> labelModel;
 
-    @Autowired
-    private Faker faker;
+    private static Faker faker = new Faker();
 
     public ModelGenerator() {
         userModel = Instancio.of(User.class)
