@@ -40,19 +40,6 @@ public class TaskService {
 
     public TaskDTO create(TaskCreateDTO taskData) {
         var task = taskMapper.map(taskData);
-
-        var assigneeId = taskData.getAssigneeId();
-
-        if (assigneeId != null) {
-            var assignee = userRepository.findById(assigneeId).orElse(null);
-            task.setAssignee(assignee);
-        }
-
-        var statusSlug = taskData.getStatus();
-        var taskStatus = taskStatusRepository.findBySlug(statusSlug).orElse(null);
-
-        task.setTaskStatus(taskStatus);
-
         taskRepository.save(task);
         return taskMapper.map(task);
     }
