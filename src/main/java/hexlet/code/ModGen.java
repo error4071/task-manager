@@ -9,10 +9,8 @@ import net.datafaker.Faker;
 import org.instancio.Instancio;
 import org.instancio.Model;
 import org.instancio.Select;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
-
 public class ModGen {
 
     private Model<User> userModel;
@@ -20,9 +18,8 @@ public class ModGen {
     private Model<TaskStatus> taskStatusModel;
     private Model<Label> labelModel;
 
-    private static Faker faker = new Faker();
-
     public ModGen() {
+        var faker = new Faker();
         userModel = Instancio.of(User.class)
                 .ignore(Select.field(User::getId))
                 .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
