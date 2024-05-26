@@ -70,7 +70,7 @@ public class TaskController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update status")
     public TaskDTO update(@PathVariable Long id, @RequestBody TaskUpdateDTO taskUpdateDTO) {
-        return taskService.update(id, taskUpdateDTO);
+        return taskService.update(taskUpdateDTO, id);
     }
 
     @DeleteMapping("/tasks/{id}")
