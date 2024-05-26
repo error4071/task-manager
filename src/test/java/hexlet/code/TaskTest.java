@@ -42,7 +42,7 @@ public class TaskTest {
 
     @Autowired
     private TaskStatusRepository taskStatusRepository;
-    
+
     private ModelGenerator modelGenerator = new ModelGenerator();
 
     private Task testTask;
