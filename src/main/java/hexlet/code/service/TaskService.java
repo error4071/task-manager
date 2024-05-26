@@ -4,9 +4,11 @@ import hexlet.code.dto.Task.TaskCreateDTO;
 import hexlet.code.dto.Task.TaskDTO;
 import hexlet.code.dto.Task.TaskUpdateDTO;
 
+import hexlet.code.dto.TaskFilterDTO;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.repository.TaskRepository;
+import hexlet.code.specification.TaskFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +19,12 @@ import java.util.List;
 public class TaskService {
 
     private TaskMapper taskMapper;
-
     private TaskRepository taskRepository;
+    private TaskFilter taskFilter;
 
-    public List<TaskDTO> getAll() {
-        var task = taskRepository.findAll();
-        return task.stream()
+    public List<TaskDTO> getAll(TaskFilterDTO filter) {
+        var task = taskFilter.build(filter);
+        return taskRepository.findAll().stream()
                 .map(taskMapper::map)
                 .toList();
     }
