@@ -29,7 +29,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Table(name = "task_statuses")
 @EqualsAndHashCode
 
-public class TaskStatus {
+public class TaskStatus implements BaseEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @EqualsAndHashCode.Include
