@@ -34,13 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class LabelTest {
 
     @Autowired
-    private Faker faker;
-
-    @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private LabelMapper labelMapper;
 
     @Autowired
     private LabelRepository labelRepository;

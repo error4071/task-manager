@@ -14,7 +14,6 @@ import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
 import org.instancio.Instancio;
-import org.instancio.Select;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,12 +57,22 @@ public class TaskTest {
     private LabelRepository labelRepository;
 
     @BeforeEach
-    public void beforeEach() {
-        var taskStatus = taskStatusRepository.findBySlug("draft").get();
-        testTask = Instancio.of(modelGenerator.getTaskModel())
-                .set(Select.field(Task::getAssignee), null)
-                .create();
+    public void setUp() {
+        jwt().jwt(builder -> builder.subject("hexlet@example.com"));
+
+        var user = userRepository.findByEmail("hexlet@example.com")
+                .orElseThrow(() -> new RuntimeException("User doesn't exist"));
+
+        var taskStatus = taskStatusRepository.findBySlug("draft")
+                .orElseThrow(() -> new RuntimeException("TaskStatus doesn't exist"));
+
+        var label = labelRepository.findByName("feature")
+                .orElseThrow(() -> new RuntimeException("Label doesn't exist"));
+
+        testTask = Instancio.of(modelGenerator.getTaskModel()).create();
+        testTask.setAssignee(user);
         testTask.setTaskStatus(taskStatus);
+        testTask.setLabels(Set.of(label));
         taskRepository.save(testTask);
     }
 
