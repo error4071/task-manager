@@ -35,7 +35,6 @@ public class TaskStatus {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @NotNull
     @Size(min = 1)
     @Column(unique = true)
     private String name;
