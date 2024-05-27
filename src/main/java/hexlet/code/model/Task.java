@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -41,12 +42,14 @@ public class Task implements BaseEntity {
     private String description;
 
     @ManyToOne
+    @NotNull
     private TaskStatus taskStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User assignee;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @NotNull
     private Set<Label> labels = new HashSet<>();
 
     @CreatedDate
