@@ -44,14 +44,12 @@ public class Task implements BaseEntity {
     private String description;
 
     @ManyToOne
-    @NotNull
     private TaskStatus taskStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User assignee;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-    @NotNull
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Label> labels = new HashSet<>();
 
     @CreatedDate
