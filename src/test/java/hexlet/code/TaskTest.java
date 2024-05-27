@@ -91,6 +91,7 @@ public class TaskTest {
 
     @Test
     public void testCreate() throws Exception {
+        taskRepository.save(testTask);
         var taskStatus = taskStatusRepository.findBySlug("draft").get();
         var data = new TaskDTO();
         var name = "New Task Name";
