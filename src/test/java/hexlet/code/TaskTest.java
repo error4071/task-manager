@@ -1,8 +1,11 @@
 package hexlet.code;
 
+import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -86,7 +89,35 @@ public class TaskTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    public void testCreate() throws Exception {
+        var taskStatus = taskStatusRepository.findBySlug("draft").get();
+        var data = new TaskDTO();
+        var name = "New Task Name";
+        data.setTitle(name);
+        data.setStatus(taskStatus.getSlug());
 
+        taskStatusRepository.save(taskStatus);
+
+        var request = post("/api/tasks").with(jwt())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(data));
+
+        var result = mockMvc.perform(request)
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        var body = result.getResponse().getContentAsString();
+
+        assertThatJson(body).and(
+                v -> v.node("id").isPresent(),
+                v -> v.node("content").isPresent(),
+                v -> v.node("title").isPresent(),
+                v -> v.node("status").isEqualTo(data.getStatus()));
+
+        var task = taskRepository.findByName(name).get();
+        assertNotNull(task);
+    }
 
     @Test
     public void testUpdate() throws Exception {
