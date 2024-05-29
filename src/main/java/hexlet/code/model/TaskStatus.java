@@ -37,15 +37,10 @@ public class TaskStatus {
     @ToString.Include
     private Long id;
 
-    @ToString.Include
-    @NotNull
-    @Size(min = 1)
     @Column(unique = true)
     private String name;
 
-    @ToString.Include
     @Column(unique = true)
-    @Size(min = 1)
     private String slug;
 
     @CreatedDate
