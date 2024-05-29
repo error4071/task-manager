@@ -47,6 +47,6 @@ public class TaskStatus implements BaseEntity {
     @CreatedDate
     private LocalDate createdAt;
 
-    @OneToMany(mappedBy = "taskStatus", fetch = FetchType.EAGER)
+    @OneToMany
     private List<Task> tasks;
 }
