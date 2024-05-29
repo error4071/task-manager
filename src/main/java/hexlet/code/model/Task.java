@@ -43,7 +43,7 @@ public class Task {
 
     @NotNull
     @ToString.Include
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private TaskStatus taskStatus;
 
     @ToString.Include
