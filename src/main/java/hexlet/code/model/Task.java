@@ -1,59 +1,65 @@
 package hexlet.code.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.Date;
 import java.util.Set;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
+import static jakarta.persistence.GenerationType.AUTO;
+import static jakarta.persistence.TemporalType.TIMESTAMP;
 
 @Entity
-@Table(name = "tasks")
-@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class Task implements BaseEntity {
-
+@Table(name = "tasks")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Task {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = AUTO)
     private Long id;
 
-    private Integer index;
-
-    @NotBlank
-    private String name;
-
-    @Column(columnDefinition = "TEXT")
-    private String description;
-
-    @ManyToOne
-    @NotNull
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    private TaskStatus taskStatus;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User author;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private User assignee;
+    private User executor;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @NotNull
-    private Set<Label> labels = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    private TaskStatus taskStatus;
 
-    @CreatedDate
-    private LocalDate createdAt;
+    @NotBlank
+    @Size(min = 3, max = 1000)
+    private String name;
+
+    private String description;
+
+    @CreationTimestamp
+    @Temporal(TIMESTAMP)
+    private Date createdAt;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "task_label",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "label_id"))
+    private Set<Label> labels;
 }
