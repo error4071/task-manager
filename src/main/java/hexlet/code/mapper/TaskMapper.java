@@ -16,7 +16,6 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
@@ -50,10 +49,4 @@ public abstract class TaskMapper {
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
-
-    @Named("statusToTaskStatus")
-    public TaskStatus statusToTaskStatus(String status) {
-        return taskStatusRepository.findBySlug(status)
-                .orElseThrow(() -> new ResourceNotFoundException("TaskStatus with slug " + status + " not found"));
-    }
 }
