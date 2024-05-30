@@ -28,11 +28,10 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @Builder
 
-public class TaskStatus {
+public class TaskStatus implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-
     private Long id;
 
     @Column(unique = true)
