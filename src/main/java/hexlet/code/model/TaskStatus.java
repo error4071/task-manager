@@ -9,8 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.GeneratedValue;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -24,6 +23,9 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "task_statuses")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 
 public class TaskStatus {
 
