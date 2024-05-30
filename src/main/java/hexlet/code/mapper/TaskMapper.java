@@ -3,11 +3,8 @@ package hexlet.code.mapper;
 import hexlet.code.dto.Task.TaskCreateDTO;
 import hexlet.code.dto.Task.TaskDTO;
 import hexlet.code.dto.Task.TaskUpdateDTO;
-import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.model.Task;
 
-import hexlet.code.model.TaskStatus;
-import hexlet.code.repository.TaskStatusRepository;
 import lombok.Getter;
 
 import org.mapstruct.Mapper;
@@ -16,7 +13,6 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.MappingTarget;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @Mapper(
@@ -27,9 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 )
 
 public abstract class TaskMapper {
-
-    @Autowired
-    private TaskStatusRepository taskStatusRepository;
 
     @Mapping(target = "assignee", source = "assigneeId")
     @Mapping(target = "name", source = "title")
