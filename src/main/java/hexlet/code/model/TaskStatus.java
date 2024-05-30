@@ -17,7 +17,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -48,14 +47,4 @@ public class TaskStatus implements BaseEntity {
 
     @OneToMany(mappedBy = "taskStatus", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<Task> tasks;
-
-    public void addTask(Task task) {
-        tasks.add(task);
-        task.setTaskStatus(this);
-    }
-
-    public void removeTask(Task task) {
-        tasks.remove(task);
-        task.setTaskStatus(null);
-    }
 }

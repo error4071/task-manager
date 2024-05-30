@@ -8,7 +8,6 @@ import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
-import hexlet.code.repository.UserRepository;
 import hexlet.code.specification.TaskFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -21,8 +20,6 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepository taskRepository;
-
-    private final UserRepository userRepository;
 
     private final TaskStatusRepository taskStatusRepository;
 
