@@ -41,6 +41,6 @@ public class TaskStatus {
     @CreatedDate
     private LocalDate createdAt;
 
-    @OneToMany(mappedBy = "tasks", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "taskStatus", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<Task> tasks;
 }
