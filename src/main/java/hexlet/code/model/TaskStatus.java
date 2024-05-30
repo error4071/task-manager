@@ -9,7 +9,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.GeneratedValue;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -24,9 +25,6 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "task_statuses")
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 
 public class TaskStatus implements BaseEntity {
 
@@ -43,6 +41,4 @@ public class TaskStatus implements BaseEntity {
     @CreatedDate
     private LocalDate createdAt;
 
-    @OneToMany(mappedBy = "taskStatus", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    private List<Task> tasks = new ArrayList<>();;
 }
