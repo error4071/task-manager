@@ -6,15 +6,15 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -43,7 +43,7 @@ public class Task implements BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @Cascade(CascadeType.MERGE)
     private TaskStatus taskStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
