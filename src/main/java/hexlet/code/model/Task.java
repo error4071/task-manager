@@ -40,7 +40,7 @@ public class Task implements BaseEntity {
     private String description;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private TaskStatus taskStatus;
 
     @ManyToOne
