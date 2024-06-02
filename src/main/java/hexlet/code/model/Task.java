@@ -42,7 +42,7 @@ public class Task implements BaseEntity {
     private String description;
 
     @ManyToOne
-    @Cascade(CascadeType.DELETE_ORPHAN)
+    @Cascade(CascadeType.REFRESH)
     private TaskStatus taskStatus;
 
     @ManyToOne
