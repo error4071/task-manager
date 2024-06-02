@@ -44,7 +44,7 @@ public class Task implements BaseEntity {
     private String description;
 
     @ManyToOne
-    @Cascade(CascadeType.MERGE)
+    @Cascade(CascadeType.PERSIST)
     private TaskStatus taskStatus;
 
     @ManyToOne
