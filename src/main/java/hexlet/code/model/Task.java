@@ -1,14 +1,6 @@
 package hexlet.code.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.validation.constraints.NotBlank;
@@ -40,7 +32,7 @@ public class Task implements BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "taskStatus")
     private TaskStatus taskStatus;
 
