@@ -33,6 +33,7 @@ public class Task implements BaseEntity {
     private String description;
 
     @ManyToOne(cascade = CascadeType.MERGE)
+    @NotBlank
     private TaskStatus taskStatus;
 
     @ManyToOne
