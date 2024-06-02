@@ -5,15 +5,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -40,4 +44,8 @@ public class TaskStatus implements BaseEntity {
 
     @CreatedDate
     private LocalDate createdAt;
+
+    @OneToMany
+    @Cascade(CascadeType.ALL)
+    private List<Task> tasks;
 }
