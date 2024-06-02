@@ -1,5 +1,6 @@
 package hexlet.code.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class Task implements BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "task_statuses")
+    @JsonBackReference
     private TaskStatus taskStatus;
 
     @ManyToOne
