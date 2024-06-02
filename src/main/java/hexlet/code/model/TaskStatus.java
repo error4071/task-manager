@@ -6,8 +6,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -29,13 +28,12 @@ public class TaskStatus implements BaseEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @NotNull
-    @Size(min = 1)
     @Column(unique = true)
+    @NotBlank
     private String name;
 
     @Column(unique = true)
-    @Size(min = 1)
+    @NotBlank
     private String slug;
 
     @CreatedDate
