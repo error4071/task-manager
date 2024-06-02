@@ -2,8 +2,8 @@ package hexlet.code.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -17,7 +17,7 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-@AllArgsConstructor
+@NoArgsConstructor
 public class Task implements BaseEntity {
 
     @Id
