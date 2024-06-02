@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
@@ -19,6 +20,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -48,7 +50,7 @@ public class Task implements BaseEntity {
     private User assignee;
 
     @ManyToMany
-    private Set<Label> labels;
+    private Set<Label> labels = new HashSet<>();
 
     @CreatedDate
     private LocalDate createdAt;
