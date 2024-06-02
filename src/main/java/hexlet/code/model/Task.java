@@ -41,7 +41,7 @@ public class Task implements BaseEntity {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "tasks")
+    @JoinColumn(name = "taskStatus")
     private TaskStatus taskStatus;
 
     @ManyToOne
