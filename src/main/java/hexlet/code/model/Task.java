@@ -1,66 +1,48 @@
 package hexlet.code.model;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
-
-import java.time.LocalDate;
-
-import hexlet.code.model.BaseEntity;
-import hexlet.code.model.TaskStatus;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
+@Table(name = "tasks")
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-@EntityListeners(AuditingEntityListener.class)
-@ToString(includeFieldNames = true, onlyExplicitlyIncluded = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "posts")
 public class Task implements BaseEntity {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @ToString.Include
-    @EqualsAndHashCode.Include
     private Long id;
 
-    @JsonIgnore
-    @ManyToOne(optional = false)
-    // @NotNull
-    private TaskStatus taskStatus;
-
-    @Column(unique = true)
-    @ToString.Include
-    @NotNull
-    private String slug;
+    private Integer index;
 
     @NotBlank
-    @ToString.Include
     private String name;
 
-    @NotBlank
-    @ToString.Include
     @Column(columnDefinition = "TEXT")
-    private String body;
+    private String description;
 
-    @LastModifiedDate
-    private LocalDate updatedAt;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @NotNull
+    private TaskStatus taskStatus;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User assignee;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @NotNull
+    private Set<Label> labels = new HashSet<>();
 
     @CreatedDate
     private LocalDate createdAt;
