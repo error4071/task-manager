@@ -1,55 +1,47 @@
 package hexlet.code.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 @Entity
-@Table(name = "task_statuses")
-@EntityListeners(AuditingEntityListener.class)
-@Getter
 @Setter
-@ToString(onlyExplicitlyIncluded = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Getter
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "task_statuses")
+
 public class TaskStatus implements BaseEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @ToString.Include
-    @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
+    @NotNull
     @Size(min = 1)
     @Column(unique = true)
-    @NotBlank
-    @ToString.Include
     private String name;
 
-    @Size(min = 1)
     @Column(unique = true)
-    @NotBlank
-    @ToString.Include
+    @Size(min = 1)
     private String slug;
 
     @CreatedDate
     private LocalDate createdAt;
-
-    @OneToMany(mappedBy = "taskStatus")
-    private List<Task> tasks = new ArrayList<>();
 }
