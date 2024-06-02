@@ -18,9 +18,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -46,12 +44,7 @@ public class Task implements BaseEntity {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @NotNull
-    private List<TaskStatus> taskStatuses = new ArrayList<>();
-
-    public void addTaskStatus(TaskStatus taskStatus) {
-        taskStatuses.add(taskStatus);
-        taskStatus.setName(String.valueOf(this));
-    }
+    private TaskStatus taskStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User assignee;
