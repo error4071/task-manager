@@ -40,7 +40,7 @@ public class Task implements BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private User assignee;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @NotNull
     private Set<Label> labels = new HashSet<>();
 
