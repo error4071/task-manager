@@ -33,7 +33,7 @@ public class Task implements BaseEntity {
     private String description;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "taskStatus")
+    @JoinColumn(name = "task_statuses")
     private TaskStatus taskStatus;
 
     @ManyToOne
