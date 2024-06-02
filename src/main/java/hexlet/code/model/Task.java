@@ -42,7 +42,7 @@ public class Task implements BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @NotNull
     private TaskStatus taskStatus;
 
