@@ -42,7 +42,7 @@ public class Task implements BaseEntity {
     private String description;
 
     @ManyToOne
-    @Cascade({CascadeType.ALL})
+    @Cascade(CascadeType.ALL)
     private TaskStatus taskStatus;
 
     @ManyToOne
