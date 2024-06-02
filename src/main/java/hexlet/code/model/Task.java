@@ -34,7 +34,6 @@ public class Task implements BaseEntity {
     private String description;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @NotNull
     private TaskStatus taskStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
