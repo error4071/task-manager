@@ -33,6 +33,7 @@ public class Task implements BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @ManyToOne()
     private TaskStatus taskStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
