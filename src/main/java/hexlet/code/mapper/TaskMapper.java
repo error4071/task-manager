@@ -57,12 +57,4 @@ public abstract class TaskMapper {
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
-
-    public Set<Label> toLabelsSet(List<Long> taskLabelIds) {
-        return new HashSet<>(labelRepository.findByIdIn(taskLabelIds).orElse(new HashSet<>()));
-    }
-
-    public Date toDate(LocalDate createdAt) {
-        return java.util.Date.from(createdAt.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-    }
 }
