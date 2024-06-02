@@ -11,7 +11,6 @@ import jakarta.persistence.Table;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
@@ -43,7 +42,7 @@ public class Task implements BaseEntity {
     private String description;
 
     @ManyToOne
-    @Cascade(CascadeType.MERGE)
+    @Cascade(CascadeType.PERSIST)
     private TaskStatus taskStatus;
 
     @ManyToOne
