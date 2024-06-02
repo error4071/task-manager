@@ -44,7 +44,7 @@ public class Task implements BaseEntity {
     @ManyToOne(cascade = CascadeType.MERGE)
     private TaskStatus taskStatus;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private User assignee;
 
     @ManyToMany(fetch = FetchType.EAGER)
