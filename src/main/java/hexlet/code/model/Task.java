@@ -33,7 +33,7 @@ public class Task implements BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @NotNull
     private TaskStatus taskStatus;
 
