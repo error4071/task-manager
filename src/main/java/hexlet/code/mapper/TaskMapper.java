@@ -77,7 +77,7 @@ public abstract class TaskMapper {
     }
 
     @Named("idsToLabels")
-    public Set<Label> idsToLabels(Set<Long> ids) {
+    public Object idsToLabels(Set<Long> ids) {
         return ids == null ? new HashSet<>() : labelRepository.findByIdIn(ids);
     }
 }
