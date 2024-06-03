@@ -115,7 +115,7 @@ public class TaskTest {
                 v -> v.node("id").isPresent(),
                 v -> v.node("title").isPresent(),
                 v -> v.node("status").isEqualTo(data.getStatus()),
-                v -> v.node("taskLabelIds").isPresent());
+                v -> v.node("taskLabelIds").isAbsent());
 
 
         var task = taskRepository.findByName(name).get();
