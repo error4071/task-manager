@@ -18,6 +18,7 @@ public class TaskCreateDTO {
     @JsonProperty("assignee_id")
     private Long assigneeId;
 
+    @JsonProperty
     private List<Long> taskLabelIds = new ArrayList<>();
 
     @NotBlank
