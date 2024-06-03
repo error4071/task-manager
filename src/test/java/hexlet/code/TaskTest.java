@@ -114,7 +114,9 @@ public class TaskTest {
         assertThatJson(body).and(
                 v -> v.node("id").isPresent(),
                 v -> v.node("title").isPresent(),
-                v -> v.node("status").isEqualTo(data.getStatus()));
+                v -> v.node("status").isEqualTo(data.getStatus()),
+                v -> v.node("taskLabelIds").isPresent());
+
 
         var task = taskRepository.findByName(name).get();
         assertNotNull(task);
