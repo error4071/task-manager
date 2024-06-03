@@ -1,7 +1,14 @@
 package hexlet.code.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,8 +41,6 @@ public class Task implements BaseEntity {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "task_statuses")
-    @JsonBackReference
     private TaskStatus taskStatus;
 
     @ManyToOne
