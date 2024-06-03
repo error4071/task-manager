@@ -60,6 +60,7 @@ public abstract class TaskMapper {
     @Mapping(target = "labels", source = "taskLabelIds")
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
+    @Mapping(target = "labels", source = "labels", qualifiedByName = "insertLabelsIdToTask")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
 
     public Set<Label> toLabelsSet(List<Long> taskLabelIds) {
