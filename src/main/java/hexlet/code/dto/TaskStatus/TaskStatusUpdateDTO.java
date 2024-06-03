@@ -14,4 +14,5 @@ public class TaskStatusUpdateDTO {
 
     @NotNull
     private JsonNullable<String> slug;
+
 }
