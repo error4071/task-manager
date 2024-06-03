@@ -4,6 +4,7 @@ import hexlet.code.dto.Task.TaskCreateDTO;
 import hexlet.code.dto.Task.TaskDTO;
 import hexlet.code.dto.Task.TaskUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
+import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 
 import hexlet.code.model.TaskStatus;
@@ -19,6 +20,10 @@ import org.mapstruct.ReportingPolicy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Mapper(
         uses = { JsonNullableMapper.class, ReferenceMapper.class },
@@ -40,7 +45,7 @@ public abstract class TaskMapper {
     @Mapping(target = "name", source = "title")
     @Mapping(target = "taskStatus", source = "status", qualifiedByName = "slugToTaskStatus")
     @Mapping(target = "description", source = "content")
-    @Mapping(target = "labels", source = "labels", qualifiedByName = "labelsToIds")
+    @Mapping(target = "labels", source = "taskLabelIds")
     public abstract Task map(TaskCreateDTO dto);
 
     @Mapping(source = "assignee.id", target = "assigneeId")
@@ -48,7 +53,6 @@ public abstract class TaskMapper {
     @Mapping(source = "name", target = "title")
     @Mapping(source = "description", target = "content")
     @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(target = "labels", source = "labels", qualifiedByName = "insertLabelsIdToTask")
     public abstract TaskDTO map(Task model);
 
     @Mapping(target = "assignee", source = "assigneeId")
@@ -58,6 +62,10 @@ public abstract class TaskMapper {
     @Mapping(target = "description", source = "content")
     @Mapping(target = "labels", source = "labels", qualifiedByName = "insertLabelsIdToTask")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
+
+    public Set<Label> toLabelsSet(List<Long> taskLabelIds) {
+        return new HashSet<>(labelRepository.findByIdIn(taskLabelIds).orElse(new HashSet<>()));
+    }
 
     @Named("slugToTaskStatus")
     public TaskStatus toEntity(String slug) {
