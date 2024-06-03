@@ -40,6 +40,7 @@ public abstract class TaskMapper {
     @Autowired
     private LabelRepository labelRepository;
 
+
     @Mapping(target = "assignee", source = "assigneeId")
     @Mapping(target = "name", source = "title")
     @Mapping(target = "taskStatus", source = "status", qualifiedByName = "slugToTaskStatus")
@@ -60,6 +61,7 @@ public abstract class TaskMapper {
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
+    public abstract List<TaskDTO> map(List<Task> tasks);
 
     public Set<Label> toLabelsSet(List<Long> taskLabelIds) {
         return new HashSet<>(labelRepository.findByIdIn(taskLabelIds).orElse(new HashSet<>()));
