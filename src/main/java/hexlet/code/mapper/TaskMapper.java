@@ -8,6 +8,7 @@ import hexlet.code.model.Task;
 
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.TaskStatusRepository;
+import lombok.Getter;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
