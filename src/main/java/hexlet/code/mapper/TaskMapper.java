@@ -4,9 +4,11 @@ import hexlet.code.dto.Task.TaskCreateDTO;
 import hexlet.code.dto.Task.TaskDTO;
 import hexlet.code.dto.Task.TaskUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
+import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 
 import hexlet.code.model.TaskStatus;
+import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskStatusRepository;
 
 
@@ -18,6 +20,10 @@ import org.mapstruct.ReportingPolicy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Mapper(
         uses = { JsonNullableMapper.class, ReferenceMapper.class },
@@ -31,9 +37,13 @@ public abstract class TaskMapper {
     @Autowired
     private TaskStatusRepository taskStatusRepository;
 
+    @Autowired
+    private LabelRepository labelRepository;
+
     @Mapping(target = "assignee", source = "assigneeId")
     @Mapping(target = "name", source = "title")
     @Mapping(target = "taskStatus", source = "status", qualifiedByName = "slugToTaskStatus")
+    @Mapping(target = "labels", source = "taskLabelIds")
     @Mapping(target = "description", source = "content")
     public abstract Task map(TaskCreateDTO dto);
 
@@ -46,9 +56,14 @@ public abstract class TaskMapper {
 
     @Mapping(target = "assignee", source = "assigneeId")
     @Mapping(target = "taskStatus.slug", source = "status")
+    @Mapping(target = "labels", source = "taskLabelIds")
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
+
+    public Set<Label> toLabelsSet(List<Long> taskLabelIds) {
+        return new HashSet<>(labelRepository.findByIdIn(taskLabelIds).orElse(new HashSet<>()));
+    }
 
     @Named("slugToTaskStatus")
     public TaskStatus toEntity(String slug) {
