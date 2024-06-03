@@ -16,8 +16,8 @@ public class TaskUpdateDTO {
     @JsonProperty("assignee_id")
     private JsonNullable<Long> assigneeId;
 
-    @NotNull
-    private JsonNullable<List<Long>> taskLabelIds;
+    @JsonProperty("taskLabelIds")
+    private List<Long> labels;
 
     @NotBlank
     private JsonNullable<String> title;

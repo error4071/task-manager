@@ -18,8 +18,8 @@ public class TaskCreateDTO {
     @JsonProperty("assignee_id")
     private Long assigneeId;
 
-    @JsonProperty
-    private List<Long> taskLabelIds = new ArrayList<>();
+    @JsonProperty("taskLabelIds")
+    private List<Long> labels;
 
     @NotBlank
     private String title;
