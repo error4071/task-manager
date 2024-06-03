@@ -68,11 +68,4 @@ public abstract class TaskMapper {
                 .orElseThrow(() -> new ResourceNotFoundException("Task Status has not found"));
         return taskStatus;
     }
-
-    @Named("labelsToIds")
-    public Set<Long> labelsToIds(Set<Label> labels) {
-        return labels == null ? new HashSet<>() : labels.stream()
-                .map(Label::getId)
-                .collect(Collectors.toSet());
-    }
 }
