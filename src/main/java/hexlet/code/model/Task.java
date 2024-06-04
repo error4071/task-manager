@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -24,7 +25,7 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-
+@NoArgsConstructor
 public class Task implements BaseEntity {
 
     @Id
