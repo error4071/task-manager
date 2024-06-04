@@ -24,4 +24,7 @@ public class TaskCreateDTO {
     @NotBlank
     private String title;
     private String content;
+
+    @NotNull
+    private String status;
 }
