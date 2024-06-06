@@ -47,7 +47,7 @@ public class Task implements BaseEntity {
     private User assignee;
 
     @ManyToMany
-    private Set<Label> labels = new HashSet<>();
+    private Set<Label> labels ;
 
     @CreatedDate
     private LocalDate createdAt;
