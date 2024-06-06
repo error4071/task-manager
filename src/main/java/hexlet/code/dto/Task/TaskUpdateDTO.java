@@ -9,6 +9,7 @@ import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,5 +25,5 @@ public class TaskUpdateDTO {
     @NotNull
     private JsonNullable<String> status;
 
-    private List<Long> taskLabelIds = new ArrayList<>();
+    private Set<Long> taskLabelIds;
 }
