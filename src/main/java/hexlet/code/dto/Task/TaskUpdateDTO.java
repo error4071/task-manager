@@ -25,5 +25,6 @@ public class TaskUpdateDTO {
     @NotNull
     private JsonNullable<String> status;
 
-    private JsonNullable<Set<Long>> taskLabelIds;
+    @NotNull
+    private JsonNullable<List<Long>> taskLabelIds;
 }
