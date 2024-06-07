@@ -91,28 +91,23 @@ public class TaskTest {
 
     @Test
     public void testCreate() throws Exception {
-        taskRepository.save(testTask);
-
         var taskStatus = taskStatusRepository.findBySlug("draft").get();
         var data = new TaskDTO();
         var name = "New Task Name";
         data.setTitle(name);
         data.setStatus(taskStatus.getSlug());
 
-        taskStatusRepository.save(taskStatus);
-
         var request = post("/api/tasks").with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
-
         var result = mockMvc.perform(request)
                 .andExpect(status().isCreated())
                 .andReturn();
-
         var body = result.getResponse().getContentAsString();
 
         assertThatJson(body).and(
                 v -> v.node("id").isPresent(),
+                v -> v.node("content").isPresent(),
                 v -> v.node("title").isPresent(),
                 v -> v.node("status").isEqualTo(data.getStatus()));
 
