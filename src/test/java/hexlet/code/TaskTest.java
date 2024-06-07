@@ -107,7 +107,7 @@ public class TaskTest {
 
         assertThatJson(body).and(
                 v -> v.node("id").isPresent(),
-                v -> v.node("content").isPresent(),
+                v -> v.node("content").isAbsent(),
                 v -> v.node("title").isPresent(),
                 v -> v.node("status").isEqualTo(data.getStatus()));
 
