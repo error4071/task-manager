@@ -63,7 +63,10 @@ public class TaskController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create new task")
     public TaskDTO create(@RequestBody @Valid TaskCreateDTO taskCreateDTO) {
-        return taskService.create(taskCreateDTO);
+        var task = taskMapper.map(taskCreateDTO);
+        taskRepository.save(task);
+        var taskDto = taskMapper.map(task);
+        return taskDto;
     }
 
     @PutMapping("/tasks/{id}")
