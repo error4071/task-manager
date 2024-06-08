@@ -8,7 +8,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class TaskDTO {
-
     private Long id;
     private int index;
     private Date createdAt;

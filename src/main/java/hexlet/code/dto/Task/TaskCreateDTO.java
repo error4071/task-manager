@@ -6,7 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,5 +26,5 @@ public class TaskCreateDTO {
     @NotNull
     private String status;
 
-    private Set<Long> taskLabelIds;
+    private List<Long> taskLabelIds = new ArrayList<>();
 }
