@@ -21,8 +21,6 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -64,16 +62,19 @@ public abstract class TaskMapper {
     @Mapping(target = "description", source = "content")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
 
-    @Named("labelsToIds")
-    public Set<Long> labelsToIds(Set<Label> labels) {
-        return labels == null ? new HashSet<>() : labels.stream()
-                .map(Label::getId)
+    public Set<Label> toEntity(Set<Long> labelIds) {
+        if (labelIds == null) {
+            return null;
+        }
+        return labelIds.stream()
+                .map(labelId -> labelRepository.findById(labelId)
+                        .orElseThrow())
                 .collect(Collectors.toSet());
     }
-
-    @Named("idsToLabels")
-    public Set<Label> idsToLabels(Set<Long> ids) {
-        return ids == null ? new HashSet<>() : labelRepository.findByIdIn(ids);
+    public Set<Long> toDto(Set<Label> labels) {
+        return labels.stream()
+                .map(Label::getId)
+                .collect(Collectors.toSet());
     }
 
     @Named("slugToTaskStatus")
