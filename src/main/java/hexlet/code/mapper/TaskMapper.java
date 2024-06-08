@@ -24,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Getter
 @Mapper(
@@ -54,7 +53,6 @@ public abstract class TaskMapper {
     @Mapping(source = "name", target = "title")
     @Mapping(source = "description", target = "content")
     @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(target = "taskLabelIds", source = "labels", qualifiedByName = "labelsToIds")
     public abstract TaskDTO map(Task model);
 
     @Mapping(target = "assignee", source = "assigneeId")
@@ -67,23 +65,6 @@ public abstract class TaskMapper {
     @Named("idsToLabels")
     public Set<Label> toLabelsSet(List<Long> taskLabelIds) {
         return new HashSet<>(labelRepository.findByIdIn(taskLabelIds).orElse(new HashSet<>()));
-    }
-
-    public Set<Label> toEntity(Set<Long> labelIds) {
-        if (labelIds == null) {
-            return null;
-        }
-        return labelIds.stream()
-                .map(labelId -> labelRepository.findById(labelId)
-                        .orElseThrow())
-                .collect(Collectors.toSet());
-    }
-
-    @Named("labelsToIds")
-    public Set<Long> toDto(Set<Label> labels) {
-        return labels.stream()
-                .map(Label::getId)
-                .collect(Collectors.toSet());
     }
 
     @Named("slugToTaskStatus")
