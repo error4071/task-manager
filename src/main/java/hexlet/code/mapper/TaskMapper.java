@@ -63,7 +63,7 @@ public abstract class TaskMapper {
     @Mapping(target = "description", source = "content")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
 
-    @Named("idsToLabels")
+    @Named("labelsToIds")
     public Set<Label> toLabelsSet(List<Long> taskLabelIds) {
         return new HashSet<>(labelRepository.findByIdIn(taskLabelIds).orElse(new HashSet<>()));
     }
