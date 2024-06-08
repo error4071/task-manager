@@ -55,4 +55,3 @@ public class ModGen {
                 .toModel();
     }
 }
-
