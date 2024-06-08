@@ -11,6 +11,7 @@ import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskStatusRepository;
 
+import lombok.Getter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -24,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Getter
 @Mapper(
         uses = { JsonNullableMapper.class, ReferenceMapper.class },
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
@@ -38,7 +40,6 @@ public abstract class TaskMapper {
 
     @Autowired
     private LabelRepository labelRepository;
-
 
     @Mapping(target = "assignee", source = "assigneeId")
     @Mapping(target = "name", source = "title")
