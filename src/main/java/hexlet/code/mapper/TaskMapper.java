@@ -69,6 +69,7 @@ public abstract class TaskMapper {
         return new HashSet<>(labelRepository.findByIdIn(taskLabelIds).orElse(new HashSet<>()));
     }
 
+    @Named("labelsToIds")
     public Set<Label> toEntity(Set<Long> labelIds) {
         if (labelIds == null) {
             return null;
@@ -78,6 +79,7 @@ public abstract class TaskMapper {
                         .orElseThrow())
                 .collect(Collectors.toSet());
     }
+
     public Set<Long> toDto(Set<Label> labels) {
         return labels.stream()
                 .map(Label::getId)
