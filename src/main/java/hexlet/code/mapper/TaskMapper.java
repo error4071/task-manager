@@ -80,6 +80,7 @@ public abstract class TaskMapper {
                 .collect(Collectors.toSet());
     }
 
+    @Named("labelsToIds")
     public Set<Long> toDto(Set<Label> labels) {
         return labels.stream()
                 .map(Label::getId)
