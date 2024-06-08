@@ -53,7 +53,7 @@ public abstract class TaskMapper {
     @Mapping(source = "name", target = "title")
     @Mapping(source = "description", target = "content")
     @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(target = "taskLabelIds", source = "labels", qualifiedByName = "labelsToIds")
+    @Mapping(target = "labels", source = "taskLabelIds", qualifiedByName = "idsToLabels")
     public abstract TaskDTO map(Task model);
 
     @Mapping(target = "assignee", source = "assigneeId")
@@ -63,7 +63,7 @@ public abstract class TaskMapper {
     @Mapping(target = "description", source = "content")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
 
-    @Named("labelsToIds")
+    @Named("idsToLabels")
     public Set<Label> toLabelsSet(List<Long> taskLabelIds) {
         return new HashSet<>(labelRepository.findByIdIn(taskLabelIds).orElse(new HashSet<>()));
     }
