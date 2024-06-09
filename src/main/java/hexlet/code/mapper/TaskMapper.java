@@ -5,12 +5,9 @@ import hexlet.code.dto.Task.TaskDTO;
 import hexlet.code.dto.Task.TaskUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.model.Task;
-
 import hexlet.code.model.TaskStatus;
-import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskStatusRepository;
 
-import lombok.Getter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -32,9 +29,6 @@ public abstract class TaskMapper {
     @Autowired
     private TaskStatusRepository taskStatusRepository;
 
-    @Autowired
-    private LabelRepository labelRepository;
-
     @Mapping(target = "assignee", source = "assigneeId")
     @Mapping(target = "name", source = "title")
     @Mapping(target = "taskStatus", source = "status", qualifiedByName = "slugToTaskStatus")
@@ -53,7 +47,6 @@ public abstract class TaskMapper {
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
-
 
     @Named("slugToTaskStatus")
     public TaskStatus toEntity(String slug) {
