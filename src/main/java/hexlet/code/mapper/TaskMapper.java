@@ -6,10 +6,13 @@ import hexlet.code.dto.Task.TaskUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.model.Label;
 import hexlet.code.model.Task;
-
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskStatusRepository;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import lombok.Getter;
 import org.mapstruct.Mapper;
@@ -20,10 +23,6 @@ import org.mapstruct.ReportingPolicy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Getter
 @Mapper(
