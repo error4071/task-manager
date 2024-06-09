@@ -21,8 +21,9 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Getter
 @Mapper(
@@ -44,7 +45,7 @@ public abstract class TaskMapper {
     @Mapping(target = "name", source = "title")
     @Mapping(target = "taskStatus", source = "status", qualifiedByName = "slugToTaskStatus")
     @Mapping(target = "description", source = "content")
-    @Mapping(target = "labels", ignore = true)
+    @Mapping(target = "labels", source = "taskLabelIds", qualifiedByName = "idsToLabels")
     public abstract Task map(TaskCreateDTO dto);
 
     @Mapping(source = "assignee.id", target = "assigneeId")
@@ -52,20 +53,18 @@ public abstract class TaskMapper {
     @Mapping(source = "name", target = "title")
     @Mapping(source = "description", target = "content")
     @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(target = "taskLabelIds", expression = "java(labelsToLabelIds(model.getLabels()))")
     public abstract TaskDTO map(Task model);
 
     @Mapping(target = "assignee", source = "assigneeId")
     @Mapping(target = "taskStatus.slug", source = "status")
-    @Mapping(target = "labels", ignore = true)
+    @Mapping(target = "labels", source = "taskLabelIds", qualifiedByName = "idsToLabels")
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
 
-    Set<Long> labelsToLabelIds(Set<Label> labels) {
-        return labels.stream()
-                .map(Label::getId)
-                .collect(Collectors.toSet());
+    @Named("idsToLabels")
+    public Set<Label> toLabelsSet(List<Long> taskLabelIds) {
+        return new HashSet<>(labelRepository.findByIdIn(taskLabelIds).orElse(new HashSet<>()));
     }
 
     @Named("slugToTaskStatus")
