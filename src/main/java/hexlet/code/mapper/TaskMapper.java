@@ -21,10 +21,6 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 @Getter
 @Mapper(
         uses = { JsonNullableMapper.class, ReferenceMapper.class },
