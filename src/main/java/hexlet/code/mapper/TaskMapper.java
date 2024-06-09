@@ -4,7 +4,6 @@ import hexlet.code.dto.Task.TaskCreateDTO;
 import hexlet.code.dto.Task.TaskDTO;
 import hexlet.code.dto.Task.TaskUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
-import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 
 import hexlet.code.model.TaskStatus;
