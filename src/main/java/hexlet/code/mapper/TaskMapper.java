@@ -50,7 +50,7 @@ public abstract class TaskMapper {
 
     @Mapping(source = "assignee.id", target = "assigneeId")
     @Mapping(source = "taskStatus.slug", target = "status")
-    @Mapping(target = "labels", ignore = true)
+    @Mapping(target = "taskLabelIds", expression = "java(labelsToLabelIds(model.getLabels()))")
     @Mapping(source = "name", target = "title")
     @Mapping(source = "description", target = "content")
     @Mapping(target = "createdAt", source = "createdAt")
