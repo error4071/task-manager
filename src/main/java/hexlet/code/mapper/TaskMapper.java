@@ -53,7 +53,6 @@ public abstract class TaskMapper {
     @Mapping(source = "name", target = "title")
     @Mapping(source = "description", target = "content")
     @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(source = "labels", target = "taskLabelIds", qualifiedByName = "labelsToLabelsIds")
     public abstract TaskDTO map(Task model);
 
     @Mapping(target = "assignee", source = "assigneeId")
@@ -62,14 +61,6 @@ public abstract class TaskMapper {
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
-
-    @Named("labelsToLabelsIds")
-    public Set<Long> labelToLabelId(Set<Label> labels) {
-        return labels == null ? new HashSet<>()
-                : labels.stream()
-                .map(Label::getId)
-                .collect(Collectors.toSet());
-    }
 
     @Named("slugToTaskStatus")
     public TaskStatus toEntity(String slug) {
