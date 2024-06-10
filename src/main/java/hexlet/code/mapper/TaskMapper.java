@@ -4,7 +4,6 @@ import hexlet.code.dto.Task.TaskCreateDTO;
 import hexlet.code.dto.Task.TaskDTO;
 import hexlet.code.dto.Task.TaskUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
-import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 
 import hexlet.code.model.TaskStatus;
@@ -20,10 +19,6 @@ import org.mapstruct.ReportingPolicy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Getter
 @Mapper(
