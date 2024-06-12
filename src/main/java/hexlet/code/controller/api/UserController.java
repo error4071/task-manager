@@ -29,14 +29,9 @@ import java.util.List;
 @RequestMapping("/api")
 public class UserController {
 
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
     private UserService userService;
+    private UserMapper userMapper;
 
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
