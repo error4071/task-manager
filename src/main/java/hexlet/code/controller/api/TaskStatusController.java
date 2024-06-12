@@ -30,13 +30,8 @@ import java.util.List;
 @RequestMapping("/api")
 public class TaskStatusController {
 
-    @Autowired
     private TaskStatusRepository taskStatusRepository;
-
-    @Autowired
     private TaskStatusMapper taskStatusMapper;
-
-    @Autowired
     private TaskStatusService taskStatusService;
 
     @GetMapping("/task_statuses")

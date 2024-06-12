@@ -29,13 +29,8 @@ import java.util.List;
 @RequestMapping("/api")
 public class TaskController {
 
-    @Autowired
     private TaskRepository taskRepository;
-
-    @Autowired
     private TaskMapper taskMapper;
-
-    @Autowired
     private TaskService taskService;
 
     @GetMapping("/tasks")
