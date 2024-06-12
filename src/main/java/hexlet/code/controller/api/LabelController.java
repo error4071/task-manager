@@ -30,14 +30,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class LabelController {
 
-    @Autowired
     private LabelRepository labelRepository;
+    private LabelService labelService;
 
     @Autowired
     private LabelMapper labelMapper;
-
-    @Autowired
-    private LabelService labelService;
 
     @GetMapping("/labels")
     @ResponseStatus(HttpStatus.OK)
