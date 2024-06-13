@@ -43,7 +43,7 @@ public class TaskStatusesTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private ModelGenerator modelGenerator = new ModelGenerator();
+    private ModelGenerator modelGenerator;
 
     private TaskStatus testTaskStatus;
 

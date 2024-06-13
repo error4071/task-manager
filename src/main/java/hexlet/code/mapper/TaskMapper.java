@@ -70,6 +70,7 @@ public abstract class TaskMapper {
                 .map(Label::getId)
                 .collect(Collectors.toSet());
     }
+
     @Named("slugToTaskStatus")
     public TaskStatus toEntity(String slug) {
         var taskStatus = taskStatusRepository.findBySlug(slug)
