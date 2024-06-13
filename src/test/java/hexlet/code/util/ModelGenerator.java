@@ -10,9 +10,10 @@ import net.datafaker.Faker;
 import org.instancio.Instancio;
 import org.instancio.Model;
 import org.instancio.Select;
+import org.springframework.stereotype.Component;
 
 @Getter
-@AllArgsConstructor
+@Component
 public class ModelGenerator {
 
     private Model<User> userModel;
