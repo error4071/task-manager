@@ -4,7 +4,6 @@ import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.model.User;
 import hexlet.code.model.Label;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.datafaker.Faker;
 import org.instancio.Instancio;
