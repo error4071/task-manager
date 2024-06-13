@@ -4,6 +4,7 @@ import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.model.User;
 import hexlet.code.model.Label;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.datafaker.Faker;
 import org.instancio.Instancio;
@@ -11,6 +12,7 @@ import org.instancio.Model;
 import org.instancio.Select;
 
 @Getter
+@AllArgsConstructor
 public class ModelGenerator {
 
     private Model<User> userModel;
