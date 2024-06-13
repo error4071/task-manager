@@ -4,45 +4,69 @@ import hexlet.code.exception.ResourceNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.naming.AuthenticationException;
 import java.nio.file.AccessDeniedException;
+import java.util.List;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
+@ResponseBody
 @ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler {
 
+    @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    public String resourceNotFoundExceptionHandler(ResourceNotFoundException exception) {
+        return exception.getMessage();
     }
 
+    @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> validationExceptionsHandler(MethodArgumentNotValidException exception) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    public List<ObjectError> validationExceptionsHandler(MethodArgumentNotValidException exception) {
+        return exception.getAllErrors();
     }
 
+    @ResponseStatus(METHOD_NOT_ALLOWED)
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<String> dataIntegrityViolationExceptionsHandler(DataIntegrityViolationException exception) {
-        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(exception.getMessage());
+    public String dataIntegrityViolationExceptionsHandler(DataIntegrityViolationException exception) {
+        return exception.getCause().getCause().getMessage();
     }
 
+    @ResponseStatus(UNAUTHORIZED)
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<String> badCredentialsExceptionHandler(AuthenticationException exception) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(exception.getMessage());
+    public String badCredentialsExceptionHandler(AuthenticationException exception) {
+        return exception.getMessage();
     }
 
+    @ResponseStatus(FORBIDDEN)
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<String> accessDeniedExceptionHandler(AccessDeniedException exception) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exception.getMessage());
+    public String accessDeniedExceptionHandler(AccessDeniedException exception) {
+        return exception.getMessage();
     }
 
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public String validationExceptionsHandler(HttpMessageNotReadableException exception) {
+        return exception.getMessage();
+    }
+
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> generalExceptionHandler(Exception exception) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+    public String generalExceptionHandler(Exception exception) {
+        return exception.getMessage();
     }
 }
