@@ -46,15 +46,16 @@ public class TaskTest {
     @Autowired
     private TaskStatusRepository taskStatusRepository;
 
-    private ModelGenerator modelGenerator = new ModelGenerator();
-
-    private Task testTask;
+    @Autowired
+    private ModelGenerator modelGenerator;
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private LabelRepository labelRepository;
+
+    private Task testTask;
 
     @BeforeEach
     public void setUp() {

@@ -39,7 +39,8 @@ public class UserTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private ModelGenerator modelGenerator = new ModelGenerator();
+    @Autowired
+    private ModelGenerator modelGenerator;
 
     private User testUser;
 

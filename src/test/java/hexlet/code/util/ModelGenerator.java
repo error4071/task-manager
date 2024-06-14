@@ -4,7 +4,6 @@ import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.model.User;
 import hexlet.code.model.Label;
-import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import net.datafaker.Faker;
 import org.instancio.Instancio;
@@ -21,8 +20,7 @@ public class ModelGenerator {
     private Model<TaskStatus> taskStatusModel;
     private Model<Label> labelModel;
 
-    @PostConstruct
-    public void ModelGenerator() {
+    public ModelGenerator() {
         var faker = new Faker();
         userModel = Instancio.of(User.class)
                 .ignore(Select.field(User::getId))

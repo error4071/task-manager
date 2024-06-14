@@ -40,7 +40,8 @@ public class LabelTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private ModelGenerator modelGenerator = new ModelGenerator();
+    @Autowired
+    private ModelGenerator modelGenerator;
 
     private Label testLabel;
 
