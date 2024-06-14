@@ -34,7 +34,6 @@ import java.util.Map;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 public class TaskStatusesTest {
-
     @Autowired
     private MockMvc mockMvc;
 
