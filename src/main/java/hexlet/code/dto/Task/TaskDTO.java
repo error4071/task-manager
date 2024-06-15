@@ -23,3 +23,4 @@ public class TaskDTO {
     private String status;
     private Set<Long> taskLabelIds = new HashSet<>();
 }
+
