@@ -10,6 +10,7 @@ import hexlet.code.utils.UserUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,7 +32,10 @@ import java.util.List;
 public class UserController {
 
     private UserRepository userRepository;
+
+    @Autowired
     private UserService userService;
+
     private UserMapper userMapper;
     private final UserUtils userUtils;
 
@@ -65,7 +69,7 @@ public class UserController {
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update user data")
-    @PreAuthorize(value = "@userService.findById(#id).getEmail() == authentication.name")
+    @PreAuthorize("@userUtils.isUser(#id)")
     public UserDTO update(@PathVariable Long id, @RequestBody UserUpdateDTO userUpdateDTO) {
         return userService.update(id, userUpdateDTO);
     }
@@ -73,7 +77,7 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete user")
-    @PreAuthorize(value = "@userService.findById(#id).getEmail() == authentication.name")
+    @PreAuthorize("@userUtils.isUser(#id)")
     public void delete(@PathVariable Long id) {
         userRepository.deleteById(id);
     }
