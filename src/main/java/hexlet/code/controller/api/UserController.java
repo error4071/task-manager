@@ -32,11 +32,12 @@ import java.util.List;
 public class UserController {
 
     private UserRepository userRepository;
+    private UserMapper userMapper;
 
     @Autowired
     private UserService userService;
 
-    private UserMapper userMapper;
+    @Autowired
     private final UserUtils userUtils;
 
     @GetMapping("/users")
