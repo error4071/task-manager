@@ -21,14 +21,8 @@ public class UserUtils {
         return userRepository.findByEmail(email).get();
     }
 
-    public User getTestUser() {
-        return userRepository.findByEmail("hexlet@example.com")
-                .orElseThrow(() -> new RuntimeException("User doesn't exists"));
-    }
-
-    public boolean isUser(Long userId) {
-        var taskAuthorId = userRepository.findById(userId).get().getUsername();
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-        return taskAuthorId.equals(authentication.getName());
+    public boolean isUser(Long id) {
+        var currentUser = getCurrentUser();
+        return currentUser.getId() == id;
     }
 }
