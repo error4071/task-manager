@@ -56,7 +56,7 @@ public final class UserService {
         return userMapper.map(user);
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 }
