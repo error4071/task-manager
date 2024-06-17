@@ -11,14 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
-@AllArgsConstructor
 public class CustomUserDetailsService implements UserDetailsManager {
-
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -29,11 +24,7 @@ public class CustomUserDetailsService implements UserDetailsManager {
 
     @Override
     public void createUser(UserDetails userData) {
-        var user = new User();
-        user.setEmail(userData.getUsername());
-        var hashedPassword = passwordEncoder.encode(userData.getPassword());
-        user.setPasswordDigest(hashedPassword);
-        userRepository.save(user);
+        throw new UnsupportedOperationException("Unimplemented method 'createUser'");
     }
 
     @Override

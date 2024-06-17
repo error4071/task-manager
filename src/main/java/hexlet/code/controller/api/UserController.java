@@ -7,9 +7,11 @@ import hexlet.code.mapper.UserMapper;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
 import hexlet.code.utils.UserUtils;
+
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,9 +38,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private final UserUtils userUtils;
 
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
