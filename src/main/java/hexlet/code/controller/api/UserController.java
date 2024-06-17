@@ -6,6 +6,7 @@ import hexlet.code.dto.User.UserUpdateDTO;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
+import hexlet.code.utils.UserUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,7 @@ public class UserController {
     private UserRepository userRepository;
     private UserService userService;
     private UserMapper userMapper;
+    private final UserUtils userUtils;
 
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
