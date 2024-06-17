@@ -29,6 +29,10 @@ import java.util.List;
 @RequestMapping("/api")
 public class UserController {
 
+    private static final String ACCESS_FILTER = """
+            @userRepository.findById(#id).get().getEmail() == authentication.getName()
+        """;
+
     private UserRepository userRepository;
     private UserService userService;
     private UserMapper userMapper;
@@ -63,7 +67,7 @@ public class UserController {
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update user data")
-    @PreAuthorize("@userUtils.isUser(#id)")
+    @PreAuthorize(ACCESS_FILTER)
     public UserDTO update(@PathVariable Long id, @RequestBody UserUpdateDTO userUpdateDTO) {
         return userService.update(id, userUpdateDTO);
     }
@@ -71,7 +75,7 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete user")
-    @PreAuthorize("@userUtils.isUser(#id)")
+    @PreAuthorize(ACCESS_FILTER)
     public void delete(@PathVariable Long id) {
         userRepository.deleteById(id);
     }
