@@ -79,6 +79,6 @@ public class UserController {
     @Operation(summary = "Delete user")
 
     public void delete(@PathVariable Long id) {
-        userRepository.deleteById(id);
+        userService.deleteById(id);
     }
 }
