@@ -48,12 +48,10 @@ public final class UserService {
     }
 
     public UserDTO update(Long id, UserUpdateDTO userUpdateDTO) {
-        var user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User with id" + id + "not found"));
+        var user = userRepository.findById(id).orElseThrow();
         userMapper.update(userUpdateDTO, user);
         userRepository.save(user);
-        var userDto = userMapper.map(user);
-        return userDto;
+        return userMapper.map(user);
     }
 
     public void delete(Long id) {
