@@ -13,7 +13,7 @@ import java.time.temporal.ChronoUnit;
 @AllArgsConstructor
 public class JWTUtils {
 
-    private JwtEncoder encoder;
+    private final JwtEncoder encoder;
 
     //Подготовка и шифрование токена
     public String generateToken(String username) {

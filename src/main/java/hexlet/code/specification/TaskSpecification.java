@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TaskSpecification {
+
     public Specification<Task> build(TaskFilterDTO params) {
         return withAssigneeId(params.getAssigneeId())
                 .and(withTitleCont(params.getTitleCont()))

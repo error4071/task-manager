@@ -13,12 +13,12 @@ public class UserUtils {
 
     private final UserRepository userRepository;
 
-    @Bean
     public User getCurrentUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             return null;
         }
-        return userRepository.findByEmail(authentication.getName()).orElseThrow();
+        var email = authentication.getName();
+        return userRepository.findByEmail(email).orElseThrow();
     }
 }
