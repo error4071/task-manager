@@ -32,9 +32,12 @@ import java.util.List;
 @RequestMapping("/api")
 public class UserController {
 
+    private static final String USER_BY_ID = """
+            @userRepository.findById(#id).get().getEmail() == authentication.getName()
+        """;
+
     private UserRepository userRepository;
     private UserMapper userMapper;
-
     @Autowired
     private UserService userService;
 
@@ -68,7 +71,7 @@ public class UserController {
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update user data")
-    @PreAuthorize(value = "@userService.findById(#id).getEmail() == authentication.name")
+    @PreAuthorize("hasRole('USER_BY_ID')")
     public UserDTO update(@PathVariable Long id, @RequestBody UserUpdateDTO userUpdateDTO) {
         return userService.update(id, userUpdateDTO);
     }
@@ -76,7 +79,7 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete user")
-    @PreAuthorize(value = "@userService.findById(#id).getEmail() == authentication.name")
+    @PreAuthorize("hasRole('USER_BY_ID')")
     public void delete(@PathVariable Long id) {
         userService.delete(id);
     }
