@@ -4,6 +4,7 @@ import hexlet.code.dto.LoginDTO;
 import hexlet.code.utils.JWTUtils;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
@@ -28,9 +29,8 @@ public class LoginController {
 
     @Operation(summary = "Authenticates the user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Success"),
-            @ApiResponse(responseCode = "401", description = "Wrong data"),
-            @ApiResponse(responseCode = "403", description = "Access denied"),
+            @ApiResponse(responseCode = "200", description = "Successful authorization", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)
     })
 
     @PostMapping("/login")
