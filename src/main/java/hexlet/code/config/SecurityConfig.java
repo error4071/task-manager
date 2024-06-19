@@ -1,7 +1,6 @@
 package hexlet.code.config;
 
 import hexlet.code.service.CustomUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,11 +24,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Autowired
     private JwtDecoder jwtDecoder;
-    @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
     private CustomUserDetailsService userService;
 
     @Bean
