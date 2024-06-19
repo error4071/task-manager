@@ -78,6 +78,6 @@ public class UserController {
     @Operation(summary = "Delete user")
     @PreAuthorize(value = "@userService.findById(#id).getEmail() == authentication.name")
     public void delete(@PathVariable Long id) {
-        userService.deleteById(id);
+        userService.delete(id);
     }
 }
