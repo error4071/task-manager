@@ -31,11 +31,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class UserController {
-
-    private static final String USER_BY_ID = """
-            @userRepository.findById(#id).get().getEmail() == authentication.getName()
-        """;
-
     private UserRepository userRepository;
     private UserMapper userMapper;
     @Autowired
@@ -46,7 +41,7 @@ public class UserController {
     @Operation(summary = "Show all users")
     ResponseEntity<List<UserDTO>> index() {
         var users = userRepository.findAll();
-        var result =  users.stream()
+        var result = users.stream()
                 .map(x -> userMapper.map(x))
                 .toList();
         return ResponseEntity.ok()
@@ -79,7 +74,7 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete user")
-    @PreAuthorize("hasRole('USER_BY_ID')")
+    @PreAuthorize("@userUtils.isAuthor(#id)")
     public void delete(@PathVariable Long id) {
         userService.delete(id);
     }

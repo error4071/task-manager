@@ -20,4 +20,10 @@ public class UserUtils {
         var email = authentication.getName();
         return userRepository.findByEmail(email).orElseThrow();
     }
+
+    public boolean isAuthor(long id) {
+        var userEmail = userRepository.findById(id).orElseThrow().getEmail();
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        return userEmail.equals(authentication.getName());
+    }
 }
