@@ -106,10 +106,13 @@ public class UserTest {
 
     @Test
     public void testUpdate() throws Exception {
+
+        var token = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
+
         var data = new UserDTO();
         data.setFirstName(String.valueOf(JsonNullable.of("New name")));
 
-        var request = put("/api/users/" + testUser.getId()).with(jwt())
+        var request = put("/api/users/" + testUser.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(data));
         mockMvc.perform(request)
