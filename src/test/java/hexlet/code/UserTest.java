@@ -31,6 +31,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 @ContextConfiguration(classes = AppApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -107,8 +108,8 @@ public class UserTest {
     @Test
     public void testUpdate() throws Exception {
 
-        var data = new UserDTO();
-        data.setFirstName(String.valueOf(JsonNullable.of("New name")));
+        var data = new HashMap<>();
+        data.put("firstName", "Mike");
 
         var request = put("/api/users/" + testUser.getId()).with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
