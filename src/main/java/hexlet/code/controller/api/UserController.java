@@ -66,7 +66,7 @@ public class UserController {
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update user data")
-    @PreAuthorize("hasRole('USER_BY_ID')")
+    @PreAuthorize("@userUtils.is Author(#id)")
     public UserDTO update(@PathVariable Long id, @RequestBody UserUpdateDTO userUpdateDTO) {
         return userService.update(id, userUpdateDTO);
     }
