@@ -13,7 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import hexlet.code.dto.User.UserDTO;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
@@ -52,8 +50,6 @@ public class UserTest {
 
     @Autowired
     private WebApplicationContext wac;
-
-    private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
 
     private User testUser;
 
@@ -111,10 +107,11 @@ public class UserTest {
     @Test
     public void testUpdate() throws Exception {
 
+        var token = jwt().jwt(builder -> builder.subject(testUser.getFirstName()));
         var data = new HashMap<>();
         data.put("firstName", "Mike");
 
-        var request = put("/api/users/" + testUser.getId()).with(jwt())
+        var request = put("/api/users/" + testUser.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(data));
         mockMvc.perform(request)
