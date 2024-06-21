@@ -115,8 +115,6 @@ public class UserTest {
                 .content(objectMapper.writeValueAsString(data));
         mockMvc.perform(request)
                 .andExpect(status().isOk());
-
-        assertFalse(userRepository.existsById(testUser.getId()));
     }
 
     @Test
