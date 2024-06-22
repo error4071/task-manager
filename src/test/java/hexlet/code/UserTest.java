@@ -51,6 +51,8 @@ public class UserTest {
     @Autowired
     private WebApplicationContext wac;
 
+    private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
+
     private User testUser;
 
     @BeforeEach
@@ -107,7 +109,6 @@ public class UserTest {
     @Test
     public void testUpdate() throws Exception {
 
-        var token = jwt().jwt(builder -> builder.subject(testUser.getFirstName()));
         var data = new HashMap<>();
         data.put("firstName", "Mike");
 
