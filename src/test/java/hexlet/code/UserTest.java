@@ -114,7 +114,7 @@ public class UserTest {
         var name = "New Task Name";
         data.setFirstName(name);
 
-        var request = put("/api/users/" + testUser.getId()).with(token)
+        var request = put("/api/users/" + testUser.getId()).with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(data));
 
