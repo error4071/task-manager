@@ -110,9 +110,12 @@ public class UserTest {
     @Test
     public void testUpdate() throws Exception {
 
+        var data = new HashMap<>();
+        data.put("firstName", "Mike");
+
         var request = put("/api/users/" + testUser.getId()).with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(token));
+                .content(objectMapper.writeValueAsString(data));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk());
