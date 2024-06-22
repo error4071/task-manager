@@ -1,6 +1,7 @@
 package hexlet.code;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -11,9 +12,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import hexlet.code.dto.User.UserDTO;
+import hexlet.code.dto.User.UserUpdateDTO;
+import net.datafaker.Faker;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -51,6 +55,9 @@ public class UserTest {
 
     @Autowired
     private WebApplicationContext wac;
+
+    @Autowired
+    private Faker faker;
 
     private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
 
@@ -110,15 +117,17 @@ public class UserTest {
     @Test
     public void testUpdate() throws Exception {
 
-        var data = new HashMap<>();
-        data.put("firstName", "Mike");
-
-        var request = put("/api/users/" + testUser.getId()).with(jwt())
+        userRepository.save(testUser);
+        var dto = new UserUpdateDTO();
+        String email = faker.internet().emailAddress();
+        dto.setEmail(JsonNullable.of(email));
+        var request = put("/api/users/" + testUser.getId())
+                .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(data));
-
-        mockMvc.perform(request)
-                .andExpect(status().isOk());
+                .content(objectMapper.writeValueAsString(dto));
+        mockMvc.perform(request).andExpect(status().isOk());
+        var userRes = userRepository.findById(testUser.getId()).orElseThrow();
+        assertThat(userRes.getEmail()).isEqualTo(email);
     }
 
     @Test
