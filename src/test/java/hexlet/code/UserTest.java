@@ -124,6 +124,8 @@ public class UserTest {
 
         var user = userRepository.findById(testUser.getId()).get();
         assertThat(user.getFirstName()).isEqualTo(("Mike"));
+
+        assertFalse(userRepository.existsById(testUser.getId()));
     }
 
     @Test
