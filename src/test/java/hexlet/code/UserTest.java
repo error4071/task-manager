@@ -110,13 +110,9 @@ public class UserTest {
     @Test
     public void testUpdate() throws Exception {
 
-        var data = new UserDTO();
-        var name = "New Task Name";
-        data.setId(testUser.getId());
-
         var request = put("/api/users/" + testUser.getId()).with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(data));
+                .content(objectMapper.writeValueAsString(token));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk());
