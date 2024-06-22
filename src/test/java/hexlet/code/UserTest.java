@@ -36,6 +36,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Map;
 
 @ContextConfiguration(classes = AppApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -117,17 +118,28 @@ public class UserTest {
     @Test
     public void testUpdate() throws Exception {
 
-        userRepository.save(testUser);
-        var dto = new UserUpdateDTO();
-        String email = faker.internet().emailAddress();
-        dto.setEmail(JsonNullable.of(email));
-        var request = put("/api/users/" + testUser.getId())
-                .with(token)
+        var data = Map.of(
+                "email", faker.internet().emailAddress(),
+                "firstName", faker.name().firstName(),
+                "lastName", faker.name().lastName(),
+                "password", faker.internet().password(3, 12)
+        );
+
+        var jwt = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
+        var request = put("/api/users/{id}", testUser.getId()).with(jwt)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto));
-        mockMvc.perform(request).andExpect(status().isOk());
-        var userRes = userRepository.findById(testUser.getId()).orElseThrow();
-        assertThat(userRes.getEmail()).isEqualTo(email);
+                .content(objectMapper.writeValueAsString(data));
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk());
+
+        var updatedUser = userRepository.findById(testUser.getId()).orElse(null);
+
+        assertThat(updatedUser).isNotNull();
+        assertThat(updatedUser.getEmail()).isEqualTo(data.get("email"));
+        assertThat(updatedUser.getFirstName()).isEqualTo(data.get("firstName"));
+        assertThat(updatedUser.getLastName()).isEqualTo(data.get("lastName"));
+        assertThat(updatedUser.getPasswordDigest()).isNotEqualTo(data.get("password"));
     }
 
     @Test
