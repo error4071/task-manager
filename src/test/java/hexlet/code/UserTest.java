@@ -113,7 +113,7 @@ public class UserTest {
 
         var data = new UserDTO();
         var name = "New Task Name";
-        data.setFirstName(name);
+        data.setEmail(name);
 
         var request = put("/api/users/" + testUser.getId()).with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
