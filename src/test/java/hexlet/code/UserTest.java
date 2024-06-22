@@ -10,6 +10,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import hexlet.code.dto.Task.TaskDTO;
+import hexlet.code.dto.User.UserDTO;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -109,8 +111,9 @@ public class UserTest {
     @Test
     public void testUpdate() throws Exception {
 
-        var data = new HashMap<>();
-        data.put("firstName", "Mike");
+        var data = new UserDTO();
+        var name = "New Task Name";
+        data.setFirstName(name);
 
         var request = put("/api/users/" + testUser.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)
