@@ -114,9 +114,10 @@ public class UserTest {
         var name = "New Task Name";
         data.setEmail(name);
 
-        var request = put("/api/users/" + testUser.getId()).with(jwt())
+        var request = put("/api/users/{id}" + testUser.getId()).with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(data));
+
         mockMvc.perform(request)
                 .andExpect(status().isOk());
     }
