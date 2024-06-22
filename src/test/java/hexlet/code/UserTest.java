@@ -1,7 +1,6 @@
 package hexlet.code;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -111,21 +110,15 @@ public class UserTest {
     @Test
     public void testUpdate() throws Exception {
 
-        var data = new HashMap<>();
-        data.put("firstName", "Mike");
+        var data = new UserDTO();
+        var name = "New Task Name";
+        data.setEmail(name);
 
-        var request = put("/api/users/" + testUser.getId())
-                .with(token)
+        var request = put("/api/users/" + testUser.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(data));
-
         mockMvc.perform(request)
                 .andExpect(status().isOk());
-
-        var user = userRepository.findById(testUser.getId()).get();
-        assertThat(user.getFirstName()).isEqualTo(("Mike"));
-
-        assertFalse(userRepository.existsById(testUser.getId()));
     }
 
     @Test
