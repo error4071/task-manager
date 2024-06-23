@@ -116,7 +116,7 @@ public class UserTest {
         var data = new HashMap<>();
         data.put("firstName", "Mike");
 
-        var request = put("/api/users" + testUser.getId()).with(token)
+        var request = put("/api/users/" + testUser.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(data));
 
