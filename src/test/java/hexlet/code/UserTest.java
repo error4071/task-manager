@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -52,6 +53,7 @@ public class UserTest {
     @Autowired
     private WebApplicationContext wac;
 
+    private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
     private User testUser;
 
     @BeforeEach
@@ -61,6 +63,9 @@ public class UserTest {
                 .defaultResponseCharacterEncoding(StandardCharsets.UTF_8)
                 .apply(springSecurity())
                 .build();
+
+        token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
+
         testUser = Instancio.of(modelGenerator.getUserModel())
                 .create();
         userRepository.save(testUser);
