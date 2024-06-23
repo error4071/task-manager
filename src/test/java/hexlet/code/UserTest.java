@@ -112,7 +112,7 @@ public class UserTest {
 
     @Test
     public void testUpdate() throws Exception {
-        var token = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
+
         var data = new HashMap<>();
         data.put("firstName", "Mike");
 
