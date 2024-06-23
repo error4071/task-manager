@@ -3,6 +3,7 @@ package hexlet.code.controller.api;
 import hexlet.code.dto.User.UserCreateDTO;
 import hexlet.code.dto.User.UserDTO;
 import hexlet.code.dto.User.UserUpdateDTO;
+import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
@@ -68,7 +69,12 @@ public class UserController {
     @Operation(summary = "Update user data")
     @PreAuthorize("@userUtils.is Author(#id)")
     public UserDTO update(@PathVariable Long id, @RequestBody UserUpdateDTO userUpdateDTO) {
-        return userService.update(id, userUpdateDTO);
+        var user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
+        userMapper.update(userUpdateDTO, user);
+        userRepository.save(user);
+        var userDto = userMapper.map(user);
+        return userDto;
     }
 
     @DeleteMapping("/users/{id}")
