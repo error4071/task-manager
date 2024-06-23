@@ -107,11 +107,11 @@ public class UserTest {
 
     @Test
     public void testUpdate() throws Exception {
-
+        var token = jwt().jwt(builder -> builder.subject(testUser.getFirstName()));
         var data = new HashMap<>();
         data.put("firstName", "Mike");
 
-        var request = put("/api/users/" + testUser.getId()).with(jwt())
+        var request = put("/api/users/" + testUser.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(data));
 
