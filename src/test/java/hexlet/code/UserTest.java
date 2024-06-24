@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import lombok.NoArgsConstructor;
+import net.datafaker.Faker;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,7 @@ import hexlet.code.util.ModelGenerator;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Map;
 
 @ContextConfiguration(classes = AppApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -44,6 +46,9 @@ public class UserTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private Faker faker;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -115,8 +120,12 @@ public class UserTest {
     public void testUpdate() throws Exception {
 
         var token = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
-        var data = new HashMap<>();
-        data.put("firstName", "Mike");
+        var data = Map.of(
+                "email", faker.internet().emailAddress(),
+                "firstName", faker.name().firstName(),
+                "lastName", faker.name().lastName(),
+                "password", faker.internet().password(3, 12)
+        );
 
         var request = put("/api/users/" + testUser.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)
