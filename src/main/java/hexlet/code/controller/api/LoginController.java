@@ -21,10 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class LoginController {
 
-    @Autowired
     private JWTUtils jwtUtils;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Operation(summary = "Authenticates the user")

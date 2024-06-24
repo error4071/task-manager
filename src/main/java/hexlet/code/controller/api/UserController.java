@@ -31,8 +31,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class UserController {
+
     private UserRepository userRepository;
     private UserMapper userMapper;
+
     @Autowired
     private UserService userService;
 
