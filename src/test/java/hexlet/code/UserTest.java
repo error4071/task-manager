@@ -113,6 +113,7 @@ public class UserTest {
 
     @Test
     public void testUpdate() throws Exception {
+
         var token = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
         var data = new HashMap<>();
         data.put("firstName", "Mike");
@@ -125,7 +126,7 @@ public class UserTest {
                 .andExpect(status().isOk());
 
         var user = userRepository.findById(testUser.getId()).orElseThrow();
-        assertThat(user.getEmail()).isEqualTo(request);
+        assertThat(user.getEmail()).isEqualTo(data.get("email"));
     }
 
     @Test
