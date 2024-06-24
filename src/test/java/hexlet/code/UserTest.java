@@ -33,7 +33,6 @@ import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 
 @ContextConfiguration(classes = AppApplication.class)
