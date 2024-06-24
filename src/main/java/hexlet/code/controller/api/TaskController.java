@@ -28,9 +28,9 @@ import java.util.List;
 @RequestMapping("/api")
 public class TaskController {
 
-    private TaskRepository taskRepository;
-    private TaskMapper taskMapper;
-    private TaskService taskService;
+    private final TaskRepository taskRepository;
+    private final TaskMapper taskMapper;
+    private final TaskService taskService;
 
     @GetMapping("/tasks")
     @ResponseStatus(HttpStatus.OK)
