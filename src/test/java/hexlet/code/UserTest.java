@@ -2,6 +2,7 @@ package hexlet.code;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -122,6 +123,9 @@ public class UserTest {
 
         mockMvc.perform(request)
                 .andExpect(status().isOk());
+
+        var user = userRepository.findById(testUser.getId()).orElseThrow();
+        assertThat(user.getEmail()).isEqualTo(data);
     }
 
     @Test
