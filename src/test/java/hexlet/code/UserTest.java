@@ -125,7 +125,7 @@ public class UserTest {
                 .andExpect(status().isOk());
 
         var user = userRepository.findById(testUser.getId()).orElseThrow();
-        assertThat(user.getEmail()).isEqualTo(data);
+        assertThat(user.getEmail()).isEqualTo(token);
     }
 
     @Test
