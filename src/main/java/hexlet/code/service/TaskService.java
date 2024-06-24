@@ -32,7 +32,7 @@ public class TaskService {
 
     public List<TaskDTO> getAll(TaskFilterDTO params) {
         var spec = specBuilder.build(params);
-        var tasks = taskRepository.findAll((Sort) spec);
+        var tasks = taskRepository.findAll(spec);
         return tasks.stream()
                 .map(taskMapper::map)
                 .toList();
