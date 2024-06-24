@@ -26,7 +26,6 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-@NoArgsConstructor
 public class Task implements BaseEntity {
 
     @Id
