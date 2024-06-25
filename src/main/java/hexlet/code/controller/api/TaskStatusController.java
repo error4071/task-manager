@@ -63,7 +63,7 @@ public class TaskStatusController {
     @PutMapping("/task_statuses/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update task status")
-    public TaskStatusDTO update(@PathVariable Long id, @RequestBody TaskStatusUpdateDTO taskStatusUpdateDTO) {
+    public TaskStatusDTO update(@Valid @PathVariable Long id, @RequestBody TaskStatusUpdateDTO taskStatusUpdateDTO) {
         return taskStatusService.update(id, taskStatusUpdateDTO);
     }
 
@@ -71,6 +71,6 @@ public class TaskStatusController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete task status")
     public void delete(@PathVariable Long id) {
-        taskStatusRepository.deleteById(id);
+        taskStatusService.delete(id);
     }
 }
