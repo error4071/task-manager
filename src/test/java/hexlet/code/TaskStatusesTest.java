@@ -2,6 +2,7 @@ package hexlet.code;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -131,7 +132,11 @@ public class TaskStatusesTest {
     @Test
     public void testDestroy() throws Exception {
 
-       mockMvc.perform(delete("/api/task_statuses/" + testTaskStatus.getId()).with(jwt()))
+        var token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
+
+       mockMvc.perform(delete("/api/task_statuses/" + testTaskStatus.getId()).with(token))
                .andExpect(status().isNoContent());
+
+        assertFalse(taskStatusRepository.existsById(testTaskStatus.getId()));
     }
 }
