@@ -27,7 +27,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hexlet.code.util.ModelGenerator;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.Map;
 
