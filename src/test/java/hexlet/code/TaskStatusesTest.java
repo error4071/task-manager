@@ -101,7 +101,7 @@ public class TaskStatusesTest {
     @Test
     public void testUpdate() throws Exception {
 
-        jwt().jwt(builder -> builder.subject("hexlet@example.com"));
+        var token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
         testTaskStatus = Instancio.of(TaskStatus.class)
                 .ignore(Select.field(TaskStatus::getId))
                 .supply(Select.field(TaskStatus::getName), () -> "To experiment")
@@ -115,7 +115,7 @@ public class TaskStatusesTest {
                 "slug", "to_test_update"
         );
 
-        MockHttpServletRequestBuilder request = put("/api/task_statuses/{id}", testTaskStatus.getId()).with(jwt())
+        var request = put("/api/task_statuses/{id}", testTaskStatus.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(taskStatusData));
 
