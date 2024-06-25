@@ -28,3 +28,4 @@ public abstract class LabelMapper {
 
     public abstract void update(LabelUpdateDTO dto, @MappingTarget Label model);
 }
+
