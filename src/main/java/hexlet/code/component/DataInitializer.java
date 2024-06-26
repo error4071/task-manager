@@ -33,7 +33,7 @@ public class DataInitializer implements ApplicationRunner {
 
     private final LabelMapper labelMapper;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
