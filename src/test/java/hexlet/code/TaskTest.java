@@ -1,6 +1,7 @@
 package hexlet.code;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
@@ -129,7 +130,7 @@ public class TaskTest {
         mockMvc.perform(request)
                 .andExpect(status().isOk());
 
-        assertFalse(taskRepository.existsById(testTask.getId()));
+        assertThat(testTask.getName()).isEqualTo(data.getTitle());
     }
 
     @Test
