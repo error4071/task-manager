@@ -29,9 +29,9 @@ import java.util.List;
 @RequestMapping("/api")
 public class TaskStatusController {
 
-    private TaskStatusRepository taskStatusRepository;
-    private TaskStatusMapper taskStatusMapper;
-    private TaskStatusService taskStatusService;
+    private final TaskStatusRepository taskStatusRepository;
+    private final TaskStatusMapper taskStatusMapper;
+    private final TaskStatusService taskStatusService;
 
     @GetMapping("/task_statuses")
     @ResponseStatus(HttpStatus.OK)

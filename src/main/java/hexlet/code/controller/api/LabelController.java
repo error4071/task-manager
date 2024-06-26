@@ -29,9 +29,9 @@ import java.util.List;
 @RequestMapping("/api")
 public class LabelController {
 
-    private LabelRepository labelRepository;
-    private LabelService labelService;
-    private LabelMapper labelMapper;
+    private final LabelRepository labelRepository;
+    private final LabelService labelService;
+    private final LabelMapper labelMapper;
 
     @GetMapping("/labels")
     @ResponseStatus(HttpStatus.OK)
