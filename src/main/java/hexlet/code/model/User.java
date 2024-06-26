@@ -9,7 +9,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -20,17 +23,20 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "users")
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-@NoArgsConstructor
 public class User implements UserDetails, BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = IDENTITY)
+    @ToString.Include
+    @EqualsAndHashCode.Include
     private Long id;
 
     private String firstName;
