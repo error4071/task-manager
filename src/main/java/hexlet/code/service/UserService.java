@@ -18,11 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public final class UserService {
 
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final UserRepository userRepository;
 
     @Autowired
     private UserUtils userUtils;

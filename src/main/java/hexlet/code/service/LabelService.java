@@ -15,9 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 public class LabelService {
 
-    private LabelMapper labelMapper;
+    private final LabelMapper labelMapper;
 
-    private LabelRepository labelRepository;
+    private final LabelRepository labelRepository;
 
     public List<LabelDTO> getAll() {
         var label = labelRepository.findAll();
