@@ -33,7 +33,6 @@ import hexlet.code.model.Task;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 
-import java.util.List;
 import java.util.Set;
 
 @ContextConfiguration(classes = AppApplication.class)

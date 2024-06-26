@@ -9,10 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -29,7 +26,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-@AllArgsConstructor
+@NoArgsConstructor
 public class User implements UserDetails, BaseEntity {
 
     @Id
