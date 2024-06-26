@@ -12,12 +12,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import hexlet.code.dto.Task.TaskDTO;
+import hexlet.code.dto.Task.TaskUpdateDTO;
+import hexlet.code.model.User;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
+import net.datafaker.Faker;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,6 +33,7 @@ import hexlet.code.model.Task;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 
+import java.util.List;
 import java.util.Set;
 
 @ContextConfiguration(classes = AppApplication.class)
@@ -41,6 +46,9 @@ public class TaskTest {
 
     @Autowired
     private ObjectMapper om;
+
+    @Autowired
+    private Faker faker;
 
     @Autowired
     private TaskRepository taskRepository;
@@ -58,6 +66,8 @@ public class TaskTest {
     private LabelRepository labelRepository;
 
     private Task testTask;
+
+    private User testUser;
 
     @BeforeEach
     public void setUp() {
@@ -120,9 +130,12 @@ public class TaskTest {
 
     @Test
     public void testUpdate() throws Exception {
-        var data = new TaskDTO();
-        var name = "New Task Name";
-        data.setTitle(name);
+        var data = new TaskUpdateDTO();
+        data.setIndex(JsonNullable.of(faker.number().positive()));
+        data.setAssigneeId(JsonNullable.of(testUser.getId()));
+        data.setTitle(JsonNullable.of(faker.lorem().word()));
+        data.setContent(JsonNullable.of(faker.lorem().sentence()));
+        data.setStatus(JsonNullable.of("published"));
 
         var request = put("/api/tasks/" + testTask.getId()).with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -130,7 +143,15 @@ public class TaskTest {
         mockMvc.perform(request)
                 .andExpect(status().isOk());
 
-        assertThat(testTask.getName()).isEqualTo(String.valueOf(data));
+        var updatedTask = taskRepository.findById(testTask.getId()).orElse(null);
+
+        assertThat(updatedTask).isNotNull();
+        assertThat(updatedTask.getIndex()).isEqualTo(data.getIndex().get());
+        assertThat(updatedTask.getAssignee().getId()).isEqualTo(data.getAssigneeId().get());
+        assertThat(updatedTask.getName()).isEqualTo(data.getTitle().get());
+        assertThat(updatedTask.getDescription()).isEqualTo(data.getContent().get());
+        assertThat(updatedTask.getTaskStatus().getSlug()).isEqualTo(data.getStatus().get());
+        assertThat(updatedTask.getLabels().iterator().next().getId()).isEqualTo(2L);
     }
 
     @Test
