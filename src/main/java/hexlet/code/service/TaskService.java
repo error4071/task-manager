@@ -18,17 +18,11 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class TaskService {
-
     private final TaskRepository taskRepository;
-
     private final UserRepository userRepository;
-
     private final TaskStatusRepository taskStatusRepository;
-
     private final TaskMapper taskMapper;
-
     private final TaskSpecification specBuilder;
-
     public List<TaskDTO> getAll(TaskFilterDTO params) {
         var spec = specBuilder.build(params);
         var tasks = taskRepository.findAll(spec);
