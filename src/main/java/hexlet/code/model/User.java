@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -21,8 +22,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
-
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "users")
@@ -32,7 +31,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 public class User implements UserDetails, BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String firstName;
