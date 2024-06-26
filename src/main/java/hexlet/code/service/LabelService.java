@@ -16,7 +16,6 @@ import java.util.List;
 public class LabelService {
 
     private final LabelMapper labelMapper;
-
     private final LabelRepository labelRepository;
 
     public List<LabelDTO> getAll() {

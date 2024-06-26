@@ -19,9 +19,7 @@ import java.util.List;
 public final class UserService {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
     @Autowired
     private UserUtils userUtils;
