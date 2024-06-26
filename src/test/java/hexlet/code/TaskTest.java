@@ -128,6 +128,8 @@ public class TaskTest {
                 .content(om.writeValueAsString(data));
         mockMvc.perform(request)
                 .andExpect(status().isOk());
+
+        assertFalse(taskRepository.existsById(testTask.getId()));
     }
 
     @Test
