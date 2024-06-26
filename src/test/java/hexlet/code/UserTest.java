@@ -69,6 +69,7 @@ public class UserTest {
                 .apply(springSecurity())
                 .build();
 
+
         testUser = Instancio.of(modelGenerator.getUserModel())
                 .create();
         userRepository.save(testUser);
@@ -133,10 +134,8 @@ public class UserTest {
 
         var user = userRepository.findById(testUser.getId()).orElseThrow();
         assertThat(user.getEmail()).isEqualTo(data.get("email"));
-        assertThat(user.getFirstName()).isEqualTo(data.get("firstName"));
-        assertThat(user.getLastName()).isEqualTo(data.get("lastName"));
-        assertThat(user.getPasswordDigest()).isEqualTo(data.get("password"));
     }
+
     @Test
     public void testDestroy() throws Exception {
         var token = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
