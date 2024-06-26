@@ -130,7 +130,7 @@ public class TaskTest {
         mockMvc.perform(request)
                 .andExpect(status().isOk());
 
-        assertThat(testTask.getName()).isEqualTo(data);
+        assertThat(testTask.getName()).isEqualTo(String.valueOf(data));
     }
 
     @Test
