@@ -1,3 +1,5 @@
+# Task manager.
+
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/error4071/java-project-99/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/error4071/java-project-99/actions) ![Java CI](https://github.com/error4071/java-project-99/workflows/Java%20CI/badge.svg)
 
@@ -7,8 +9,8 @@
 
 ### [DEMO on Render](https://task-manager-3iru.onrender.com)
 
-### Task manager
-Allows to set tasks, assign performers and change their statuses.
+Task Manager is a task management system. It allows you to set tasks, assign performers and change their statuses. To work with the system, registration and authentication are required.
+This is an educational project based on the Spring Framework.
 
 ### Used stack:
 
@@ -28,3 +30,18 @@ Allows to set tasks, assign performers and change their statuses.
 + Gradle 8.3
 + Makefile
 
+
+### Setup
+    make setup
+
+### Install
+    make install
+
+### Run server
+    make start
+    # Open http://localhost:8080
+    # Username: hexlet@example.com
+    # Password: qwerty
+
+#### Author
+Sergey Tsoy / error4071
